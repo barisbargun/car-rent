@@ -1,0 +1,33 @@
+{
+  "name": "@repo/mock",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "imports": {
+    "#mock/*": [
+      "./src/*.ts"
+    ]
+  },
+  "exports": {
+    "./enable-mocking": "./src/mocks/index.ts",
+    "./api-paths": "./src/config/api-paths.ts"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.2"
+  },
+  "devDependencies": {
+    "@mswjs/data": "^0.16.2",
+    "@mswjs/http-middleware": "^0.10.3",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^22.13.9",
+    "js-cookie": "^3.0.5",
+    "msw": "^2.7.3"
+  }
+}

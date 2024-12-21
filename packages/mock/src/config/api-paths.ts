@@ -1,0 +1,15 @@
+export const apiPaths = {
+  users: 'users',
+  siteConfig: 'site-config',
+  carousels: 'carousels',
+  images: 'images',
+  menubarFull: 'menubar-populated',
+  menubarTabs: 'menubar-tabs',
+  menubarVehicles: 'menubar-vehicles',
+  vehicles: 'vehicles',
+  services: 'services',
+  reviews: 'reviews',
+  footerFull: 'footer-populated',
+  footerTabs: 'footer-tabs',
+  footerLinks: 'footer-links',
+}

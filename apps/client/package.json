@@ -1,0 +1,47 @@
+{
+  "name": "client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "clean": "rm -rf dist",
+    "dev": "vite --host 0.0.0.0 --port 3002 --clearScreen false",
+    "lint": "eslint . --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "@tanstack/query-sync-storage-persister": "^5.67.2",
+    "@tanstack/react-query": "^5.67.2",
+    "@tanstack/react-query-devtools": "^5.67.2",
+    "@tanstack/react-query-persist-client": "^5.67.2",
+    "axios": "^1.8.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.5.2",
+    "lucide-react": "^0.477.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router": "^7.2.0",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/mock": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22.13.10",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/react-slick": "^0.23.13",
+    "@vitejs/plugin-react-swc": "^3.8.0",
+    "autoprefixer": "^10.4.20",
+    "globals": "^15.14.0",
+    "postcss": "^8.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.2.1"
+  }
+}
