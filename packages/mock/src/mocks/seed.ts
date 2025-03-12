@@ -26,7 +26,6 @@ const users: ExcludeId<UserPost>[] = [
     email: 'abc@gmail.com',
     role: 0,
     img: '65eb2c2541603216c5d18ed4',
-    refreshToken: '',
   },
 ]
 

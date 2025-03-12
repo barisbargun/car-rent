@@ -7,7 +7,7 @@ export const models = {
     username: String,
     password: String,
     email: String,
-    role: String,
+    role: Number,
     img: String,
     refreshToken: String,
   },

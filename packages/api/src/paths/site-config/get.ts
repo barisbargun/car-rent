@@ -2,10 +2,8 @@ import { apiPaths } from '@repo/mock/api-paths'
 import { SiteConfig } from '@repo/typescript-config/types/api'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-import { QueryConfig } from '@/config/react-query'
-import { ApiResponse } from '@/types/response'
-
-import { api } from '../api'
+import { QueryConfig } from '#api/config/react-query'
+import { api, ApiResponse } from '#api/lib/api'
 
 export const getSiteConfig = (): ApiResponse<SiteConfig> => {
   return api.get(apiPaths.siteConfig)

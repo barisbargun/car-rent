@@ -1,0 +1,88 @@
+import { Image, UserPost } from '@repo/typescript-config/types/api'
+import { http, HttpResponse } from 'msw'
+
+import { ROLE_LIST } from '#mock/config/enums'
+import { getPath } from '#mock/utils/get-path'
+import { populateWithImage } from '#mock/utils/populate'
+
+import { db, persistDb } from '../db'
+import { networkDelay, requireAuth } from '../utils'
+
+const url = getPath('users')
+const api = db.user
+export const usersHandlers = [
+  http.get(url, async () => {
+    await networkDelay()
+    try {
+      const users = api.getAll().map((user) => {
+        const img = populateWithImage(user.img)
+        if (!img?.id) throw new Error('Server Error')
+        delete (user as any).refreshToken
+        return {
+          ...user,
+          img: img as Image,
+        }
+      })
+      return HttpResponse.json(users)
+    } catch (error: any) {
+      return HttpResponse.json(
+        { message: error?.message || 'Server Error' },
+        { status: 500 },
+      )
+    }
+  }),
+
+  http.post(url, async ({ request, cookies }) => {
+    await networkDelay()
+
+    try {
+      const { error } = requireAuth(cookies)
+      if (error) {
+        return HttpResponse.json({ message: error }, { status: 401 })
+      }
+      const data = (await request.json()) as UserPost
+      const result = api.create({
+        ...data,
+        refreshToken: '',
+      })
+      await persistDb('user')
+      return HttpResponse.json(result)
+    } catch (error: any) {
+      return HttpResponse.json(
+        { message: error?.message || 'Server Error' },
+        { status: 500 },
+      )
+    }
+  }),
+
+  http.delete(`${url}/:id`, async ({ params, cookies }) => {
+    await networkDelay()
+
+    try {
+      const { user, error } = requireAuth(cookies)
+      if (error) {
+        return HttpResponse.json({ message: error }, { status: 401 })
+      }
+      const id = params.id as string
+      const result = api.delete({
+        where: {
+          id: {
+            equals: id,
+          },
+          ...(user?.role === ROLE_LIST.USER && {
+            authorId: {
+              equals: user.id,
+            },
+          }),
+        },
+      })
+      await persistDb('user')
+      return HttpResponse.json(result)
+    } catch (error: any) {
+      return HttpResponse.json(
+        { message: error?.message || 'Server Error' },
+        { status: 500 },
+      )
+    }
+  }),
+]

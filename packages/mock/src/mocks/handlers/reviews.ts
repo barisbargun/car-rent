@@ -1,6 +1,7 @@
 import { ReviewPost } from '@repo/typescript-config/types/api'
 import { http, HttpResponse } from 'msw'
 
+import { ROLE_LIST } from '#mock/config/enums'
 import { getPath } from '#mock/utils/get-path'
 import { populateWithImage } from '#mock/utils/populate'
 
@@ -68,7 +69,7 @@ export const reviewsHandlers = [
           id: {
             equals: id,
           },
-          ...(user?.role === 'USER' && {
+          ...(user?.role === ROLE_LIST.USER && {
             authorId: {
               equals: user.id,
             },

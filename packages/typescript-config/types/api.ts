@@ -9,7 +9,9 @@ export type User = {
   refreshToken: string
 }
 
-export type UserPost = Omit<User, 'img'> & {
+export type UserGet = Omit<User, 'refreshToken'>
+
+export type UserPost = Omit<User, 'img' | 'refreshToken'> & {
   img: string
 }
 

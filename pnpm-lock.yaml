@@ -35,12 +35,21 @@ importers:
 
   apps/admin:
     dependencies:
+      '@repo/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@repo/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@tanstack/react-query':
         specifier: ^5.67.1
         version: 5.67.1(react@18.3.1)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.67.2
+        version: 5.67.2(@tanstack/react-query@5.67.1(react@18.3.1))(react@18.3.1)
       axios:
         specifier: ^1.8.1
         version: 1.8.1
@@ -74,6 +83,9 @@ importers:
       react-error-boundary:
         specifier: ^5.0.0
         version: 5.0.0(react@18.3.1)
+      react-router:
+        specifier: ^7.2.0
+        version: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
         specifier: ^7.2.0
         version: 7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -93,6 +105,9 @@ importers:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../../packages/eslint-config
+      '@repo/mock':
+        specifier: workspace:*
+        version: link:../../packages/mock
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -429,6 +444,15 @@ importers:
 
   packages/mock:
     dependencies:
+      bcryptjs:
+        specifier: ^2.4.3
+        version: 2.4.3
+      cloudinary:
+        specifier: ^2.5.1
+        version: 2.5.1
+      jsonwebtoken:
+        specifier: ^9.0.2
+        version: 9.0.2
       nanoid:
         specifier: ^5.1.2
         version: 5.1.2
@@ -445,9 +469,15 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/bcryptjs':
+        specifier: ^2.4.6
+        version: 2.4.6
       '@types/js-cookie':
         specifier: ^3.0.6
         version: 3.0.6
+      '@types/jsonwebtoken':
+        specifier: ^9.0.9
+        version: 9.0.9
       '@types/node':
         specifier: ^22.13.9
         version: 22.13.9
@@ -5851,6 +5881,12 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.67.2
       '@tanstack/query-persist-client-core': 5.67.2
+
+  '@tanstack/react-query-devtools@5.67.2(@tanstack/react-query@5.67.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-devtools': 5.67.2
+      '@tanstack/react-query': 5.67.1(react@18.3.1)
+      react: 18.3.1
 
   '@tanstack/react-query-devtools@5.67.2(@tanstack/react-query@5.67.2(react@18.3.1))(react@18.3.1)':
     dependencies:

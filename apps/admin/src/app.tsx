@@ -1,13 +1,14 @@
-import './globals.css'
+import { useUsers } from '@repo/api/user/get'
 
-function App() {
+import { PageSection } from './components/global/page-section'
+
+export const App = () => {
   return (
-    <div className="flex size-full min-h-screen bg-black flex-center">
-      <h1 className="text-3xl font-bold text-primary underline">
-        Hello world!
-      </h1>
-    </div>
+    <>
+      {/** Home */}
+
+      {/** Menubar */}
+      <PageSection></PageSection>
+    </>
   )
 }
-
-export default App

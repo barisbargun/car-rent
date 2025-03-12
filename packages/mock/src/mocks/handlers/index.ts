@@ -7,9 +7,11 @@ import { menubarVehiclesHandlers } from './menubar-vehicles'
 import { reviewsHandlers } from './reviews'
 import { servicesHandlers } from './services'
 import { siteConfigHandlers } from './site-config'
+import { usersHandlers } from './users'
 import { vehiclesHandlers } from './vehicles'
 
 export const handlers = [
+  ...usersHandlers,
   ...siteConfigHandlers,
   ...imagesHandlers,
   ...carouselsHandlers,
