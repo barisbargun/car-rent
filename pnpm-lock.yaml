@@ -141,9 +141,15 @@ importers:
 
   apps/client:
     dependencies:
+      '@repo/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@repo/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       '@tanstack/query-sync-storage-persister':
         specifier: ^5.67.2
         version: 5.67.2
@@ -331,10 +337,26 @@ importers:
         version: 5.8.2
 
   packages/api:
+    dependencies:
+      '@repo/utils':
+        specifier: workspace:*
+        version: link:../utils
+      '@tanstack/react-query':
+        specifier: ^5.67.2
+        version: 5.67.2(react@18.3.1)
+      axios:
+        specifier: ^1.8.2
+        version: 1.8.2
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
         version: link:../eslint-config
+      '@repo/mock':
+        specifier: workspace:*
+        version: link:../mock
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -540,6 +562,25 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17(ts-node@10.9.1(@swc/core@1.10.18(@swc/helpers@0.5.15))(@types/node@22.13.9)(typescript@5.8.2)))
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
+
+  packages/utils:
+    dependencies:
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^22.13.9
+        version: 22.13.10
       typescript:
         specifier: ^5.8.2
         version: 5.8.2

@@ -1,0 +1,11 @@
+import { parseEnv } from '@repo/utils/env'
+import * as z from 'zod'
+
+const createEnv = () => {
+  const EnvSchema = z.object({
+    API_URL: z.string(),
+  })
+  return parseEnv<typeof EnvSchema>(EnvSchema)
+}
+
+export const env = createEnv()

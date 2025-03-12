@@ -2,9 +2,8 @@ import { apiPaths } from '@repo/mock/api-paths'
 import { Carousel } from '@repo/typescript-config/types/api'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
-import { QueryConfig } from '@/config/react-query'
-import { api } from '@/lib/api'
-import { ApiResponse } from '@/types/response'
+import { QueryConfig } from '#api/config/react-query'
+import { api, ApiResponse } from '#api/lib/api'
 
 export const getCarousels = (): ApiResponse<Carousel[]> => {
   return api.get(apiPaths.carousels)
