@@ -2,7 +2,7 @@ import { useFooter } from '@repo/api/footer/get'
 import { cn } from '@repo/ui/lib/utils'
 import React, { useMemo } from 'react'
 
-import { FooterTab } from '@/features/footer/components/footer-tab'
+import { FooterTitle } from '@/features/footer/components/footer-title'
 import { useDataContext } from '@/lib/context'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {}
@@ -46,7 +46,7 @@ export const FooterView = ({ className, ...props }: Props) => {
         {[...data]
           .sort((a, b) => a.index - b.index)
           .map((v) => (
-            <FooterTab key={v.id} data={v} />
+            <FooterTitle key={v.id} data={v} />
           ))}
       </div>
     </div>

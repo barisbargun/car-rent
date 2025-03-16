@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import path from 'node:path'
 
 import react from '@vitejs/plugin-react-swc'
@@ -10,5 +11,14 @@ export default defineConfig({
     alias: {
       '@': path.resolve(import.meta.dirname, './src'),
     },
+  },
+  test: {
+    coverage:{
+      provider:'v8'
+    },
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/testing/setup-tests.ts',
+    exclude: ['**/node_modules/**', '**/e2e/**'],
   },
 })

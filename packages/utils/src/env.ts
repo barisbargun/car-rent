@@ -1,10 +1,9 @@
-/* eslint-disable unicorn/no-array-reduce */
 import * as z from 'zod'
 
 export const parseEnv = <T extends z.ZodType>(schema: T): z.infer<T> => {
-  const envVars = Object.entries(import.meta.env).reduce<
+  const envVars = Object.entries((import.meta as any).env).reduce<
     Record<string, string>
-  >((acc, curr) => {
+  >((acc: any, curr) => {
     const [key, value] = curr
     if (key.startsWith('VITE_')) {
       acc[key.replace('VITE_', '')] = value

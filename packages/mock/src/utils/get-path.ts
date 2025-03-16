@@ -1,9 +1,10 @@
-import { apiPaths } from '#mock/config/api-paths'
-import { envConfig } from '#mock/config/env'
+import { API_PATHS } from '@repo/api/config/api-paths'
 
-type titles = keyof typeof apiPaths
-const base = envConfig.API_URL
+import { env } from '#mock/config/env'
+
+type titles = keyof typeof API_PATHS
+const base = env.API_URL
 
 export const getPath = (path: titles) => {
-  return `${base}/${apiPaths[path]}`
+  return `${base}/${API_PATHS[path]}`
 }

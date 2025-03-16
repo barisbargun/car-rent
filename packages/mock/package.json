@@ -1,38 +1,38 @@
 {
   "name": "@repo/mock",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
   "license": "MIT",
+  "type": "module",
   "imports": {
     "#mock/*": [
       "./src/*.ts"
     ]
   },
   "exports": {
-    "./enable-mocking": "./src/mocks/index.ts",
-    "./api-paths": "./src/config/api-paths.ts"
+    "./*": "./src/*.ts"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "nanoid": "^5.1.2",
-    "bcryptjs": "^2.4.3",
-    "cloudinary": "^2.5.1",
-    "jsonwebtoken": "^9.0.2"
+    "@repo/utils": "workspace:*",
+    "http-status-codes": "^2.3.0",
+    "nanoid": "^5.1.5",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@mswjs/data": "^0.16.2",
-    "@mswjs/http-middleware": "^0.10.3",
+    "@ngneat/falso": "^7.4.0",
+    "@repo/api": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/js-cookie": "^3.0.6",
-    "@types/node": "^22.13.9",
+    "@types/node": "^22.15.21",
     "js-cookie": "^3.0.5",
-    "msw": "^2.7.3",
-    "@types/bcryptjs": "^2.4.6",
-    "@types/jsonwebtoken": "^9.0.9"
+    "msw": "^2.10.2",
+    "typescript": "^5.8.3",
+    "eslint": "^9.29.0"
   }
 }

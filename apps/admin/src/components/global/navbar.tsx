@@ -1,54 +1,141 @@
+import { useCurrentUser } from '@repo/api/paths/auth/current-user'
+import { Button } from '@repo/ui/components/button'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@repo/ui/components/drawer'
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu'
+import { cn } from '@repo/ui/lib/utils'
 import { RowsIcon } from 'lucide-react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { navLinkConfig } from '@/config/nav'
+import { NavbarItem, navbarItems, navbarItemsMobile } from '@/config/navbar'
+import { paths } from '@/config/paths'
+import { UserContent } from '@/features/user/components/content'
+import { useBreakpoint } from '@/hooks/use-breakpoint'
 
-export const Navbar = () => {
-  const navList = Object.values(navLinkConfig)
+const NavItem = ({
+  item,
+  handleClick,
+}: {
+  item: NavbarItem
+  handleClick: (link: string) => void
+}) => {
+  const NavButton = () => {
+    const Icon = item.icon
+    return (
+      <Button
+        variant="ghost"
+        size="lg"
+        className={cn(
+          'w-full px-2 max-lg:py-8 max-lg:last:col-span-2 xl:px-3',
+          item.title === 'Users' && 'mt-auto',
+        )}
+        onClick={() => handleClick(item.link || '')}
+      >
+        <Icon width={15} height={15} className="mr-0.5" />
+        {item.title}
+      </Button>
+    )
+  }
+
+  if (item.link) return NavButton()
 
   return (
-    <>
-      <header className="fixed left-0 top-0 z-50 flex w-full justify-center bg-black/30 text-white backdrop-blur-sm">
-        <div className="container flex items-center justify-between py-2 lg:py-3">
-          <strong className="cursor-pointer font-pacifico text-3xl font-medium max-lg:text-2xl">
-            Reint
-          </strong>
-          {/** For Desktop */}
-          <nav className="max-lg:hidden">
-            <ul className="flex items-center justify-between gap-10">
-              {navList.map((v) => (
-                <li key={v.name}>
-                  <a
-                    className="text-sm opacity-60 transition-opacity hover:opacity-100"
-                    href={`#${v.link}`}
-                  >
-                    {v.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <div className="flex-center lg:hidden">
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <RowsIcon className="size-4" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="">
-                {navList.map((v) => (
-                  <DropdownMenuItem key={v.link}>
-                    <a href={`#${v.link}`}>{v.name}</a>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>{NavButton()}</DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56 lg:absolute lg:left-0">
+        <DropdownMenuLabel>{item.title}</DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          {item.children?.map((v) => (
+            <DropdownMenuItem key={v.title} onClick={() => handleClick(v.link)}>
+              {v.title}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+type Props = React.HTMLAttributes<HTMLElement> & {}
+
+export const Navbar = ({ className, ...props }: Props) => {
+  const { data: currentUser } = useCurrentUser()
+  const [openDrawer, setOpenDrawer] = useState(false)
+  const breakpoint = useBreakpoint()
+  const navigate = useNavigate()
+
+  const handleLinkClick = (link: string) => {
+    setOpenDrawer(false)
+    navigate(link || '')
+  }
+
+  /** Navigation Desktop */
+  if (breakpoint > 2) {
+    return (
+      <nav
+        className={cn('flex h-full flex-col gap-1 xl:gap-4', className)}
+        {...props}
+      >
+        {navbarItems.map(
+          (item) =>
+            (!item.protect || item.protect(currentUser?.role)) && (
+              <NavItem
+                item={item}
+                key={item.title}
+                handleClick={handleLinkClick}
+              />
+            ),
+        )}
+      </nav>
+    )
+  }
+
+  /** Navigation Mobile */
+  return (
+    <nav
+      className={cn('flex h-fit w-full justify-between', className)}
+      {...props}
+    >
+      <Drawer open={openDrawer} onOpenChange={setOpenDrawer}>
+        <DrawerTrigger>{<RowsIcon className="max-lg:size-5" />}</DrawerTrigger>
+        <DrawerContent className="w-full flex-col gap-1 pb-4 flex-center">
+          <DrawerHeader>
+            <DrawerTitle className="sr-only">Navigation</DrawerTitle>
+            <UserContent
+              className="my-2 cursor-pointer"
+              onClick={() => handleLinkClick(paths.app.profile.getHref())}
+            />
+          </DrawerHeader>
+
+          <div
+            className="grid w-full grid-cols-2"
+            onPointerDown={(e) => e.stopPropagation()}
+          >
+            {navbarItemsMobile.map((item) => (
+              <NavItem
+                item={item}
+                key={item.title}
+                handleClick={handleLinkClick}
+              />
+            ))}
           </div>
-        </div>
-      </header>
-    </>
+        </DrawerContent>
+      </Drawer>
+    </nav>
   )
 }

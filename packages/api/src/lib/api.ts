@@ -10,4 +10,8 @@ export const api = baseAxios.create({
   withCredentials: true,
 })
 
+api.interceptors.response.use((response) => {
+  return response.data
+})
+
 export type ApiResponse<T> = Promise<AxiosResponse<T>>

@@ -1,4 +1,4 @@
-import { useCarousels } from '@repo/api/carousel/get'
+import { useCarousels } from '@repo/api/paths/carousel/get-all'
 import { useState } from 'react'
 import Slider from 'react-slick'
 

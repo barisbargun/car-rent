@@ -1,0 +1,44 @@
+import { useDeleteFooterLink } from '@repo/api/paths/footer/link/delete'
+import { FooterLink } from '@repo/api/types/footer'
+import { cn } from '@repo/ui/lib/utils'
+
+import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
+import { ButtonModelForm } from '@/components/shared/buttons/model-form'
+
+import { FooterLinkUpdateForm } from './update-form'
+
+type Props = React.HTMLAttributes<HTMLDivElement> & {
+  data: FooterLink
+}
+
+export const FooterLinkCard = ({ data, className, ...props }: Props) => {
+  return (
+    <div
+      className={cn(
+        'relative overflow-hidden border-b-2 border-dashed px-4 p-8 flex-center',
+        className,
+      )}
+      data-testid="footerLink-card"
+      {...props}
+    >
+      {/** Buttons */}
+      <div
+        className="absolute right-1 top-1 z-10 flex gap-2 card-buttons"
+        onPointerDown={(e) => e.stopPropagation()}
+      >
+        <ButtonModelForm type="UPDATE" model="footerLink" modelText='footerLink'
+>
+          <FooterLinkUpdateForm footerLink={data} />
+        </ButtonModelForm>
+
+        <ButtonModelDelete
+          model="footerLink"
+          id={data.id}
+          mutate={useDeleteFooterLink}
+        />
+      </div>
+
+      <strong className='max-xl:text-sm' title={data.title}>{data.title}</strong>
+    </div>
+  )
+}

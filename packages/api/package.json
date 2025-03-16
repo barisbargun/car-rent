@@ -1,32 +1,36 @@
 {
   "name": "@repo/api",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
+  "type": "module",
   "imports": {
-    "#api*": [
+    "#api/*": [
       "./src/*.ts"
     ]
   },
   "exports": {
-    "./*": "./src/paths/*.ts",
-    ".": "./src/lib/api.ts"
+    ".": "./src/lib/api.ts",
+    "./config/*": "./src/config/*.ts",
+    "./paths/*": "./src/paths/*.ts",
+    "./types/*": "./src/types/*.ts"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
     "@repo/utils": "workspace:*",
-    "@tanstack/react-query": "^5.67.2",
-    "axios": "^1.8.2",
-    "zod": "^3.24.2"
+    "@tanstack/react-query": "^5.80.7",
+    "axios": "^1.10.0",
+    "zod": "^3.25.67"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "@repo/mock": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22.13.9",
-    "typescript": "^5.8.2"
+    "@tanstack/react-query-devtools": "^5.80.7",
+    "@types/node": "^22.15.21",
+    "@types/react": "^18.3.18",
+    "eslint": "^9.29.0",
+    "typescript": "^5.8.3"
   }
 }

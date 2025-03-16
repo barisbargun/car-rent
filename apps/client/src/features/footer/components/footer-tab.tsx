@@ -5,7 +5,7 @@ type Props = {
   data: FooterFull
 }
 
-export const FooterTab = ({ data }: Props) => {
+export const FooterTitle = ({ data }: Props) => {
   return (
     data &&
     <div>

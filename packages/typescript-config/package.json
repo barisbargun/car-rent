@@ -4,7 +4,6 @@
   "private": true,
   "license": "MIT",
   "exports": {
-    "./types/*": "./types/*.ts",
     "./*": "./*"
   }
 }

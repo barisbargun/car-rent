@@ -25,3 +25,6 @@ export type MutationConfig<
   Error,
   Parameters<MutationFnType>[0]
 >
+
+export * from '@tanstack/react-query'
+export { ReactQueryDevtools } from '@tanstack/react-query-devtools'

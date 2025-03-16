@@ -16,7 +16,7 @@ export const config = [
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    files: ['src/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
+    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     plugins: {
       'simple-import-sort': simpleImportSort,
       turbo: turboPlugin,
@@ -36,6 +36,7 @@ export const config = [
 
       'unicorn/prevent-abbreviations': ['off'],
       'unicorn/no-empty-file': 'off',
+      'unicorn/no-array-reduce': 'off',
 
       '@typescript-eslint/no-explicit-any': ['off'],
       '@typescript-eslint/no-unused-vars': [
@@ -50,6 +51,6 @@ export const config = [
   },
   eslintConfigPrettier,
   {
-    ignores: ["dist/**"],
+    ignores: ['dist/**'],
   },
 ]
