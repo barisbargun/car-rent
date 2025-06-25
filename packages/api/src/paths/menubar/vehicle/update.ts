@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { MenubarVehicle } from '#api/types/menubar'
+import { MenubarVehicleGet } from '#api/types/menubar'
 
 import { createMenubarVehicleInputSchema } from './create'
 import { getMenubarVehiclesQueryOptions } from './get-all'
@@ -22,7 +22,7 @@ export const updateMenubarVehicle = ({
 }: {
   id: string
   data: UpdateMenubarVehicleInput
-}): Promise<MenubarVehicle> => {
+}): Promise<MenubarVehicleGet> => {
   return api.patch(`${API_PATHS.menubarVehicle}/${id}`, data)
 }
 

@@ -7,58 +7,45 @@ import {
   PaginationPrevious,
 } from '@repo/ui/components/pagination'
 import { useMemo } from 'react'
-import { useLocation, useSearchParams } from 'react-router'
 
 type Props = {
   length: number
+  page: number
+  setPage: React.Dispatch<React.SetStateAction<number>>
 }
 
-export const Paginator = ({ length }: Props) => {
-  const [searchParams] = useSearchParams()
-  const location = useLocation()
-  const currentPage = Number(searchParams.get('page') || 1)
-
-  const createPageUrl = (pageNumber: number | string) => {
-    if (Number(pageNumber) < 1 || Number(pageNumber) > length)
-      return `${location.pathname}${location.search}`
-    const params = new URLSearchParams(searchParams)
-    params.set('page', pageNumber.toString())
-    return `${location.pathname}?${params.toString()}`
-  }
-
+export const Paginator = ({ length, page, setPage }: Props) => {
   const GetSlice = useMemo(() => {
     const min = Math.max(
-      length - currentPage <= 2
-        ? currentPage - 4 + (length - currentPage)
-        : currentPage - 2,
+      length - page <= 2 ? page - 4 + (length - page) : page - 2,
       1,
     )
-    const max = Math.min(currentPage <= 2 ? 6 : currentPage + 3, length + 1)
+    const max = Math.min(page <= 2 ? 6 : page + 3, length + 1)
     return [min, max]
-  }, [currentPage, length])
+  }, [page, length])
 
   return (
-    typeof length == 'number' && (
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious to={createPageUrl(currentPage - 1)} />
-          </PaginationItem>
-          <PaginationItem>
-            {Array.from({length: length + 1})
-              .map((_, i) => i)
-              .slice(GetSlice[0], GetSlice[1])
-              .map((v) => (
-                <PaginationLink key={v} to={createPageUrl(v)}>
-                  {v}
-                </PaginationLink>
-              ))}
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext to={createPageUrl(currentPage + 1)} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    )
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious
+            onClick={() => setPage((v) => Math.max(v - 1, 1))}
+          />
+        </PaginationItem>
+        <PaginationItem>
+          {Array.from({ length: length + 1 })
+            .map((_, i) => i)
+            .slice(GetSlice[0], GetSlice[1])
+            .map((v) => (
+              <PaginationLink key={v} onClick={() => setPage(v)}>
+                {v}
+              </PaginationLink>
+            ))}
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext onClick={() => setPage((v) => Math.min(v + 1, length))} />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   )
 }

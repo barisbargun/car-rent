@@ -3,7 +3,7 @@ import { Skeleton } from '@repo/ui/components/skeleton'
 import { Link, Outlet } from 'react-router'
 
 import { paths } from '@/config/paths'
-import { useBreakpoint } from '@/hooks/use-breakpoint'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 
 import { Navbar } from '../global/navbar'
 import { Topbar } from '../global/topbar'

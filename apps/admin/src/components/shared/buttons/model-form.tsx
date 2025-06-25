@@ -4,7 +4,7 @@ import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { cn } from '@repo/ui/lib/utils'
 
 import { OpenDialog, OpenDialogProps } from '@/components/global/open-dialog'
-import { useBreakpoint } from '@/hooks/use-breakpoint'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 import { Authorization } from '@/lib/authorization'
 
 type Props = {

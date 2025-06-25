@@ -1,8 +1,8 @@
-import { cn } from '@repo/ui/lib/utils'
 import { getCloudinaryImage } from '@repo/utils/image'
 import React, { ComponentProps } from 'react'
 
-import { UseBreakpointArray, useBreakpointArray } from '@/hooks/use-breakpoint'
+import { UseBreakpointArray, useBreakpointArray } from '../hooks/use-breakpoint'
+import { cn } from '../lib/utils'
 
 type BaseProps = Omit<
   React.ImgHTMLAttributes<HTMLImageElement>,

@@ -9,7 +9,7 @@ import { cn } from '@repo/ui/lib/utils'
 import { ComponentProps, useEffect, useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
 
-import { Image } from '@/features/image/components/image'
+import { Image } from '@repo/ui/components/image'
 
 import { ButtonClearImage } from './button-clear-image'
 import { ImageButtonDialogSelect } from './button-dialog-select'
@@ -48,39 +48,42 @@ export const ImageFormField = ({
       control={form.control}
       name={formName}
       render={({ field }) => (
-        <FormItem className={cn('flex items-center', className)} {...props}>
-          <FormLabel className="sr-only">{buttonProps.buttonText}</FormLabel>
-          <div className="flex gap-2 ml-2 mr-10">
-            {/** Image upload button */}
-            <FormControl>
-              <ImageButtonDialogSelect
-                fieldChange={field.onChange}
-                setImage={setImage}
-                {...buttonProps}
-              />
-            </FormControl>
+        <FormItem {...props}>
+          <div className={cn('flex items-center', className)}>
+            <FormLabel className="sr-only">{buttonProps.buttonText}</FormLabel>
+            <div className="ml-2 mr-10 flex gap-2">
+              {/** Image upload button */}
+              <FormControl>
+                <ImageButtonDialogSelect
+                  fieldChange={field.onChange}
+                  setImage={setImage}
+                  {...buttonProps}
+                />
+              </FormControl>
 
-            {/** Clear image button */}
-            {showClearButton && (
-              <ButtonClearImage
-                name={imageProps.alt}
-                disabled={!image}
-                onClick={() => {
-                  setImage('')
-                  form.setValue('img', '')
-                }}
+              {/** Clear image button */}
+              {showClearButton && (
+                <ButtonClearImage
+                  name={imageProps.alt}
+                  disabled={!image}
+                  onClick={() => {
+                    setImage('')
+                    form.setValue('img', '')
+                  }}
+                />
+              )}
+            </div>
+
+            {/** Preview image */}
+            {showPreview && (
+              <Image
+                src={image}
+                widthList={[100, 80, 90, 90, 70]}
+                {...imageProps}
               />
             )}
           </div>
 
-          {/** Preview image */}
-          {showPreview && (
-            <Image
-              src={image}
-              widthList={[100, 80, 90, 90, 70]}
-              {...imageProps}
-            />
-          )}
           <FormMessage />
         </FormItem>
       )}

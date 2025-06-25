@@ -16,6 +16,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 import { cn } from '@repo/ui/lib/utils'
 import { RowsIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -24,7 +25,6 @@ import { useNavigate } from 'react-router-dom'
 import { NavbarItem, navbarItems, navbarItemsMobile } from '@/config/navbar'
 import { paths } from '@/config/paths'
 import { UserContent } from '@/features/user/components/content'
-import { useBreakpoint } from '@/hooks/use-breakpoint'
 
 const NavItem = ({
   item,

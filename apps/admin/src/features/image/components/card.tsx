@@ -1,10 +1,10 @@
 import { useDeleteImage } from '@repo/api/paths/image/delete'
 import { Image } from '@repo/api/types/image'
 import { AspectRatioProps } from '@repo/ui/components/aspect-ratio'
+import { Image as ImageComponent } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
-import { Image as ImageComponent } from '@/features/image/components/image'
 
 type Props = AspectRatioProps & {
   data: Image

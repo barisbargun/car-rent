@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { MenubarVehicle } from '#api/types/menubar'
+import { MenubarVehicleGet } from '#api/types/menubar'
 
 import { getMenubarVehiclesQueryOptions } from './get-all'
 
@@ -27,7 +27,7 @@ export const createMenubarVehicle = ({
   data,
 }: {
   data: CreateMenubarVehicleInput
-}): Promise<MenubarVehicle> => {
+}): Promise<MenubarVehicleGet> => {
   return api.post(`${API_PATHS.menubarVehicle}`, data)
 }
 

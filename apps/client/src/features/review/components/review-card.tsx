@@ -1,9 +1,6 @@
-import { Review } from '@repo/typescript-config/types/api'
-import { useMemo } from 'react'
-
-type Props = {
-  data: Review
-}
+import { ReviewGet } from '@repo/api/types/review'
+import { Image } from '@repo/ui/components/image'
+import { cn } from '@repo/ui/lib/utils'
 
 const colors = [
   'to-slate-200',
@@ -12,32 +9,25 @@ const colors = [
   'to-lime-200',
   'to-yellow-200',
 ]
-export const ReviewCard = ({ data }: Props) => {
-  const getAvatar = useMemo(() => {
-    let url: any = data.img?.url
-    if (url) {
-      url = url.split('/image/upload/')
-      url = `${url[0]}/image/upload/w_55,h_55,c_lfill/${url[1]}`
-    }
-    return url
-  }, [data?.img?.url])
 
+type Props = React.HTMLAttributes<HTMLDivElement> & {
+  data: ReviewGet
+  index: number
+}
+
+export const ReviewCard = ({ data, index, className, ...props }: Props) => {
   return (
     <div
-      className={
-        'h-[240px] w-[500px] overflow-hidden rounded-md bg-gradient-to-br from-white p-6 max-md:h-[300px] ' +
-        colors[(data.index - 1) % colors.length]
-      }
+      className={cn(
+        'overflow-hidden rounded-md bg-gradient-to-br from-white p-6',
+        colors[index % colors.length],
+        className,
+      )}
+      {...props}
     >
       <div className="flex items-center gap-4">
         <div>
-          <img
-            src={getAvatar}
-            alt="person-img"
-            width={55}
-            height={55}
-            className="rounded-full"
-          />
+          <Image src={data.img?.url} w={55} alt="carousel" />
         </div>
         <div>
           <h4 className="text-md font-medium leading-none">{data.fullname}</h4>

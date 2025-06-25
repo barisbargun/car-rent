@@ -5,7 +5,7 @@ import { cn } from '@repo/ui/lib/utils'
 import assets from '@/assets'
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
-import { Image } from '@/features/image/components/image'
+import { Image } from '@repo/ui/components/image'
 
 import { UserUpdateForm } from './update-form'
 

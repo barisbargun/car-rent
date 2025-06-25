@@ -1,11 +1,11 @@
-import { Vehicle } from '#api/types/vehicle'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { QueryConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
+import { VehicleGet } from '#api/types/vehicle'
 
-export const getVehicles = (): Promise<Vehicle[]> => {
+export const getVehicles = (): Promise<VehicleGet[]> => {
   return api.get(API_PATHS.vehicle)
 }
 

@@ -7,7 +7,7 @@
 
 @layer base {
   * {
-    @apply m-0 box-border border-border p-0 text-foreground;
+    @apply m-0 box-border border-border p-0;
   }
 
   html {
@@ -20,7 +20,7 @@
   }
 
   #root {
-    @apply flex min-h-screen w-full bg-background max-lg:flex-col;
+    @apply flex min-h-screen w-full bg-background max-lg:flex-col  text-foreground;
   }
 
   textarea {

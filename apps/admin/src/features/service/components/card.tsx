@@ -2,7 +2,7 @@ import { ServiceGet } from '@repo/api/types/service'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
-import { Image } from '@/features/image/components/image'
+import { Image } from '@repo/ui/components/image'
 
 import { ServiceUpdateForm } from './update-form'
 

@@ -20,7 +20,7 @@ import { z } from 'zod'
 
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { ImageFormField } from '@/features/image/components/form-field'
-import { useBreakpoint } from '@/hooks/use-breakpoint'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 import { toast } from '@/lib/toast'
 import { DialogPropsPartial } from '@/types/dialog'
 

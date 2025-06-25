@@ -9,6 +9,6 @@ export type SiteConfig = {
 }
 
 export type SiteConfigGet = Omit<SiteConfig, 'logoImg' | 'serviceImg'> & {
-  logoImg: Image
-  serviceImg: Image
+  logoImg?: Image
+  serviceImg?: Image
 }

@@ -6,7 +6,7 @@ import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
 import { ButtonModelSwap } from '@/components/shared/buttons/model-swap'
 import { ModelHover } from '@/components/shared/model-hover'
-import { Image } from '@/features/image/components/image'
+import { Image } from '@repo/ui/components/image'
 
 import { CarouselUpdateForm } from './update-form'
 

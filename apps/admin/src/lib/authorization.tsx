@@ -1,7 +1,7 @@
 import { useCurrentUser } from '@repo/api/paths/auth/current-user'
 import { ROLE_LIST } from '@repo/api/types/user'
 
-export type AuthorizationProps = {
+type AuthorizationProps = {
   checkRole: (userRole: ROLE_LIST) => boolean
   forbiddenFallback?: React.ReactNode
   children: React.ReactNode

@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { Vehicle } from '#api/types/vehicle'
+import { VehicleGet } from '#api/types/vehicle'
 
 import { createVehicleInputSchema } from './create'
 import { getVehiclesQueryOptions } from './get-all'
@@ -20,7 +20,7 @@ export const updateVehicle = ({
 }: {
   id: string
   data: UpdateVehicleInput
-}): Promise<Vehicle> => {
+}): Promise<VehicleGet> => {
   return api.patch(`${API_PATHS.vehicle}/${id}`, data)
 }
 

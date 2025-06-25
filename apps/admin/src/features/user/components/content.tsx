@@ -2,7 +2,7 @@ import { useCurrentUser } from '@repo/api/paths/auth/current-user'
 import { cn } from '@repo/ui/lib/utils'
 
 import assets from '@/assets'
-import { Image } from '@/features/image/components/image'
+import { Image } from '@repo/ui/components/image'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {}
 

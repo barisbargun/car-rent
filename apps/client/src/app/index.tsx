@@ -1,13 +1,13 @@
 import { Button } from '@repo/ui/components/button'
 
-import { PageHeader } from './components/global/page-header'
-import { PageSection } from './components/global/page-section'
-import { navLinkConfig } from './config/nav'
-import { CarouselView } from './features/carousel/components/view'
-import { FooterView } from './features/footer/components/view'
-import { MenubarView } from './features/menubar/components/view'
-import { ReviewView } from './features/review/components/view'
-import { ServiceView } from './features/service/components/view'
+import { PageHeader } from '../components/global/page-header'
+import { PageSection } from '../components/global/page-section'
+import { navLinkConfig } from '../config/nav'
+import { CarouselView } from '../features/carousel/components/view'
+import { FooterView } from '../features/footer/components/view'
+import { MenubarView } from '../features/menubar/components/view'
+import { ReviewView } from '../features/review/components/view'
+import { ServiceView } from '../features/service/components/view'
 
 export const App = () => {
   return (
@@ -28,9 +28,9 @@ export const App = () => {
       </PageSection>
 
       {/** Subscribe */}
-      <PageSection className="bg-black text-white">
+      <PageSection className="bg-primary">
         <div className="flex flex-col items-center gap-5">
-          <h2 className="max-w-80 text-balance text-center text-3xl font-bold uppercase tracking-wider">
+          <h2 className="max-w-80 text-balance text-center text-3xl font-bold uppercase tracking-wider text-primary-foreground">
             subscribe to get discounts
           </h2>
           <form
@@ -59,9 +59,9 @@ export const App = () => {
       </PageSection>
 
       {/** Footer */}
-      <PageSection className="bg-slate-950 text-white">
+      {/* <PageSection className="bg-slate-950 text-white">
         <FooterView />
-      </PageSection>
+      </PageSection> */}
     </>
   )
 }

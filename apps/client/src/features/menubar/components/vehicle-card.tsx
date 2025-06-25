@@ -1,10 +1,14 @@
-import { Vehicle } from '@repo/typescript-config/types/api'
+import {
+  DRIVE_TRAIN_LIST_UI,
+  VehicleGet,
+  WHEEL_DRIVE_LIST_UI,
+} from '@repo/api/types/vehicle'
 import { useMemo } from 'react'
 
 import assets from '@/assets'
 
 type Props = {
-  data: Vehicle
+  data: VehicleGet
 }
 export const VehicleCard = ({ data }: Props) => {
   const getImg = useMemo(() => {
@@ -27,7 +31,9 @@ export const VehicleCard = ({ data }: Props) => {
             alt="steering-icon"
             className="h-[20px] w-[20px]"
           />
-          <p className="text-xs md:text-sm">{data.wheel}</p>
+          <p className="text-xs md:text-sm">
+            {WHEEL_DRIVE_LIST_UI[data.wheel]}
+          </p>
         </div>
         <div className="w-28 flex-col flex-center">
           <img
@@ -35,7 +41,9 @@ export const VehicleCard = ({ data }: Props) => {
             alt="awd-icon"
             className="h-[20px] w-[20px]"
           />
-          <p className="text-xs md:text-sm">{data.drivetrain}</p>
+          <p className="text-xs md:text-sm">
+            {DRIVE_TRAIN_LIST_UI[data.drivetrain]}
+          </p>
         </div>
         <div className="w-28 flex-col flex-center">
           <img
@@ -46,7 +54,9 @@ export const VehicleCard = ({ data }: Props) => {
 
           <p className="text-xs md:text-sm">
             {data.fuel}
-            <span className="text-[10px] opacity-60 md:text-xs">/mpg</span>
+            {!Number.isNaN(Number(data.fuel)) && (
+              <span className="text-[10px] opacity-60 md:text-xs">/mpg</span>
+            )}
           </p>
         </div>
       </div>

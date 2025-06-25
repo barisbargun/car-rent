@@ -4,7 +4,7 @@ import React from 'react'
 
 import { ProfileSettingsButton } from '@/features/profile/components/button-icon'
 import { UserContent } from '@/features/user/components/content'
-import { useBreakpoint } from '@/hooks/use-breakpoint'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 
 import { ButtonAlertLogout } from '../shared/buttons/alert-logout'
 

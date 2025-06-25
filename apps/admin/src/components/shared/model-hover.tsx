@@ -5,7 +5,7 @@ import {
   HoverCardTrigger,
 } from '@repo/ui/components/hover-card'
 
-import { useBreakpoint } from '@/hooks/use-breakpoint'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 
 type Props = {
   model: MODELS

@@ -5,7 +5,7 @@ import { cn } from '@repo/ui/lib/utils'
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
 import { ButtonModelSwap } from '@/components/shared/buttons/model-swap'
-import { Image } from '@/features/image/components/image'
+import { Image } from '@repo/ui/components/image'
 
 import { ReviewUpdateForm } from './update-form'
 

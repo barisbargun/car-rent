@@ -23,11 +23,11 @@
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "@mswjs/data": "^0.16.2",
-    "@ngneat/falso": "^7.4.0",
     "@repo/api": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@mswjs/data": "^0.16.2",
+    "@ngneat/falso": "^7.4.0",
     "@types/js-cookie": "^3.0.6",
     "@types/node": "^22.15.21",
     "js-cookie": "^3.0.5",

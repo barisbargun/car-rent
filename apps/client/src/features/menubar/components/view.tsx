@@ -1,10 +1,16 @@
-import { useMenubar } from '@repo/api/menubar/get'
-import { Vehicle } from '@repo/typescript-config/types/api'
-import { Button } from '@repo/ui/components/button'
+import { useMenubarTabs } from '@repo/api/paths/menubar/tab/get-all'
+import { useMenubarVehicles } from '@repo/api/paths/menubar/vehicle/get-all'
+import { useVehicles } from '@repo/api/paths/vehicle/get-all'
+import { Loader } from '@repo/ui/components/loader'
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from '@repo/ui/components/navigation-menu'
 import { cn } from '@repo/ui/lib/utils'
-import { SlidersHorizontal } from 'lucide-react'
-import React, { useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router'
+import React, { useMemo, useState } from 'react'
 
 import { Menubar } from './menubar'
 import { Paginator } from './paginator'
@@ -14,55 +20,75 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {}
 
 const count = 6
 export const MenubarView = ({ className, ...props }: Props) => {
-  const { data, isSuccess } = useMenubar({})
+  const { data: menubarTabs, isPending: isMenubarTabsPending } =
+    useMenubarTabs()
+  const { data: menubarVehicles, isPending: isMenubarVehiclesPending } =
+    useMenubarVehicles()
+  const { data: vehicles, isPending: isVehiclesPending } = useVehicles()
+
   const [page, setPage] = useState(1)
-  const [category, setCategory] = useState(0)
-  const [searchParams] = useSearchParams()
+  const [selectedMenubarVehicle, setSelectedMenubarVehicle] = useState<
+    string | undefined
+  >()
 
-  useEffect(() => {
-    setPage(Number(searchParams.get('page')) || 1)
-    setCategory(Number(searchParams.get('category')) || 0)
-  }, [searchParams])
+  const menubarVehiclesByMenubarTab = useMemo(() => {
+    const map = new Map<string, typeof menubarVehicles>()
+    if (menubarVehicles)
+      for (const v of menubarVehicles) {
+        if (!map.has(v.menubarTab)) map.set(v.menubarTab, [])
+        map.get(v.menubarTab)?.push(v)
+      }
+    return map
+  }, [menubarVehicles])
 
-  const getVehicleData = useMemo(() => {
-    if (!isSuccess) return
-    const allVehicles: Vehicle[] = []
-    if (category == 0) {
-      const vehicles = data.flatMap((tab) =>
-        tab.menubarVehicles.flatMap((vehicle) => vehicle.vehicles),
-      )
-      allVehicles.push(...vehicles)
-    } else {
-      data.map((a) =>
-        a.menubarVehicles.map(
-          (b) =>
-            b.index == category && b.vehicles.map((c) => allVehicles.push(c)),
-        ),
-      )
-    }
-    return allVehicles
-  }, [category, data, isSuccess])
+  const vehiclesByMenubarVehicles = useMemo(() => {
+    if (!selectedMenubarVehicle) return vehicles
+    return vehicles?.filter(
+      (vehicle) => vehicle.menubarVehicle == selectedMenubarVehicle,
+    )
+  }, [vehicles, selectedMenubarVehicle])
 
-  if (!isSuccess) return
+  if (isMenubarTabsPending || isMenubarVehiclesPending || isVehiclesPending)
+    return <Loader />
   return (
     <div
-      className={cn('pageWidth z-20 flex-col flex-center', className)}
+      className={cn('z-20 flex-col flex-center', className)}
       {...props}
     >
-      <div className="gap-2 flex-center max-md:flex-col">
-        <Button variant="outline" size="icon">
-          <SlidersHorizontal className="size-4" />
-        </Button>
-        <Menubar data={data} />
-      </div>
+      <NavigationMenu className="gap-2 flex-center max-md:flex-col">
+        <NavigationMenuList className="flex-wrap px-4 max-md:flex">
+          {menubarTabs?.map((tab) => {
+            const vehicles = menubarVehiclesByMenubarTab.get(tab.id)
+            if (!vehicles?.length) return
+            return (
+              <Menubar
+                key={tab.id}
+                menubarTab={tab}
+                menubarVehicles={vehicles}
+                setSelectedMenubarVehicle={setSelectedMenubarVehicle}
+              />
+            )
+          })}
+
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              className={cn(navigationMenuTriggerStyle(), 'cursor-pointer')}
+              onClick={() => setSelectedMenubarVehicle(undefined)}
+            >
+              Show all
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
       <div className="my-10 grid w-full grid-cols-3 gap-8 max-xl:grid-cols-2 max-md:grid-cols-1">
-        {getVehicleData
+        {vehiclesByMenubarVehicles
           ?.slice((page - 1) * count, page * count)
-          .sort((a, b) => a.index - b.index)
           .map((v) => <VehicleCard data={v} key={v.id} />)}
       </div>
       <Paginator
-        length={Math.round(getVehicleData ? getVehicleData.length / count : 1)}
+        length={Math.ceil((vehiclesByMenubarVehicles?.length || count) / count)}
+        page={page}
+        setPage={setPage}
       />
     </div>
   )

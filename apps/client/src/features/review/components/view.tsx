@@ -1,4 +1,4 @@
-import { useReviews } from '@repo/api/review/get'
+import { useReviews } from '@repo/api/paths/review/get-all'
 import {
   Carousel,
   CarouselContent,
@@ -6,28 +6,40 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@repo/ui/components/carousel'
+import { Loader } from '@repo/ui/components/loader'
 
 import { ReviewCard } from './review-card'
 
 export const ReviewView = () => {
-  const { data } = useReviews({})
+  const { data: reviews, isPending } = useReviews()
 
-  if (!data) return
+  if (isPending) return <Loader />
+  if (!reviews) return
   return (
-      <Carousel className="w-full">
-        <CarouselContent className="md:w-[2100px]">
-          <CarouselItem className="md:!basis-1/4 max-md:hidden"></CarouselItem>
-          {data
-            .sort((a, b) => a.index - b.index)
-            .map((v) => (
-              <CarouselItem className="md:!basis-1/4 flex-center" key={v.id}>
-                <ReviewCard data={v} />
-              </CarouselItem>
-            ))}
-          <CarouselItem className="md:!basis-1/4 basis-0"></CarouselItem>
-        </CarouselContent>
-        <CarouselNext className="carouselBtn right-5 lg:right-10" />
-        <CarouselPrevious className="carouselBtn left-5 lg:left-10" />
-      </Carousel>
+    <Carousel className="w-full">
+      <CarouselContent>
+        <CarouselItem className="basis-1/3"/>
+        {reviews.map((review, index) => (
+          <CarouselItem key={review.id} className="basis-1/2">
+            <ReviewCard
+              data={review}
+              index={index}
+              className="h-[240px] max-md:h-[300px]"
+            />
+          </CarouselItem>
+        ))}
+        {reviews.map((review, index) => (
+          <CarouselItem key={review.id} className="basis-1/2">
+            <ReviewCard
+              data={review}
+              index={index}
+              className="h-[240px] max-md:h-[300px]"
+            />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
   )
 }

@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { DRIVE_TRAIN_LIST, Vehicle, WHEEL_DRIVE_LIST } from '#api/types/vehicle'
+import { DRIVE_TRAIN_LIST, VehicleGet, WHEEL_DRIVE_LIST } from '#api/types/vehicle'
 
 import { getVehiclesQueryOptions } from './get-all'
 
@@ -34,7 +34,7 @@ export const createVehicle = ({
   data,
 }: {
   data: CreateVehicleInput
-}): Promise<Vehicle> => {
+}): Promise<VehicleGet> => {
   return api.post(`${API_PATHS.vehicle}`, data)
 }
 

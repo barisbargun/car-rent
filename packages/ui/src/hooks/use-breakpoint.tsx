@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
 
-import { env } from '@/config/env'
-
 const breakpoints = [1536, 1280, 1024, 640, 0] // 2xl, xl, lg, sm, max-sm
 
 export type UseBreakpointArray = [
@@ -27,11 +25,6 @@ export const useBreakpoint = (): number => {
   const [breakpointValue, setBreakpointValue] = useState(5)
 
   useEffect(() => {
-    if (typeof globalThis === 'undefined' || env.MODE === 'test') {
-      setBreakpointValue(5)
-      return
-    }
-
     const updateBreakpoint = () => {
       const width = window.innerWidth
       const index = breakpoints.findIndex((bp) => width >= bp)
@@ -53,11 +46,6 @@ export const useBreakpointArray = () => {
   const [breakpointIndex, setBreakpointIndex] = useState(1)
 
   useEffect(() => {
-    if (typeof globalThis === 'undefined' || env.MODE === 'test') {
-      setBreakpointIndex(env.MODE === 'test' ? 0 : 1)
-      return
-    }
-
     const getBreakpointIndex = () => {
       const width = window.innerWidth
       return breakpoints.findIndex((bp) => width >= bp)

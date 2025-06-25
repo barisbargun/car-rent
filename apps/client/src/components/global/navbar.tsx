@@ -13,7 +13,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <header className="fixed left-0 top-0 z-50 flex w-full justify-center bg-black/30 text-white backdrop-blur-sm">
+      <header className="fixed left-0 top-0 z-50 flex w-full justify-center bg-primary/30 text-primary-foreground backdrop-blur-sm">
         <div className="container flex items-center justify-between py-2 lg:py-3">
           <strong className="cursor-pointer font-pacifico text-3xl font-medium max-lg:text-2xl">
             Reint

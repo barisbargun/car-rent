@@ -14,6 +14,7 @@
     "./tailwind.config": "./tailwind.config.ts",
     "./prettier.config.js": "./prettier.config.js",
     "./lib/*": "./src/lib/*.ts",
+    "./hooks/*": "./src/hooks/*.tsx",
     "./components/*": "./src/components/*.tsx"
   },
   "scripts": {
@@ -23,6 +24,7 @@
     "shadcn": "pnpx shadcn@latest add"
   },
   "dependencies": {
+    "@repo/utils": "workspace:*",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
     "@radix-ui/react-avatar": "^1.1.10",
