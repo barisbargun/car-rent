@@ -1,5 +1,6 @@
 import { MODELS } from '@repo/api/config/api-paths'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import { giveError } from '@repo/utils/error'
+import { StatusCodes } from 'http-status-codes'
 
 import { db } from '../db'
 

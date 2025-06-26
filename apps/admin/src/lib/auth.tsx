@@ -1,5 +1,5 @@
 import { useCurrentUser } from '@repo/api/paths/auth/current-user'
-import { ROLE_LIST } from '@repo/api/types/user'
+import { ROLE_LIST } from '@repo/api/paths/user/common'
 import { FullPageLoader } from '@repo/ui/components/loader'
 import { Navigate, useLocation } from 'react-router'
 
@@ -10,11 +10,11 @@ export const ProtectedAuthRoute = ({
 }: {
   children: React.ReactNode
 }) => {
-  const { data, isLoading, isError } = useCurrentUser()
+  const { data: user, isPending,  isError } = useCurrentUser()
   const location = useLocation()
-  if (isLoading) return <FullPageLoader />
+  if (isPending) return <FullPageLoader />
 
-  if (!data || isError) {
+  if (!user?.id || isError) {
     return <Navigate replace to={paths.auth.login.getHref(location.pathname)} />
   }
 
@@ -23,7 +23,9 @@ export const ProtectedAuthRoute = ({
 
 type ProtectedComponentRouteProps = {
   checkRole: (userRole: ROLE_LIST) => boolean
-  route: () => React.LazyExoticComponent<React.ComponentType> | React.ComponentType
+  route: () =>
+    | React.LazyExoticComponent<React.ComponentType>
+    | React.ComponentType
 }
 
 export const ProtectedComponentRoute = ({
@@ -38,5 +40,5 @@ export const ProtectedComponentRoute = ({
 
   const LazyComponent = route()
 
-  return <LazyComponent/>
+  return <LazyComponent />
 }

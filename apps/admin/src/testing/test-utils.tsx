@@ -1,5 +1,5 @@
 /* eslint-disable unicorn/prefer-export-from */
-import { ROLE_LIST,RoleTypes } from '@repo/api/types/user'
+import { ROLE_LIST } from '@repo/api/paths/user/common'
 import { generateUser } from '@repo/mock/utils/data-generators'
 import { authenticate } from '@repo/mock/utils/mock'
 import { storageToken } from '@repo/utils/storage'
@@ -22,7 +22,7 @@ const waitForLoadingToFinish = () =>
     { timeout: 4000 },
   )
 
-const authenticatedUser = (role: RoleTypes) => {
+const authenticatedUser = (role: keyof typeof ROLE_LIST) => {
   const password = '123456'
   const createdUser = generateUser({ password, role: ROLE_LIST[role] }, true)
   const authenticated = authenticate({
@@ -41,7 +41,7 @@ export const renderApp = async (
     url = '/',
     path = '/',
     ...renderOptions
-  }: { user?: RoleTypes } & Record<string, any> = {},
+  }: { user?: keyof typeof ROLE_LIST } & Record<string, any> = {},
 ) => {
   const initializedUser = user && authenticatedUser(user)
   const router = createMemoryRouter(

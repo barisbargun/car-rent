@@ -1,13 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  updateUserInputSchema,
-  useUpdateUser,
-} from '@repo/api/paths/user/update'
-import {
   ROLE_POST_LIST,
   ROLE_POST_LIST_UI,
   UserGet,
-} from '@repo/api/types/user'
+  UserUpdate,
+  userUpdateSchema,
+} from '@repo/api/paths/user/common'
+import { useUpdateUser } from '@repo/api/paths/user/update'
 import {
   Form,
   FormControl,
@@ -27,16 +26,15 @@ import {
 import { cn } from '@repo/ui/lib/utils'
 import { getEnumEntries } from '@repo/utils/enum'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 import assets from '@/assets'
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     user: Omit<UserGet, 'role'> & {
       role: ROLE_POST_LIST
     }
@@ -50,17 +48,17 @@ export const UserUpdateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useUpdateUser()
 
-  const form = useForm<z.infer<typeof updateUserInputSchema>>({
-    resolver: zodResolver(updateUserInputSchema),
+  const form = useForm<UserUpdate>({
+    resolver: zodResolver(userUpdateSchema),
     defaultValues: {
-      img: user.img?.id || '',
+      img: user.img?.id,
       username: user.username || '',
       email: user.email || '',
       role: user.role,
     },
   })
 
-  async function onSubmit(values: z.infer<typeof updateUserInputSchema>) {
+  async function onSubmit(values: UserUpdate) {
     try {
       await mutateAsync({
         id: user.id,

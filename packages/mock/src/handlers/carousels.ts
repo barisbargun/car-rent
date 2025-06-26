@@ -2,15 +2,19 @@ import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { swapModelInputSchema } from '@repo/api/config/shared-schemas'
-import { createCarouselInputSchema } from '@repo/api/paths/carousel/create'
-import { updateCarouselInputSchema } from '@repo/api/paths/carousel/update'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import {
+  carouselCreateSchema,
+  carouselUpdateSchema,
+} from '@repo/api/paths/carousel/common'
+import { giveError } from '@repo/utils/error'
 import { getNextIndex, sortByIndex } from '@repo/utils/obj'
+import { zodCheckSchema } from '@repo/utils/schema'
+import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, checkSchema, networkDelay } from '#mock/utils/mock'
+import { catchError, networkDelay } from '#mock/utils/mock'
 import { getImageById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -47,11 +51,11 @@ export const carouselsHandlers = [
       if (dbModel.count() >= maxItemCounts.carousel)
         throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        createCarouselInputSchema,
+        carouselCreateSchema,
       )
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const result = dbModel.create({
         ...data,
@@ -80,12 +84,12 @@ export const carouselsHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.carousel.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateCarouselInputSchema,
+        carouselUpdateSchema,
       )
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const result = dbModel.update({
         where: {
@@ -111,14 +115,14 @@ export const carouselsHandlers = [
   }),
 
   // Swapping
-  http.patch(`${url}`, async ({ request }) => {
+  http.patch(url, async ({ request }) => {
     await networkDelay()
 
     try {
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.carousel.swap(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
         swapModelInputSchema,
       )

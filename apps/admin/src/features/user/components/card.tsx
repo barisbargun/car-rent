@@ -1,5 +1,5 @@
 import { useDeleteUser } from '@repo/api/paths/user/delete'
-import { UserGet } from '@repo/api/types/user'
+import { UserGet } from '@repo/api/paths/user/common'
 import { cn } from '@repo/ui/lib/utils'
 
 import assets from '@/assets'

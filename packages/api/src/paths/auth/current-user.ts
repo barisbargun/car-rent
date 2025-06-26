@@ -3,7 +3,8 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 import { API_PATHS } from '#api/config/api-paths'
 import { QueryConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { UserGet } from '#api/types/user'
+
+import { UserGet } from '../user/common'
 
 export const getCurrentUser = (): Promise<UserGet> => {
   return api.get(API_PATHS.currentUser)

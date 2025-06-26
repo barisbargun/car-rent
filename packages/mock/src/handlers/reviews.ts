@@ -2,15 +2,19 @@ import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { swapModelInputSchema } from '@repo/api/config/shared-schemas'
-import { createReviewInputSchema } from '@repo/api/paths/review/create'
-import { updateReviewInputSchema } from '@repo/api/paths/review/update'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import {
+  reviewCreateSchema,
+  reviewUpdateSchema,
+} from '@repo/api/paths/review/common'
+import { giveError } from '@repo/utils/error'
 import { getNextIndex, sortByIndex } from '@repo/utils/obj'
+import { zodCheckSchema } from '@repo/utils/schema'
+import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, checkSchema, networkDelay } from '#mock/utils/mock'
+import { catchError, networkDelay } from '#mock/utils/mock'
 import { getImageById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -47,12 +51,12 @@ export const reviewsHandlers = [
       if (dbModel.count() >= maxItemCounts.review)
         throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        createReviewInputSchema,
+        reviewCreateSchema,
       )
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const result = dbModel.create({
         ...data,
@@ -81,12 +85,12 @@ export const reviewsHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.review.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateReviewInputSchema,
+        reviewUpdateSchema,
       )
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const result = dbModel.update({
         where: {
@@ -113,14 +117,14 @@ export const reviewsHandlers = [
   }),
 
   // Swapping
-  http.patch(`${url}`, async ({ request }) => {
+  http.patch(url, async ({ request }) => {
     await networkDelay()
 
     try {
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.review.swap(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
         swapModelInputSchema,
       )

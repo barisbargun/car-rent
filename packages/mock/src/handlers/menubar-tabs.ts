@@ -2,15 +2,19 @@ import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { swapModelInputSchema } from '@repo/api/config/shared-schemas'
-import { createMenubarTabInputSchema } from '@repo/api/paths/menubar/tab/create'
-import { updateMenubarTabInputSchema } from '@repo/api/paths/menubar/tab/update'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import {
+  menubarTabCreateSchema,
+  menubarTabUpdateSchema,
+} from '@repo/api/paths/menubar/tab/common'
+import { giveError } from '@repo/utils/error'
 import { getNextIndex, sortByIndex } from '@repo/utils/obj'
+import { zodCheckSchema } from '@repo/utils/schema'
+import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, checkSchema, networkDelay } from '#mock/utils/mock'
+import { catchError, networkDelay } from '#mock/utils/mock'
 
 import { db, persistDb } from '../db'
 
@@ -41,9 +45,9 @@ export const menubarTabsHandlers = [
       if (dbModel.count() >= maxItemCounts.menubarTab)
         throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        createMenubarTabInputSchema,
+        menubarTabCreateSchema,
       )
 
       const result = dbModel.create({
@@ -70,9 +74,9 @@ export const menubarTabsHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.menubarTab.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateMenubarTabInputSchema,
+        menubarTabUpdateSchema,
       )
 
       const result = dbModel.update({
@@ -97,14 +101,14 @@ export const menubarTabsHandlers = [
   }),
 
   // Swapping
-  http.patch(`${url}`, async ({ request }) => {
+  http.patch(url, async ({ request }) => {
     await networkDelay()
 
     try {
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.menubarTab.swap(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
         swapModelInputSchema,
       )
@@ -134,6 +138,7 @@ export const menubarTabsHandlers = [
     }
   }),
 
+  // TODO: After delete, also delete all related menubar vehicles
   http.delete(`${url}/:id`, async ({ params, request }) => {
     await networkDelay()
 

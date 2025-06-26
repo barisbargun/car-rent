@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  updateServiceInputSchema,
-  useUpdateService,
-} from '@repo/api/paths/service/update'
-import { ServiceGet } from '@repo/api/types/service'
+  ServiceGet,
+  ServiceUpdate,
+  serviceUpdateSchema,
+} from '@repo/api/paths/service/common'
+import { useUpdateService } from '@repo/api/paths/service/update'
 import { Button } from '@repo/ui/components/button'
 import {
   Form,
@@ -18,29 +19,28 @@ import { Input } from '@repo/ui/components/input'
 import { Textarea } from '@repo/ui/components/textarea'
 import { Loader } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = DialogPropsPartial & {
+type Props = DialogProps & {
   service: ServiceGet
 }
 
 export const ServiceUpdateForm = ({ service, closeDialog }: Props) => {
   const { mutateAsync, isPending } = useUpdateService()
 
-  const form = useForm<z.infer<typeof updateServiceInputSchema>>({
-    resolver: zodResolver(updateServiceInputSchema),
+  const form = useForm<ServiceUpdate>({
+    resolver: zodResolver(serviceUpdateSchema),
     defaultValues: {
-      img: service.img?.id || '',
+      img: service.img?.id,
       title: service.title || '',
       desc: service.desc || '',
     },
   })
 
-  async function onSubmit(values: z.infer<typeof updateServiceInputSchema>) {
+  async function onSubmit(values: ServiceUpdate) {
     try {
       await mutateAsync({
         id: service.id,

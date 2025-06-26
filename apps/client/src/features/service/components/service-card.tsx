@@ -1,4 +1,4 @@
-import { ServiceGet } from '@repo/api/types/service'
+import { ServiceGet } from '@repo/api/paths/service/common'
 import { Image } from '@repo/ui/components/image'
 
 type Props = {

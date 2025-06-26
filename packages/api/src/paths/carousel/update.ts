@@ -1,24 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { z } from 'zod'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { CarouselGet } from '#api/types/carousel'
 
-import { createCarouselInputSchema } from './create'
+import { CarouselGet, CarouselUpdate } from './common'
 import { getCarouselsQueryOptions } from './get-all'
-
-export const updateCarouselInputSchema = createCarouselInputSchema
-
-export type UpdateCarouselInput = z.infer<typeof updateCarouselInputSchema>
 
 export const updateCarousel = ({
   id,
   data,
 }: {
   id: string
-  data: UpdateCarouselInput
+  data: CarouselUpdate
 }): Promise<CarouselGet> => {
   return api.patch(`${API_PATHS.carousel}/${id}`, data)
 }

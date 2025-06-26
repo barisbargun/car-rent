@@ -1,6 +1,6 @@
+import { FooterTitle } from '@repo/api/paths/footer/title/common'
 import { useFooterTitles } from '@repo/api/paths/footer/title/get-all'
 import { useSwapFooterTitle } from '@repo/api/paths/footer/title/swap'
-import { FooterTitle } from '@repo/api/types/footer'
 import { cn } from '@repo/ui/lib/utils'
 import { useEffect, useState } from 'react'
 
@@ -74,7 +74,7 @@ const FooterTitlesRoute = () => {
       const idList = currentData.map((footerTitle) => footerTitle.id)
       if (idList) {
         await mutateSwap({
-          data: { idList },
+          data: {idList},
         })
         setIsAnyChange(false)
         toast.footerTitle.swap.success()

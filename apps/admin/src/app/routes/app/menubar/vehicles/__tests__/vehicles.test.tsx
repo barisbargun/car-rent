@@ -1,4 +1,5 @@
-import { MenubarTab, MenubarVehicle } from '@repo/api/types/menubar'
+import { MenubarTab } from '@repo/api/paths/menubar/tab/common'
+import { MenubarVehicle } from '@repo/api/paths/menubar/vehicle/common'
 import { db } from '@repo/mock/db'
 import {
   generateMenubarTab,
@@ -34,7 +35,9 @@ const create = async (
   const drawer = await screen.findByRole('dialog', {
     name: /add a new menubar vehicle/i,
   })
-  await selectFirstImage(within(drawer).getByRole('button', { name: /add image/i }))
+  await selectFirstImage(
+    within(drawer).getByRole('button', { name: /add image/i }),
+  )
 
   const titleField = within(drawer).getByLabelText(/title/i)
   const descField = within(drawer).getByLabelText(/description/i)

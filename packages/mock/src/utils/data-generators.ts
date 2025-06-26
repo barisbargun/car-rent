@@ -10,22 +10,23 @@ import {
   randVehicle,
 } from '@ngneat/falso'
 import { MODELS } from '@repo/api/config/api-paths'
-import { Carousel } from '@repo/api/types/carousel'
-import { FooterLink, FooterTitle } from '@repo/api/types/footer'
+import { Carousel } from '@repo/api/paths/carousel/common'
+import { FooterLink } from '@repo/api/paths/footer/link/common'
+import { FooterTitle } from '@repo/api/paths/footer/title/common'
 import {
   MENUBAR_TAB_GRID_LIST,
   MenubarTab,
-  MenubarVehicle,
-} from '@repo/api/types/menubar'
-import { Review } from '@repo/api/types/review'
-import { Service } from '@repo/api/types/service'
-import { SiteConfig } from '@repo/api/types/site-config'
-import { ROLE_POST_LIST, UserPost } from '@repo/api/types/user'
+} from '@repo/api/paths/menubar/tab/common'
+import { MenubarVehicle } from '@repo/api/paths/menubar/vehicle/common'
+import { Review } from '@repo/api/paths/review/common'
+import { Service } from '@repo/api/paths/service/common'
+import { SiteConfig } from '@repo/api/paths/site-config/common'
+import { ROLE_POST_LIST, User } from '@repo/api/paths/user/common'
 import {
   DRIVE_TRAIN_LIST,
   Vehicle,
   WHEEL_DRIVE_LIST,
-} from '@repo/api/types/vehicle'
+} from '@repo/api/paths/vehicle/common'
 import { getEnumValues } from '@repo/utils/enum'
 import { getNextIndex } from '@repo/utils/obj'
 import { randElement } from '@repo/utils/random'
@@ -74,7 +75,7 @@ const user = () =>
     password: randPassword({ size: 20 }) as any,
     email: randEmail(),
     role: randElement(...getEnumValues(ROLE_POST_LIST)),
-  }) as Required<UserPost>
+  }) as Required<Omit<User, 'refreshToken'>>
 
 const siteConfig = () =>
   ({
@@ -133,7 +134,9 @@ const vehicle = () =>
   ({
     index: getNextIndex(db.vehicle.getAll()),
     img: randomImage().id,
-    menubarVehicle: randElement(...db.menubarVehicle.getAll().map((v) => v.id)),
+    menubarVehicle: randElement(
+      ...db.menubarVehicle.getAll().map((v) => v.id),
+    ),
     title: randTextRange({ min: 5, max: 50 }),
     fuel: randElement(randNumber({ min: 4, max: 1000 }).toString(), 'electric'),
     drivetrain: randElement(...getEnumValues(DRIVE_TRAIN_LIST)),

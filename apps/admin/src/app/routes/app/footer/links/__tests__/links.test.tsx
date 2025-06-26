@@ -1,4 +1,5 @@
-import { FooterLink, FooterTitle } from '@repo/api/types/footer'
+import { FooterLink } from '@repo/api/paths/footer/link/common'
+import { FooterTitle } from '@repo/api/paths/footer/title/common'
 import { db } from '@repo/mock/db'
 import {
   generateFooterLink,
@@ -23,7 +24,9 @@ const create = async (
   footerLink: FooterLinkType,
   footerTitle: FooterTitleType,
 ) => {
-  await userEvent.click(screen.getByRole('button', { name: /add footer link/i }))
+  await userEvent.click(
+    screen.getByRole('button', { name: /add footer link/i }),
+  )
 
   const drawer = await screen.findByRole('dialog', {
     name: /add a new footer link/i,

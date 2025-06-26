@@ -1,24 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { z } from 'zod'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { ServiceGet } from '#api/types/service'
 
-import { createServiceInputSchema } from './create'
+import { ServiceGet,ServiceUpdate } from './common'
 import { getServicesQueryOptions } from './get-all'
-
-export const updateServiceInputSchema = createServiceInputSchema
-
-export type UpdateServiceInput = z.infer<typeof updateServiceInputSchema>
 
 export const updateService = ({
   id,
   data,
 }: {
   id: string
-  data: UpdateServiceInput
+  data: ServiceUpdate
 }): Promise<ServiceGet> => {
   return api.patch(`${API_PATHS.service}/${id}`, data)
 }

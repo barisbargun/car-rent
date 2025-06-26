@@ -10,7 +10,7 @@ const H1 = React.forwardRef<HTMLParagraphElement, HeadingProps>(
     return (
       <Tag
         ref={ref}
-        className={cn('text-4xl lg:text-5xl 2xl:text-6xl', className)}
+        className={cn('text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl', className)}
         {...props}
       />
     )
@@ -34,6 +34,18 @@ const H3 = React.forwardRef<HTMLParagraphElement, HeadingProps>(
       <Tag
         ref={ref}
         className={cn('text-3xl tracking-wider xl:text-4xl', className)}
+        {...props}
+      />
+    )
+  },
+)
+
+const H4 = React.forwardRef<HTMLParagraphElement, HeadingProps>(
+  ({ as: Tag = 'h4', className, ...props }, ref) => {
+    return (
+      <Tag
+        ref={ref}
+        className={cn('text-2xl tracking-wider xl:text-3xl', className)}
         {...props}
       />
     )
@@ -66,18 +78,11 @@ const Small = React.forwardRef<
   )
 })
 
-const Ul = React.forwardRef<
-  HTMLUListElement,
-  React.HTMLAttributes<HTMLUListElement>
->(({ className, ...props }, ref) => {
-  return <ul ref={ref} className={cn('my-6', className)} {...props} />
-})
-
 H1.displayName = 'H1'
 H2.displayName = 'H2'
 H3.displayName = 'H3'
+H4.displayName = 'H4'
 Large.displayName = 'Large'
 Small.displayName = 'Small'
-Ul.displayName = 'Ul'
 
-export { H1, H2, H3, Large, Small, Ul }
+export { H1, H2, H3, H4, Large, Small }

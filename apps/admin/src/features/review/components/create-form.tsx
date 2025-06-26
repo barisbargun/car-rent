@@ -1,8 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  createReviewInputSchema,
-  useCreateReview,
-} from '@repo/api/paths/review/create'
+import { ReviewCreate, reviewCreateSchema } from '@repo/api/paths/review/common'
+import { useCreateReview } from '@repo/api/paths/review/create'
 import {
   Form,
   FormControl,
@@ -15,14 +13,13 @@ import { Input } from '@repo/ui/components/input'
 import { Textarea } from '@repo/ui/components/textarea'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps
 
 export const ReviewCreateForm = ({
   closeDialog,
@@ -31,9 +28,8 @@ export const ReviewCreateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useCreateReview()
 
-
-  const form = useForm<z.infer<typeof createReviewInputSchema>>({
-    resolver: zodResolver(createReviewInputSchema),
+  const form = useForm<ReviewCreate>({
+    resolver: zodResolver(reviewCreateSchema),
     defaultValues: {
       img: '',
       fullname: '',
@@ -42,7 +38,7 @@ export const ReviewCreateForm = ({
     },
   })
 
-  async function onSubmit(values: z.infer<typeof createReviewInputSchema>) {
+  async function onSubmit(values: ReviewCreate) {
     try {
       await mutateAsync({
         data: values,

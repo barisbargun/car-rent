@@ -1,12 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  createMenubarTabInputSchema,
-  useCreateMenubarTab,
-} from '@repo/api/paths/menubar/tab/create'
-import {
   MENUBAR_TAB_GRID_LIST,
   MENUBAR_TAB_GRID_LIST_UI,
-} from '@repo/api/types/menubar'
+  MenubarTabCreate,
+  menubarTabCreateSchema,
+} from '@repo/api/paths/menubar/tab/common'
+import { useCreateMenubarTab } from '@repo/api/paths/menubar/tab/create'
 import {
   Form,
   FormControl,
@@ -26,13 +25,12 @@ import {
 import { cn } from '@repo/ui/lib/utils'
 import { getEnumEntries } from '@repo/utils/enum'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial & {}
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps & {}
 
 export const MenubarTabCreateForm = ({
   closeDialog,
@@ -41,15 +39,15 @@ export const MenubarTabCreateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useCreateMenubarTab()
 
-  const form = useForm<z.infer<typeof createMenubarTabInputSchema>>({
-    resolver: zodResolver(createMenubarTabInputSchema),
+  const form = useForm<MenubarTabCreate>({
+    resolver: zodResolver(menubarTabCreateSchema),
     defaultValues: {
       title: '',
       type: undefined,
     },
   })
 
-  async function onSubmit(values: z.infer<typeof createMenubarTabInputSchema>) {
+  async function onSubmit(values: MenubarTabCreate) {
     try {
       await mutateAsync({
         data: values,

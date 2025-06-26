@@ -1,13 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  updateMenubarTabInputSchema,
-  useUpdateMenubarTab,
-} from '@repo/api/paths/menubar/tab/update'
-import {
   MENUBAR_TAB_GRID_LIST,
   MENUBAR_TAB_GRID_LIST_UI,
   MenubarTab,
-} from '@repo/api/types/menubar'
+  MenubarTabUpdate,
+  menubarTabUpdateSchema,
+} from '@repo/api/paths/menubar/tab/common'
+import { useUpdateMenubarTab } from '@repo/api/paths/menubar/tab/update'
 import {
   Form,
   FormControl,
@@ -27,14 +26,13 @@ import {
 import { cn } from '@repo/ui/lib/utils'
 import { getEnumEntries } from '@repo/utils/enum'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     menubarTab: MenubarTab
   }
 
@@ -46,33 +44,30 @@ export const MenubarTabUpdateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useUpdateMenubarTab()
 
-  const form = useForm<z.infer<typeof updateMenubarTabInputSchema>>({
-    resolver: zodResolver(updateMenubarTabInputSchema),
+  const form = useForm<MenubarTabUpdate>({
+    resolver: zodResolver(menubarTabUpdateSchema),
     defaultValues: {
       title: menubarTab.title || '',
       type: menubarTab.type,
     },
   })
 
-  async function onSubmit(values: z.infer<typeof updateMenubarTabInputSchema>) {
+  async function onSubmit(values: MenubarTabUpdate) {
     try {
       await mutateAsync({
         id: menubarTab.id,
         data: values,
       })
-      toast.menubarTab.add.success()
+      toast.menubarTab.update.success()
       closeDialog?.()
     } catch {
-      toast.menubarTab.add.error()
+      toast.menubarTab.update.error()
     }
   }
 
   return (
     <Form {...form}>
-      <form
-        className={cn('flex w-full flex-col gap-5', className)}
-        {...props}
-      >
+      <form className={cn('flex w-full flex-col gap-5', className)} {...props}>
         <FormField
           control={form.control}
           name="title"

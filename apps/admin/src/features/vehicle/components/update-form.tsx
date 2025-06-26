@@ -1,16 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMenubarVehicles } from '@repo/api/paths/menubar/vehicle/get-all'
-import {
-  updateVehicleInputSchema,
-  useUpdateVehicle,
-} from '@repo/api/paths/vehicle/update'
 import {
   DRIVE_TRAIN_LIST,
   DRIVE_TRAIN_LIST_UI,
   VehicleGet,
+  VehicleUpdate,
+  vehicleUpdateSchema,
   WHEEL_DRIVE_LIST,
   WHEEL_DRIVE_LIST_UI,
-} from '@repo/api/types/vehicle'
+} from '@repo/api/paths/vehicle/common'
+import { useUpdateVehicle } from '@repo/api/paths/vehicle/update'
 import {
   Form,
   FormControl,
@@ -20,7 +18,6 @@ import {
   FormMessage,
 } from '@repo/ui/components/form'
 import { Input } from '@repo/ui/components/input'
-import { FullPageLoader } from '@repo/ui/components/loader'
 import {
   Select,
   SelectContent,
@@ -31,15 +28,16 @@ import {
 import { cn } from '@repo/ui/lib/utils'
 import { getEnumEntries } from '@repo/utils/enum'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
+
+import { FormBrandField } from './form-brand-field'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     vehicle: VehicleGet
   }
 
@@ -49,14 +47,12 @@ export const VehicleUpdateForm = ({
   className,
   ...props
 }: Props) => {
-  const { data: menubarVehicles, isPending: isMenubarVehiclesPending } =
-    useMenubarVehicles()
   const { mutateAsync, isPending } = useUpdateVehicle()
 
-  const form = useForm<z.infer<typeof updateVehicleInputSchema>>({
-    resolver: zodResolver(updateVehicleInputSchema),
+  const form = useForm<VehicleUpdate>({
+    resolver: zodResolver(vehicleUpdateSchema),
     defaultValues: {
-      img: vehicle.img?.id || '',
+      img: vehicle.img?.id,
       menubarVehicle: vehicle.menubarVehicle || '',
       title: vehicle.title || '',
       fuel: vehicle.fuel || '',
@@ -65,7 +61,7 @@ export const VehicleUpdateForm = ({
     },
   })
 
-  async function onSubmit(values: z.infer<typeof updateVehicleInputSchema>) {
+  async function onSubmit(values: VehicleUpdate) {
     try {
       await mutateAsync({
         id: vehicle.id,
@@ -78,22 +74,9 @@ export const VehicleUpdateForm = ({
     }
   }
 
-  if (isMenubarVehiclesPending) {
-    return <FullPageLoader />
-  } else if (!menubarVehicles || menubarVehicles.length === 0) {
-    return (
-      <div className="h-full flex-center">
-        <p className="text-muted-foreground">No groups available</p>
-      </div>
-    )
-  }
-
   return (
     <Form {...form}>
-      <form
-        className={cn('flex w-full flex-col gap-5', className)}
-        {...props}
-      >
+      <form className={cn('flex w-full flex-col gap-5', className)} {...props}>
         <ImageFormField
           form={form}
           formName="img"
@@ -107,33 +90,7 @@ export const VehicleUpdateForm = ({
           }}
         />
 
-        <FormField
-          control={form.control}
-          name="menubarVehicle"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Brand</FormLabel>
-              <Select
-                value={field.value.toString()}
-                onValueChange={field.onChange}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a brand" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {menubarVehicles.map(({ id, title }) => (
-                    <SelectItem key={id} value={id}>
-                      {title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormBrandField form={form} />
 
         <FormField
           control={form.control}

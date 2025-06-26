@@ -1,17 +1,19 @@
 import { MODELS } from '@repo/api/config/api-paths'
-import { Carousel } from '@repo/api/types/carousel'
-import { FooterLink, FooterTitle } from '@repo/api/types/footer'
-import { Image } from '@repo/api/types/image'
-import { MenubarTab, MenubarVehicle } from '@repo/api/types/menubar'
-import { Review } from '@repo/api/types/review'
-import { Service } from '@repo/api/types/service'
-import { SiteConfig } from '@repo/api/types/site-config'
-import { ROLE_LIST, UserPost } from '@repo/api/types/user'
+import { Carousel } from '@repo/api/paths/carousel/common'
+import { FooterLink } from '@repo/api/paths/footer/link/common'
+import { FooterTitle } from '@repo/api/paths/footer/title/common'
+import { Image } from '@repo/api/paths/image/common'
+import { MenubarTab } from '@repo/api/paths/menubar/tab/common'
+import { MenubarVehicle } from '@repo/api/paths/menubar/vehicle/common'
+import { Review } from '@repo/api/paths/review/common'
+import { Service } from '@repo/api/paths/service/common'
+import { SiteConfig } from '@repo/api/paths/site-config/common'
+import { ROLE_LIST, User } from '@repo/api/paths/user/common'
 import {
   DRIVE_TRAIN_LIST,
   Vehicle,
   WHEEL_DRIVE_LIST,
-} from '@repo/api/types/vehicle'
+} from '@repo/api/paths/vehicle/common'
 
 const autoIndex = <T>(model: T[]) =>
   model.map((item, index) => ({ ...item, index }))
@@ -226,7 +228,7 @@ const images: Image[] = [
   },
 ]
 
-const users: ExcludeId<UserPost>[] = [
+const users: ExcludeId<Omit<User, 'refreshToken'>>[] = [
   {
     username: 'admin',
     password: '193361109',
@@ -603,12 +605,12 @@ const footerLinks: ExcludeId<FooterLink>[] = autoIndex([
   {
     footerTitle: 'footer-title-2',
     title: 'About Us(Portfolio)',
-    link: 'https://baris-portfolio.vercel.app',
+    link: 'https://barisolgun.com',
   },
   {
     footerTitle: 'footer-title-2',
     title: 'Contact(Linkedin)',
-    link: 'https://www.linkedin.com/in/barış-olgun-7964542a6/',
+    link: 'www.linkedin.com/in/barisolgun',
   },
   {
     footerTitle: 'footer-title-2',

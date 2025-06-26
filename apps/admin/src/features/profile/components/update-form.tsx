@@ -1,9 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { UserGet, UserUpdateSelf, userUpdateSelfSchema } from '@repo/api/paths/user/common'
 import {
-  updateUserSelfInputSchema,
   useUpdateUserSelf,
 } from '@repo/api/paths/user/update-self'
-import { UserGet } from '@repo/api/types/user'
 import {
   Form,
   FormControl,
@@ -15,16 +14,15 @@ import {
 import { Input } from '@repo/ui/components/input'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 import assets from '@/assets'
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     user?: UserGet
   }
 
@@ -36,17 +34,17 @@ export const UserProfileUpdateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useUpdateUserSelf()
 
-  const form = useForm<z.infer<typeof updateUserSelfInputSchema>>({
-    resolver: zodResolver(updateUserSelfInputSchema),
+  const form = useForm<UserUpdateSelf>({
+    resolver: zodResolver(userUpdateSelfSchema),
     defaultValues: {
-      img: user?.img?.id || '',
+      img: user?.img?.id,
       username: user?.username || '',
       email: user?.email || '',
       password: '',
     },
   })
 
-  async function onSubmit(values: z.infer<typeof updateUserSelfInputSchema>) {
+  async function onSubmit(values: UserUpdateSelf) {
     try {
       await mutateAsync({
         data: values,

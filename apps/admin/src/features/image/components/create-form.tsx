@@ -15,13 +15,13 @@ import { z } from 'zod'
 
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
+import { DialogProps } from '@/components/global/open-dialog'
 
 import { ImageUploader as ImageUploaderType } from '../types'
 import { getCroppedImg } from '../utils/crop'
 import { ImageUploader } from './uploader'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial & {}
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps & {}
 
 const imageSchema = z.object({
   image: z.custom<ImageUploaderType>(

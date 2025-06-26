@@ -1,3 +1,4 @@
+import { UseQueryResult } from '@repo/api/config/react-query'
 import {
   Card,
   CardContent,
@@ -6,11 +7,18 @@ import {
 } from '@repo/ui/components/card'
 import { Link } from 'react-router'
 
-import { StatisticContainer } from '@/types/statistic'
-
 import { DashboardCardSkeleton } from './card.skeleton'
 
-type Props = React.HTMLAttributes<HTMLDivElement> & StatisticContainer
+export type DashboardCard = {
+  title: string
+  link: string
+  statistics: {
+    data: UseQueryResult<any[], Error>
+    name: string
+  }[]
+}
+
+type Props = React.HTMLAttributes<HTMLDivElement> & DashboardCard
 
 export const DashboardCard = ({
   title,

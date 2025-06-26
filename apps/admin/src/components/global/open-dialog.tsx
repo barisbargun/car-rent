@@ -12,7 +12,9 @@ import { cn } from '@repo/ui/lib/utils'
 import { PlusIcon, SquarePen } from 'lucide-react'
 import React, { useState } from 'react'
 
-import { DialogProps } from '@/types/dialog'
+export type DialogProps = {
+  closeDialog?: () => void | undefined
+}
 
 export type OpenDialogProps = DialogPrimitive.DialogContentProps & {
   buttonText: string
@@ -46,7 +48,11 @@ export const OpenDialog = ({
   return (
     <Dialog open={isDialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button title={buttonText} variant="outline" size={hideButtonText ? 'icon' : 'default'}>
+        <Button
+          title={buttonText}
+          variant="outline"
+          size={hideButtonText ? 'icon' : 'default'}
+        >
           {(buttonIconType == 'EDIT' && <SquarePen />) ||
             (buttonIconType == 'ADD' && <PlusIcon />)}
           <span className={hideButtonText ? 'sr-only' : ''}>{buttonText}</span>
@@ -54,7 +60,7 @@ export const OpenDialog = ({
       </DialogTrigger>
       <DialogContent
         className={cn(
-          'custom-scrollbar max-h-[90%] w-fit max-w-[90vw] sm:max-w-[80vw] overflow-y-auto border-4',
+          'custom-scrollbar max-h-[90%] w-fit max-w-[90vw] overflow-y-auto border-4 sm:max-w-[80vw]',
           className,
         )}
         {...props}

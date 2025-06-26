@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  createServiceInputSchema,
-  useCreateService,
-} from '@repo/api/paths/service/create'
+  ServiceCreate,
+  serviceCreateSchema,
+} from '@repo/api/paths/service/common'
+import { useCreateService } from '@repo/api/paths/service/create'
 import {
   Form,
   FormControl,
@@ -14,20 +15,19 @@ import {
 import { Input } from '@repo/ui/components/input'
 import { Textarea } from '@repo/ui/components/textarea'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps
 
 export const ServiceCreateForm = ({ closeDialog }: Props) => {
   const { mutateAsync, isPending } = useCreateService()
 
-  const form = useForm<z.infer<typeof createServiceInputSchema>>({
-    resolver: zodResolver(createServiceInputSchema),
+  const form = useForm<ServiceCreate>({
+    resolver: zodResolver(serviceCreateSchema),
     defaultValues: {
       img: '',
       title: '',
@@ -35,7 +35,7 @@ export const ServiceCreateForm = ({ closeDialog }: Props) => {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof createServiceInputSchema>) {
+  async function onSubmit(values: ServiceCreate) {
     try {
       await mutateAsync({
         data: values,

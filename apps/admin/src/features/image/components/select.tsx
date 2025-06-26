@@ -3,12 +3,12 @@ import { Loader } from '@repo/ui/components/loader'
 import { useEffect } from 'react'
 
 import { toast } from '@/lib/toast'
-import { DialogProps } from '@/types/dialog'
+import { DialogProps } from '@/components/global/open-dialog'
 
 import { ButtonImageUpload } from './button-upload'
 import { ImageCard } from './card'
 
-type Props = Partial<DialogProps> & {
+type Props = DialogProps & {
   fieldChange?: any
   setImage: React.Dispatch<React.SetStateAction<string | undefined>>
 }

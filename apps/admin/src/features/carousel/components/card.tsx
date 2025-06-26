@@ -1,12 +1,12 @@
+import { CarouselGet } from '@repo/api/paths/carousel/common'
 import { useDeleteCarousel } from '@repo/api/paths/carousel/delete'
-import { CarouselGet } from '@repo/api/types/carousel'
+import { Image } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
 import { ButtonModelSwap } from '@/components/shared/buttons/model-swap'
 import { ModelHover } from '@/components/shared/model-hover'
-import { Image } from '@repo/ui/components/image'
 
 import { CarouselUpdateForm } from './update-form'
 
@@ -25,7 +25,7 @@ export const CarouselCard = ({
 }: Props) => {
   return (
     <div
-      className={cn('relative overflow-hidden flex-center', className)}
+      className={cn('relative overflow-hidden flex-center aspect-video', className)}
       data-testid="carousel-card"
       {...props}
     >

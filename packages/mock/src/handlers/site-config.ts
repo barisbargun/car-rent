@@ -1,12 +1,14 @@
 import { MODELS } from '@repo/api/config/api-paths'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
-import { updateSiteConfigInputSchema } from '@repo/api/paths/site-config/update'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import { siteConfigUpdateSchema } from '@repo/api/paths/site-config/common'
+import { giveError } from '@repo/utils/error'
+import { zodCheckSchema } from '@repo/utils/schema'
+import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, checkSchema, networkDelay } from '#mock/utils/mock'
+import { catchError, networkDelay } from '#mock/utils/mock'
 import { getImageById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -41,9 +43,9 @@ export const siteConfigsHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.siteConfig.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateSiteConfigInputSchema,
+        siteConfigUpdateSchema,
       )
 
       const logoImg = getImageById(data.logoImg, false)

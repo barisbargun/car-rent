@@ -1,4 +1,4 @@
-import { ServiceGet } from '@repo/api/types/service'
+import { ServiceGet } from '@repo/api/paths/service/common'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'

@@ -1,6 +1,6 @@
 import { arrayMove } from '@dnd-kit/sortable'
+import { FooterLink } from '@repo/api/paths/footer/link/common'
 import { useSwapFooterLink } from '@repo/api/paths/footer/link/swap'
-import { FooterLink } from '@repo/api/types/footer'
 import { useEffect, useState } from 'react'
 
 import { ModelVerticalList } from '@/components/shared/model-vertical-list'
@@ -31,7 +31,7 @@ export const FooterLinkGroup = ({ tabTitle, data }: Props) => {
       const idList = items?.map((item) => item.id)
       if (idList) {
         await mutateSwap({
-          data: { idList },
+          data: {idList},
         })
         setIsAnyChange(false)
         toast.footerLink.swap.success()

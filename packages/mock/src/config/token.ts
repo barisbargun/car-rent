@@ -10,36 +10,10 @@ import { getJwtCookie } from './cookie-jwt'
 export const createRefreshToken = (id: string) => encode({ id }, 3600 * 12)
 
 export const createAccessToken = (id: string, role: number) =>
-  encode({ id, role }, 1800 * 1000 /* TODO: Delete 1000 afterwards */)
-
-export const verifyAccessToken = (request: Request) => {
-  const token = request.headers.get('authorization') || ''
-  if (!token?.startsWith('Bearer ') || token.length < 30)
-    throw giveError(StatusCodes.UNAUTHORIZED)
-  const encodedToken = token.split(' ')[1]
-  const payload = decode(encodedToken)
-
-  if (!payload) {
-    throw giveError(StatusCodes.UNAUTHORIZED, 'Invalid token')
-  }
-
-  const user = db.user.findFirst({
-    where: {
-      id: {
-        equals: payload.id as string,
-      },
-    },
-  })
-  if (!user) {
-    throw giveError(StatusCodes.UNAUTHORIZED, 'User not found')
-  }
-
-  return sanitizeUser(user)
-}
+  encode({ id, role }, 1800)
 
 export const refreshAccessToken = (cookies: Record<string, string>) => {
   const encodedToken = getJwtCookie(cookies)
-
   if (!encodedToken) {
     throw giveError(StatusCodes.FORBIDDEN, 'No token found')
   }
@@ -81,4 +55,27 @@ export const refreshAccessToken = (cookies: Record<string, string>) => {
   }
 
   return createAccessToken(userById.id, userById.role)
+}
+
+export const verifyAccessToken = (request: Request) => {
+  try {
+    const authToken = request.headers.get('authorization') || ''
+    if (!authToken?.startsWith('Bearer ') || authToken.length < 20) throw Error
+    const token = authToken.split(' ')[1]
+    const payload = decode(token)
+    if (!payload) throw Error
+
+    const user = db.user.findFirst({
+      where: {
+        id: {
+          equals: payload.id as string,
+        },
+      },
+    })
+    if (!user) throw Error
+
+    return sanitizeUser(user)
+  } catch {
+    throw giveError(StatusCodes.UNAUTHORIZED)
+  }
 }

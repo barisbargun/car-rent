@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { loginSchema, useAuthLogin } from '@repo/api/paths/auth/login'
+import { AuthLogin, authLoginSchema } from '@repo/api/paths/auth/common'
+import { useAuthLogin } from '@repo/api/paths/auth/login'
 import { Button } from '@repo/ui/components/button'
 import {
   Form,
@@ -12,7 +13,6 @@ import {
 import { Input } from '@repo/ui/components/input'
 import { Loader } from '@repo/ui/components/loader'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 import { toast } from '@/lib/toast'
 
@@ -23,15 +23,15 @@ type Props = {
 export const LoginForm = ({ onSuccess }: Props) => {
   const { mutateAsync, isPending, isSuccess } = useAuthLogin()
 
-  const form = useForm<z.infer<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<AuthLogin>({
+    resolver: zodResolver(authLoginSchema),
     defaultValues: {
       username: '',
       password: '',
     },
   })
 
-  async function onSubmit(values: z.infer<typeof loginSchema>) {
+  async function onSubmit(values: AuthLogin) {
     try {
       await mutateAsync({ ...values })
       form.reset()

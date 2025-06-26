@@ -1,15 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMenubarVehicles } from '@repo/api/paths/menubar/vehicle/get-all'
-import {
-  createVehicleInputSchema,
-  useCreateVehicle,
-} from '@repo/api/paths/vehicle/create'
 import {
   DRIVE_TRAIN_LIST,
   DRIVE_TRAIN_LIST_UI,
+  VehicleCreate,
+  vehicleCreateSchema,
   WHEEL_DRIVE_LIST,
   WHEEL_DRIVE_LIST_UI,
-} from '@repo/api/types/vehicle'
+} from '@repo/api/paths/vehicle/common'
+import { useCreateVehicle } from '@repo/api/paths/vehicle/create'
 import {
   Form,
   FormControl,
@@ -19,7 +17,6 @@ import {
   FormMessage,
 } from '@repo/ui/components/form'
 import { Input } from '@repo/ui/components/input'
-import { FullPageLoader } from '@repo/ui/components/loader'
 import {
   Select,
   SelectContent,
@@ -30,28 +27,27 @@ import {
 import { cn } from '@repo/ui/lib/utils'
 import { getEnumEntries } from '@repo/utils/enum'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial & {}
+import { FormBrandField } from './form-brand-field'
+
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps
 
 export const VehicleCreateForm = ({
   closeDialog,
   className,
   ...props
 }: Props) => {
-  const { data: menubarVehicles, isPending: isMenubarVehiclesPending } =
-    useMenubarVehicles()
   const { mutateAsync, isPending } = useCreateVehicle()
 
-  const form = useForm<z.infer<typeof createVehicleInputSchema>>({
-    resolver: zodResolver(createVehicleInputSchema),
+  const form = useForm<VehicleCreate>({
+    resolver: zodResolver(vehicleCreateSchema),
     defaultValues: {
-      img: '',
+      img: undefined,
       menubarVehicle: '',
       title: '',
       fuel: '',
@@ -60,7 +56,7 @@ export const VehicleCreateForm = ({
     },
   })
 
-  async function onSubmit(values: z.infer<typeof createVehicleInputSchema>) {
+  async function onSubmit(values: VehicleCreate) {
     try {
       await mutateAsync({
         data: values,
@@ -70,16 +66,6 @@ export const VehicleCreateForm = ({
     } catch {
       toast.vehicle.add.error()
     }
-  }
-
-  if (isMenubarVehiclesPending) {
-    return <FullPageLoader />
-  } else if (!menubarVehicles || menubarVehicles.length === 0) {
-    return (
-      <div className="h-full flex-center">
-        <p className="text-muted-foreground">No groups available</p>
-      </div>
-    )
   }
 
   return (
@@ -101,33 +87,7 @@ export const VehicleCreateForm = ({
           }}
         />
 
-        <FormField
-          control={form.control}
-          name="menubarVehicle"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Brand</FormLabel>
-              <Select
-                value={field.value.toString()}
-                onValueChange={field.onChange}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a brand" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {menubarVehicles.map(({ id, title }) => (
-                    <SelectItem key={id} value={id}>
-                      {title}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormBrandField form={form} />
 
         <FormField
           control={form.control}

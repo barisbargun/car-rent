@@ -1,5 +1,5 @@
+import { Image } from '@repo/api/paths/image/common'
 import { useDeleteImage } from '@repo/api/paths/image/delete'
-import { Image } from '@repo/api/types/image'
 import { AspectRatioProps } from '@repo/ui/components/aspect-ratio'
 import { Image as ImageComponent } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'

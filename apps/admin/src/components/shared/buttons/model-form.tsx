@@ -1,10 +1,10 @@
 import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 import { cn } from '@repo/ui/lib/utils'
 
 import { OpenDialog, OpenDialogProps } from '@/components/global/open-dialog'
-import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 import { Authorization } from '@/lib/authorization'
 
 type Props = {

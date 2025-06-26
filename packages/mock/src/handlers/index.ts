@@ -12,16 +12,16 @@ import { usersHandlers } from './users'
 import { vehiclesHandlers } from './vehicles'
 
 export const handlers = [
-  ...usersHandlers,
-  ...siteConfigsHandlers,
-  ...imagesHandlers,
+  ...authHandlers,
   ...carouselsHandlers,
-  ...menubarTabsHandlers,
-  ...menubarVehiclesHandlers,
-  ...vehiclesHandlers,
-  ...servicesHandlers,
-  ...reviewsHandlers,
   ...footerTitlesHandlers,
   ...footerLinksHandlers,
-  ...authHandlers,
+  ...imagesHandlers,
+  ...menubarTabsHandlers,
+  ...menubarVehiclesHandlers,
+  ...reviewsHandlers,
+  ...servicesHandlers,
+  ...siteConfigsHandlers,
+  ...usersHandlers,
+  ...vehiclesHandlers,
 ]

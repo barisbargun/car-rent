@@ -1,4 +1,4 @@
-import { Review } from '@repo/api/types/review'
+import { Review } from '@repo/api/paths/review/common'
 import { generateReview } from '@repo/mock/utils/data-generators'
 
 import { confirmDialog, selectFirstImage } from '@/testing/helpers'

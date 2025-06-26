@@ -1,10 +1,17 @@
+import { MenubarVehicle } from '@repo/api/paths/menubar/vehicle/common'
+import {
+  DRIVE_TRAIN_LIST_UI,
+  Vehicle,
+  WHEEL_DRIVE_LIST_UI,
+} from '@repo/api/paths/vehicle/common'
 import { db } from '@repo/mock/db'
-
 import {
   generateMenubarTab,
   generateMenubarVehicle,
   generateVehicle,
 } from '@repo/mock/utils/data-generators'
+import { getEnumKeys } from '@repo/utils/enum'
+
 import {
   confirmDialog,
   selectFirstImage,
@@ -19,13 +26,6 @@ import {
 } from '@/testing/test-utils'
 
 import VehiclesRoute from '../vehicles'
-import { getEnumKeys } from '@repo/utils/enum'
-import {
-  DRIVE_TRAIN_LIST_UI,
-  Vehicle,
-  WHEEL_DRIVE_LIST_UI,
-} from '@repo/api/types/vehicle'
-import { MenubarVehicle } from '@repo/api/types/menubar'
 
 type VehicleType = Required<Vehicle>
 type MenubarVehicleType = Required<MenubarVehicle>
@@ -40,7 +40,9 @@ const create = async (
     name: /add a new vehicle/i,
   })
 
-  await selectFirstImage(within(drawer).getByRole('button', { name: /add image/i }))
+  await selectFirstImage(
+    within(drawer).getByRole('button', { name: /add image/i }),
+  )
   const titleField = within(drawer).getByLabelText(/title/i)
   const fuelField = within(drawer).getByLabelText(/fuel/i)
 
@@ -121,7 +123,7 @@ test(
     await renderApp(<VehiclesRoute />, { user: 'ADMIN' })
 
     const newVehicle = generateVehicle()
-    const updatedTitle = newVehicle.title.split('').reverse().join('')
+    const updatedTitle = [...newVehicle.title].reverse().join('')
 
     // Initially, no items
     expect(await screen.findByText(/There are 0 items./i)).toBeInTheDocument()

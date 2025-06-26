@@ -1,6 +1,6 @@
 import { arrayMove } from '@dnd-kit/sortable'
 import { useSwapVehicle } from '@repo/api/paths/vehicle/swap'
-import { Vehicle } from '@repo/api/types/vehicle'
+import {  VehicleGet } from '@repo/api/paths/vehicle/common'
 import { useEffect, useState } from 'react'
 
 import { ModelVerticalList } from '@/components/shared/model-vertical-list'
@@ -11,11 +11,11 @@ import { VehicleCard } from './card'
 type Props = {
   tabTitle: string
   vehicleTitle: string
-  vehicles: Vehicle[]
+  vehicles: VehicleGet[]
 }
 
 export const VehicleGroup = ({ tabTitle, vehicleTitle, vehicles }: Props) => {
-  const [items, setItems] = useState<Vehicle[]>([])
+  const [items, setItems] = useState<VehicleGet[]>([])
   const { mutateAsync: mutateSwap, isPending: pendingSwap } = useSwapVehicle()
   const [isAnyChange, setIsAnyChange] = useState<boolean>(false)
 
@@ -29,7 +29,7 @@ export const VehicleGroup = ({ tabTitle, vehicleTitle, vehicles }: Props) => {
       const idList = items?.map((item) => item.id)
       if (idList) {
         await mutateSwap({
-          data: { idList },
+          data: {idList},
         })
         setIsAnyChange(false)
         toast.vehicle.swap.success()

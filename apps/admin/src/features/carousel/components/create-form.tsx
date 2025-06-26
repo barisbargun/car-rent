@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  createCarouselInputSchema,
-  useCreateCarousel,
-} from '@repo/api/paths/carousel/create'
+  CarouselCreate,
+  carouselCreateSchema,
+} from '@repo/api/paths/carousel/common'
+import { useCreateCarousel } from '@repo/api/paths/carousel/create'
 import {
   Form,
   FormControl,
@@ -15,14 +16,13 @@ import { Input } from '@repo/ui/components/input'
 import { Textarea } from '@repo/ui/components/textarea'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial & {}
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps & {}
 
 export const CarouselCreateForm = ({
   closeDialog,
@@ -31,9 +31,8 @@ export const CarouselCreateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useCreateCarousel()
 
-
-  const form = useForm<z.infer<typeof createCarouselInputSchema>>({
-    resolver: zodResolver(createCarouselInputSchema),
+  const form = useForm<CarouselCreate>({
+    resolver: zodResolver(carouselCreateSchema),
     defaultValues: {
       img: '',
       title: '',
@@ -45,7 +44,7 @@ export const CarouselCreateForm = ({
     },
   })
 
-  async function onSubmit(values: z.infer<typeof createCarouselInputSchema>) {
+  async function onSubmit(values: CarouselCreate) {
     try {
       await mutateAsync({
         data: values,

@@ -1,5 +1,5 @@
 import { useDeleteReview } from '@repo/api/paths/review/delete'
-import { ReviewGet } from '@repo/api/types/review'
+import { ReviewGet } from '@repo/api/paths/review/common'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'

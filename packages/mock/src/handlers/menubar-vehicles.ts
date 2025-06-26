@@ -2,15 +2,19 @@ import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { swapModelInputSchema } from '@repo/api/config/shared-schemas'
-import { createMenubarVehicleInputSchema } from '@repo/api/paths/menubar/vehicle/create'
-import { updateMenubarVehicleInputSchema } from '@repo/api/paths/menubar/vehicle/update'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import {
+  menubarVehicleCreateSchema,
+  menubarVehicleUpdateSchema,
+} from '@repo/api/paths/menubar/vehicle/common'
+import { giveError } from '@repo/utils/error'
 import { getNextIndex, sortByIndex } from '@repo/utils/obj'
+import { zodCheckSchema } from '@repo/utils/schema'
+import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, checkSchema, networkDelay } from '#mock/utils/mock'
+import { catchError, networkDelay } from '#mock/utils/mock'
 import { getImageById, getParentById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -47,14 +51,14 @@ export const menubarVehiclesHandlers = [
       if (dbModel.count() >= maxItemCounts.menubarVehicle)
         throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        createMenubarVehicleInputSchema,
+        menubarVehicleCreateSchema,
       )
 
       getParentById(data.menubarTab, 'menubarTab')
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const index = getNextIndex(
         dbModel.findMany({
@@ -93,9 +97,9 @@ export const menubarVehiclesHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.menubarVehicle.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateMenubarVehicleInputSchema,
+        menubarVehicleUpdateSchema,
       )
 
       const oldData = dbModel.findFirst({
@@ -114,7 +118,7 @@ export const menubarVehiclesHandlers = [
 
       if (!isEqualParents) getParentById(data.menubarTab, 'menubarTab')
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const index = isEqualParents
         ? oldData.index
@@ -152,14 +156,14 @@ export const menubarVehiclesHandlers = [
   }),
 
   // Swapping
-  http.patch(`${url}`, async ({ request }) => {
+  http.patch(url, async ({ request }) => {
     await networkDelay()
 
     try {
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.menubarVehicle.swap(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
         swapModelInputSchema,
       )

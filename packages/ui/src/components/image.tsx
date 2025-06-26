@@ -1,20 +1,17 @@
-import { getCloudinaryImage } from '@repo/utils/image'
-import React, { ComponentProps } from 'react'
+import React, { useMemo, useState } from 'react'
 
 import { UseBreakpointArray, useBreakpointArray } from '../hooks/use-breakpoint'
 import { cn } from '../lib/utils'
 
-type BaseProps = Omit<
+type Props = Omit<
   React.ImgHTMLAttributes<HTMLImageElement>,
   'width' | 'height'
-> &
-  Pick<ComponentProps<typeof getCloudinaryImage>, 'src' | 'fallback'>
-
-type Props = BaseProps & {
+> & {
   quality?: 'low' | 'medium' | 'high'
   heightRatio?: number
   fill?: boolean
   alt: string
+  fallback?: string
   containerClassName?: string
 } & (
     | { w: number; widthList?: never }
@@ -33,9 +30,27 @@ export const Image = ({
   className,
   ...props
 }: Props) => {
+  const [isError, setIsError] = useState(false)
   const breakpointArray = useBreakpointArray()
   const width = w || (widthList && breakpointArray(...widthList)) || 100
   const height = Math.round(width * heightRatio)
+
+  const useImage = useMemo(() => {
+    if (!src || isError)
+      return (
+        fallback || `https://dummyimage.com/${width}x${height}&text=No%20Image`
+      )
+
+    if (!src?.includes('/image/upload/')) return src || ''
+    const [split1, split2] = src.split('/image/upload/')
+    const multiply = quality === 'low' ? 1 : quality === 'medium' ? 2 : 3
+    const transformations = [width ? `w_${width * multiply}` : '', 'c_lfill']
+      .filter(Boolean)
+      .join(',')
+
+    return `${split1}/${transformations}/${split2}`
+  }, [src, isError, width, height, quality, fallback])
+
   return (
     <div
       className={cn('pointer-events-none flex-center', containerClassName)}
@@ -43,11 +58,7 @@ export const Image = ({
     >
       <img
         loading="lazy"
-        src={getCloudinaryImage({
-          src,
-          w: width * (quality === 'low' ? 1 : quality === 'medium' ? 2 : 3),
-          fallback,
-        })}
+        src={useImage}
         width={width}
         height={height}
         className={cn(
@@ -55,6 +66,7 @@ export const Image = ({
           fill && 'h-full w-[100vw]',
           className,
         )}
+        onError={() => setIsError(true)}
         {...props}
       />
     </div>

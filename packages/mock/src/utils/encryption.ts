@@ -20,17 +20,18 @@ export const encode = (obj: any, expiresInSeconds: number = 3600) => {
 
 // Decode function with expiration check
 export const decode = (
-  str: string,
+  token: string,
 ): undefined | { id: string } | { id: string; role: number } => {
   const atob =
     typeof globalThis === 'undefined'
       ? (str: string) => Buffer.from(str, 'base64').toString('binary')
       : globalThis.atob
 
-  const decodedStr = atob(str)
+  const decodedStr = atob(token)
   const payload = JSON.parse(decodedStr)
 
   // Check if token is expired
   const currentTime = getCurrentTimestamp()
   if (!payload.exp || currentTime < payload.exp) return payload
+  return
 }

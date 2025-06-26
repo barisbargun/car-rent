@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  createFooterTitleInputSchema,
-  useCreateFooterTitle,
-} from '@repo/api/paths/footer/title/create'
+  FooterTitleCreate,
+  footerTitleCreateSchema,
+} from '@repo/api/paths/footer/title/common'
+import { useCreateFooterTitle } from '@repo/api/paths/footer/title/create'
 import {
   Form,
   FormControl,
@@ -14,13 +15,12 @@ import {
 import { Input } from '@repo/ui/components/input'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial & {}
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps & {}
 
 export const FooterTitleCreateForm = ({
   closeDialog,
@@ -29,16 +29,14 @@ export const FooterTitleCreateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useCreateFooterTitle()
 
-  const form = useForm<z.infer<typeof createFooterTitleInputSchema>>({
-    resolver: zodResolver(createFooterTitleInputSchema),
+  const form = useForm<FooterTitleCreate>({
+    resolver: zodResolver(footerTitleCreateSchema),
     defaultValues: {
       title: '',
     },
   })
 
-  async function onSubmit(
-    values: z.infer<typeof createFooterTitleInputSchema>,
-  ) {
+  async function onSubmit(values: FooterTitleCreate) {
     try {
       await mutateAsync({
         data: values,

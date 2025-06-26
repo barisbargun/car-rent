@@ -8,12 +8,12 @@ export const objectExclude = <T extends object, K extends keyof T>(
   data: T,
   excludedKeys: K[],
 ): Omit<T, K> => {
-  const result = { ...data };
+  const result = { ...data }
   for (const key of excludedKeys) {
-    delete result[key];
+    delete result[key]
   }
-  return result;
-};
+  return result
+}
 
 export const getNextIndex = (data: { index: number }[]): number => {
   const indexes = data.map((item) => item.index)

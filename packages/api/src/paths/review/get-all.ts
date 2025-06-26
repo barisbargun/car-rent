@@ -3,7 +3,8 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 import { API_PATHS } from '#api/config/api-paths'
 import { QueryConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { ReviewGet } from '#api/types/review'
+
+import { ReviewGet } from './common'
 
 export const getReviews = (): Promise<ReviewGet[]> => {
   return api.get(API_PATHS.review)

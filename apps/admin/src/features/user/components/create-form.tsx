@@ -1,9 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  createUserInputSchema,
-  useCreateUser,
-} from '@repo/api/paths/user/create'
-import { ROLE_POST_LIST, ROLE_POST_LIST_UI } from '@repo/api/types/user'
+  ROLE_POST_LIST,
+  ROLE_POST_LIST_UI,
+  UserCreate,
+  userCreateSchema,
+} from '@repo/api/paths/user/common'
+import { useCreateUser } from '@repo/api/paths/user/create'
 import {
   Form,
   FormControl,
@@ -23,20 +25,19 @@ import {
 import { cn } from '@repo/ui/lib/utils'
 import { getEnumEntries } from '@repo/utils/enum'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
+import { DialogProps } from '@/components/global/open-dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial & {}
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps & {}
 
 export const UserCreateForm = ({ closeDialog, className, ...props }: Props) => {
   const { mutateAsync, isPending } = useCreateUser()
 
-  const form = useForm<z.infer<typeof createUserInputSchema>>({
-    resolver: zodResolver(createUserInputSchema),
+  const form = useForm<UserCreate>({
+    resolver: zodResolver(userCreateSchema),
     defaultValues: {
       img: '',
       username: '',
@@ -46,7 +47,7 @@ export const UserCreateForm = ({ closeDialog, className, ...props }: Props) => {
     },
   })
 
-  async function onSubmit(values: z.infer<typeof createUserInputSchema>) {
+  async function onSubmit(values: UserCreate) {
     try {
       await mutateAsync({
         data: values,

@@ -1,5 +1,5 @@
+import { MenubarTab } from '@repo/api/paths/menubar/tab/common'
 import { useDeleteMenubarTab } from '@repo/api/paths/menubar/tab/delete'
-import { MenubarTab } from '@repo/api/types/menubar'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'

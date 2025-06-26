@@ -1,11 +1,21 @@
-import express from 'express'
-import logger from 'pino-http'
+import { Router } from 'express'
+import mongoose from 'mongoose'
 
-const app = express()
+import { handlers } from './handlers'
+import { createServer } from './server'
+
+const app = createServer()
 const port = process.env.PORT || 3000
 
-app.use(express.json())
-app.use(logger())
+const router = Router()
 
-app.get('/', (_req: any, res: any) => res.send('Hello World!'))
+for (const [path, handler] of handlers) {
+  router.use('/' + path, handler)
+}
+
+app.use(router)
+
+mongoose.connection.once('open', () => {
+  console.log('connected to mongoDB')
+})
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))

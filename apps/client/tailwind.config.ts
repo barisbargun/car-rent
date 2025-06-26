@@ -1,7 +1,8 @@
 import base from '@repo/ui/tailwind.config'
-import type { Config } from 'tailwindcss'
+import { Config } from "tailwindcss"
 
 export default {
+  content: base.content,
   theme: {
     container: {
       center: true,
@@ -15,6 +16,9 @@ export default {
         inter: ['Inter', 'sans-serif'],
         pacifico: ['Pacifico', 'sans-serif'],
       },
+      dropShadow:{
+        black:'0 1.2px 1.2px rgba(0,0,0,1)'
+      }
     },
   },
   plugins: [
@@ -27,4 +31,4 @@ export default {
     },
   ],
   presets: [base],
-} satisfies Omit<Config, 'content'>
+} as Config

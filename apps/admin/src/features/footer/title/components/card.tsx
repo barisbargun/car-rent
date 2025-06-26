@@ -1,5 +1,5 @@
+import { FooterTitle } from '@repo/api/paths/footer/title/common'
 import { useDeleteFooterTitle } from '@repo/api/paths/footer/title/delete'
-import { FooterTitle } from '@repo/api/types/footer'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'

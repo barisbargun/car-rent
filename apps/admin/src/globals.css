@@ -16,11 +16,11 @@
   }
 
   body {
-    @apply overflow-x-hidden;
+    @apply overflow-x-hidden bg-background text-foreground;
   }
 
   #root {
-    @apply flex min-h-screen w-full bg-background max-lg:flex-col  text-foreground;
+    @apply flex min-h-screen w-full max-lg:flex-col;
   }
 
   textarea {

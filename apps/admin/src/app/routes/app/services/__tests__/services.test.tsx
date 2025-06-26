@@ -9,7 +9,7 @@ import {
 } from '@/testing/test-utils'
 
 import ServicesRoute from '../services'
-import { Service } from '@repo/api/types/service'
+import { Service } from '@repo/api/paths/service/common'
 
 type ServiceType = Required<Service>
 

@@ -1,25 +1,16 @@
-import dotenv from 'dotenv'
+import 'dotenv/config'
 
-dotenv.config({
-  path: [
-    '.env',
-    `.env.${process.env.MODE == 'development' ? 'development' : 'production'}`,
-  ],
+import { zodCheckEnvSchema } from '@repo/utils/schema'
+import { z } from 'zod'
+
+const schema = z.object({
+  MODE: z.enum(['development', 'production', 'test']),
+  ADMIN_URL: z.string().url(),
+  CLIENT_URL: z.string().url(),
+  ACCESS_TOKEN_SECRET: z.string().min(10),
+  REFRESH_TOKEN_SECRET: z.string().min(10),
+  CLOUDINARY_URL: z.string().min(10),
+  MONGO_URI: z.string().min(10),
 })
 
-// dotenv.config({ path: `.env.${process.env.MODE}` })
-
-export const env = {
-  MODE: process.env.MODE!,
-  CLIENT_URL: process.env.CLIENT_URL!,
-  ADMIN_URL: process.env.ADMIN_URL!,
-  REDIS_URL: process.env.REDIS_URL!,
-  ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET!,
-  REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET!,
-  CLOUD_NAME: process.env.CLOUD_NAME!,
-  API_KEY: process.env.API_KEY!,
-  API_SECRET: process.env.API_SECRET!,
-  MONGO_URI: process.env.MONGO_URI!,
-  ENABLE_API_MOCKING: process.env.ENABLE_API_MOCKING,
-  MOCKING_SEED: process.env.MOCKING_SEED,
-}
+export const env = zodCheckEnvSchema(process.env, schema)

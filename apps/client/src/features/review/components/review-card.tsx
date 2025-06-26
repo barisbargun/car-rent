@@ -1,4 +1,4 @@
-import { ReviewGet } from '@repo/api/types/review'
+import { ReviewGet } from '@repo/api/paths/review/common'
 import { Image } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'
 

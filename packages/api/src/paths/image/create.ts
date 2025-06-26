@@ -1,25 +1,16 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { z } from 'zod'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { Image } from '#api/types/image'
 
+import { Image, ImageCreate } from './common'
 import { getImagesQueryOptions } from './get-all'
-
-export const createImageInputSchema = z.object({
-  file: z.custom<File>().refine((file) => file instanceof File, {
-    message: 'File is required',
-  }),
-})
-
-export type CreateImageInput = z.infer<typeof createImageInputSchema>
 
 export const createImage = ({
   data,
 }: {
-  data: CreateImageInput
+  data: ImageCreate
 }): Promise<Image> => {
   const formData = new FormData()
   formData.append('file', data.file)

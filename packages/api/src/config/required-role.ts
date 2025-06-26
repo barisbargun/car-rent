@@ -1,7 +1,7 @@
 import { isInEnum } from '@repo/utils/enum'
 import { giveError } from '@repo/utils/error'
 
-import { ROLE_LIST } from '#api/types/user'
+import { ROLE_LIST } from '#api/paths/user/common'
 
 import { MODELS } from './api-paths'
 
@@ -68,7 +68,6 @@ export const REQUIRED_ROLE = {
   service: {
     add: reqEditor,
     update: reqEditor,
-    swap: reqEditor,
   },
   review: {
     add: reqEditor,

@@ -3,7 +3,8 @@ import { queryOptions, useQuery } from '@tanstack/react-query'
 import { API_PATHS } from '#api/config/api-paths'
 import { QueryConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { TokenResponse } from '#api/types/auth'
+
+import { TokenResponse } from './common'
 
 export const getRefreshAccessToken = (): Promise<TokenResponse> => {
   return api.get(API_PATHS.refreshAccessToken)

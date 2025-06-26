@@ -1,8 +1,8 @@
+import { RequiredRole } from '@repo/api/config/required-role'
 import { useCurrentUser } from '@repo/api/paths/auth/current-user'
-import { ROLE_LIST } from '@repo/api/types/user'
 
 type AuthorizationProps = {
-  checkRole: (userRole: ROLE_LIST) => boolean
+  checkRole: RequiredRole
   forbiddenFallback?: React.ReactNode
   children: React.ReactNode
 }

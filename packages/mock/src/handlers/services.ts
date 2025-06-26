@@ -1,15 +1,19 @@
 import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
-import { createServiceInputSchema } from '@repo/api/paths/service/create'
-import { updateServiceInputSchema } from '@repo/api/paths/service/update'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import {
+  serviceCreateSchema,
+  serviceUpdateSchema,
+} from '@repo/api/paths/service/common'
+import { giveError } from '@repo/utils/error'
 import { getNextIndex, sortByIndex } from '@repo/utils/obj'
+import { zodCheckSchema } from '@repo/utils/schema'
+import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, checkSchema, networkDelay } from '#mock/utils/mock'
+import { catchError, networkDelay } from '#mock/utils/mock'
 import { getImageById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -47,12 +51,12 @@ export const servicesHandlers = [
       if (dbModel.count() >= maxItemCounts.service)
         throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        createServiceInputSchema,
+        serviceCreateSchema,
       )
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const result = dbModel.create({
         ...data,
@@ -81,12 +85,12 @@ export const servicesHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.service.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateServiceInputSchema,
+        serviceUpdateSchema,
       )
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const result = dbModel.update({
         where: {

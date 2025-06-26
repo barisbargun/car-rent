@@ -1,16 +1,12 @@
-import { loginSchema } from '@repo/api/paths/auth/login'
+import { authLoginSchema, TokenResponse } from '@repo/api/paths/auth/common'
+import { zodCheckSchema } from '@repo/utils/schema'
 import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { getJwtCookie, removeJwtCookie } from '#mock/config/cookie-jwt'
 import { refreshAccessToken, verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import {
-  authenticate,
-  catchError,
-  checkSchema,
-  networkDelay,
-} from '#mock/utils/mock'
+import { authenticate, catchError, networkDelay } from '#mock/utils/mock'
 import { getImageById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -42,7 +38,7 @@ export const authHandlers = [
       return HttpResponse.json(
         {
           accessToken: token,
-        },
+        } as TokenResponse,
         {
           status: StatusCodes.OK,
         },
@@ -55,7 +51,10 @@ export const authHandlers = [
   http.post(loginUrl, async ({ request }) => {
     await networkDelay()
     try {
-      const data = checkSchema((await request.json()) as any, loginSchema)
+      const data = zodCheckSchema(
+        (await request.json()) as any,
+        authLoginSchema,
+      )
       const result = authenticate(data)
       return HttpResponse.json(
         { accessToken: result.accessToken },

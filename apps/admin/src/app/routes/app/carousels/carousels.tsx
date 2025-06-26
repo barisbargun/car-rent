@@ -1,6 +1,6 @@
+import { CarouselGet } from '@repo/api/paths/carousel/common'
 import { useCarousels } from '@repo/api/paths/carousel/get-all'
 import { useSwapCarousel } from '@repo/api/paths/carousel/swap'
-import { CarouselGet } from '@repo/api/types/carousel'
 import { Skeleton } from '@repo/ui/components/skeleton'
 import { cn } from '@repo/ui/lib/utils'
 import { useEffect, useState } from 'react'
@@ -15,11 +15,11 @@ import { toast } from '@/lib/toast'
 
 const CarouselsSkeleton = () => (
   <>
-    <div className="items-gap flex w-full justify-start">
+    <div className="flex w-full justify-start items-gap">
       <Skeleton className="h-10 w-32" />
       <Skeleton className="h-10 w-32" />
     </div>
-    <div className='items-gap grid lg:grid-cols-3 xl:grid-cols-4'>
+    <div className="grid items-gap lg:grid-cols-3 xl:grid-cols-4">
       {Array.from({ length: 4 }).map((_, i) => (
         <CarouselCardSkeleton key={i} />
       ))}
@@ -101,7 +101,7 @@ const CarouselsRoute = () => {
         handleSwapReset={handleSwapReset}
       />
 
-      <div className='items-gap grid lg:grid-cols-3 xl:grid-cols-4'>
+      <div className="grid items-gap lg:grid-cols-3 xl:grid-cols-4">
         {currentData?.map((carousel) => (
           <CarouselCard
             className={cn(pendingSwap && 'pointer-events-none')}

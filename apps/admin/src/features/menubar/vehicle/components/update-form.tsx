@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMenubarTabs } from '@repo/api/paths/menubar/tab/get-all'
 import {
-  updateMenubarVehicleInputSchema,
-  useUpdateMenubarVehicle,
-} from '@repo/api/paths/menubar/vehicle/update'
-import { MenubarVehicleGet } from '@repo/api/types/menubar'
+  MenubarVehicleGet,
+  MenubarVehicleUpdate,
+  menubarVehicleUpdateSchema,
+} from '@repo/api/paths/menubar/vehicle/common'
+import { useUpdateMenubarVehicle } from '@repo/api/paths/menubar/vehicle/update'
 import {
   Form,
   FormControl,
@@ -25,15 +26,14 @@ import {
 import { Textarea } from '@repo/ui/components/textarea'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     menubarVehicle: MenubarVehicleGet
   }
 
@@ -47,19 +47,17 @@ export const MenubarVehicleUpdateForm = ({
     useMenubarTabs()
   const { mutateAsync, isPending } = useUpdateMenubarVehicle()
 
-  const form = useForm<z.infer<typeof updateMenubarVehicleInputSchema>>({
-    resolver: zodResolver(updateMenubarVehicleInputSchema),
+  const form = useForm<MenubarVehicleUpdate>({
+    resolver: zodResolver(menubarVehicleUpdateSchema),
     defaultValues: {
-      img: menubarVehicle.img?.id || '',
+      img: menubarVehicle.img?.id,
       title: menubarVehicle.title || '',
       desc: menubarVehicle.desc || '',
       menubarTab: menubarVehicle.menubarTab || '',
     },
   })
 
-  async function onSubmit(
-    values: z.infer<typeof updateMenubarVehicleInputSchema>,
-  ) {
+  async function onSubmit(values: MenubarVehicleUpdate) {
     try {
       await mutateAsync({
         id: menubarVehicle.id,
@@ -84,10 +82,7 @@ export const MenubarVehicleUpdateForm = ({
 
   return (
     <Form {...form}>
-      <form
-        className={cn('flex w-full flex-col gap-5', className)}
-        {...props}
-      >
+      <form className={cn('flex w-full flex-col gap-5', className)} {...props}>
         <ImageFormField
           form={form}
           formName="img"

@@ -1,22 +1,20 @@
 import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
-import { createUserInputSchema } from '@repo/api/paths/user/create'
-import { updateUserInputSchema } from '@repo/api/paths/user/update'
-import { updateUserSelfInputSchema } from '@repo/api/paths/user/update-self'
-import { ROLE_LIST } from '@repo/api/types/user'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import {
+  ROLE_LIST,
+  userCreateSchema,
+  userUpdateSchema,
+  userUpdateSelfSchema,
+} from '@repo/api/paths/user/common'
+import { giveError } from '@repo/utils/error'
+import { zodCheckSchema } from '@repo/utils/schema'
+import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import {
-  catchError,
-  checkSchema,
-  hash,
-  networkDelay,
-  sanitizeUser,
-} from '#mock/utils/mock'
+import { catchError, hash, networkDelay, sanitizeUser } from '#mock/utils/mock'
 import { getImageById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -58,9 +56,9 @@ export const usersHandlers = [
       if (dbModel.count() >= maxItemCounts.user)
         throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        createUserInputSchema,
+        userCreateSchema,
       )
 
       const img = getImageById(data.img, false)
@@ -89,9 +87,9 @@ export const usersHandlers = [
     try {
       const user = verifyAccessToken(request)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateUserSelfInputSchema,
+        userUpdateSelfSchema,
       )
 
       const changePassword = data.password && data.password.length > 0
@@ -134,12 +132,12 @@ export const usersHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.user.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateUserInputSchema,
+        userUpdateSchema,
       )
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const result = dbModel.update({
         where: {

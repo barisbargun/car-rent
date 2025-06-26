@@ -1,5 +1,5 @@
+import { FooterLink } from '@repo/api/paths/footer/link/common'
 import { useDeleteFooterLink } from '@repo/api/paths/footer/link/delete'
-import { FooterLink } from '@repo/api/types/footer'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
@@ -15,7 +15,7 @@ export const FooterLinkCard = ({ data, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'relative overflow-hidden border-b-2 border-dashed px-4 p-8 flex-center',
+        'relative overflow-hidden border-b-2 border-dashed p-8 px-4 flex-center',
         className,
       )}
       data-testid="footerLink-card"
@@ -26,8 +26,11 @@ export const FooterLinkCard = ({ data, className, ...props }: Props) => {
         className="absolute right-1 top-1 z-10 flex gap-2 card-buttons"
         onPointerDown={(e) => e.stopPropagation()}
       >
-        <ButtonModelForm type="UPDATE" model="footerLink" modelText='footerLink'
->
+        <ButtonModelForm
+          type="UPDATE"
+          model="footerLink"
+          modelText="footerLink"
+        >
           <FooterLinkUpdateForm footerLink={data} />
         </ButtonModelForm>
 
@@ -38,7 +41,9 @@ export const FooterLinkCard = ({ data, className, ...props }: Props) => {
         />
       </div>
 
-      <strong className='max-xl:text-sm' title={data.title}>{data.title}</strong>
+      <strong className="max-xl:text-sm" title={data.title}>
+        {data.title}
+      </strong>
     </div>
   )
 }

@@ -1,24 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { z } from 'zod'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { MenubarTab } from '#api/types/menubar'
 
-import { createMenubarTabInputSchema } from './create'
+import { MenubarTab, MenubarTabUpdate } from './common'
 import { getMenubarTabsQueryOptions } from './get-all'
-
-export const updateMenubarTabInputSchema = createMenubarTabInputSchema
-
-export type UpdateMenubarTabInput = z.infer<typeof updateMenubarTabInputSchema>
 
 export const updateMenubarTab = ({
   id,
   data,
 }: {
   id: string
-  data: UpdateMenubarTabInput
+  data: MenubarTabUpdate
 }): Promise<MenubarTab> => {
   return api.patch(`${API_PATHS.menubarTab}/${id}`, data)
 }

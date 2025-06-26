@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  createFooterLinkInputSchema,
-  useCreateFooterLink,
-} from '@repo/api/paths/footer/link/create'
+  FooterLinkCreate,
+  footerLinkCreateSchema,
+} from '@repo/api/paths/footer/link/common'
+import { useCreateFooterLink } from '@repo/api/paths/footer/link/create'
 import { useFooterTitles } from '@repo/api/paths/footer/title/get-all'
 import {
   Form,
@@ -23,13 +24,12 @@ import {
 } from '@repo/ui/components/select'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial & {}
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps & {}
 
 export const FooterLinkCreateForm = ({
   closeDialog,
@@ -40,8 +40,8 @@ export const FooterLinkCreateForm = ({
     useFooterTitles()
   const { mutateAsync, isPending } = useCreateFooterLink()
 
-  const form = useForm<z.infer<typeof createFooterLinkInputSchema>>({
-    resolver: zodResolver(createFooterLinkInputSchema),
+  const form = useForm<FooterLinkCreate>({
+    resolver: zodResolver(footerLinkCreateSchema),
     defaultValues: {
       title: '',
       link: '',
@@ -49,7 +49,7 @@ export const FooterLinkCreateForm = ({
     },
   })
 
-  async function onSubmit(values: z.infer<typeof createFooterLinkInputSchema>) {
+  async function onSubmit(values: FooterLinkCreate) {
     try {
       await mutateAsync({
         data: values,

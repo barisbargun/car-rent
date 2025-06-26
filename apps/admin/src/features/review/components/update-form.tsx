@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  updateReviewInputSchema,
-  useUpdateReview,
-} from '@repo/api/paths/review/update'
-import { ReviewGet } from '@repo/api/types/review'
+  ReviewGet,
+  ReviewUpdate,
+  reviewUpdateSchema,
+} from '@repo/api/paths/review/common'
+import { useUpdateReview } from '@repo/api/paths/review/update'
 import {
   Form,
   FormControl,
@@ -16,15 +17,14 @@ import { Input } from '@repo/ui/components/input'
 import { Textarea } from '@repo/ui/components/textarea'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     review: ReviewGet
   }
 
@@ -36,17 +36,17 @@ export const ReviewUpdateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useUpdateReview()
 
-  const form = useForm<z.infer<typeof updateReviewInputSchema>>({
-    resolver: zodResolver(updateReviewInputSchema),
+  const form = useForm<ReviewUpdate>({
+    resolver: zodResolver(reviewUpdateSchema),
     defaultValues: {
-      img: review.img?.id || '',
+      img: review.img?.id,
       fullname: review.fullname || '',
       desc: review.desc || '',
       occupation: review.occupation || '',
     },
   })
 
-  async function onSubmit(values: z.infer<typeof updateReviewInputSchema>) {
+  async function onSubmit(values: ReviewUpdate) {
     try {
       await mutateAsync({
         id: review.id,

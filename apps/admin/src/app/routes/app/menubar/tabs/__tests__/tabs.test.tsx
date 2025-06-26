@@ -1,4 +1,7 @@
-import { MENUBAR_TAB_GRID_LIST_UI, MenubarTab } from '@repo/api/types/menubar'
+import {
+  MENUBAR_TAB_GRID_LIST_UI,
+  MenubarTab,
+} from '@repo/api/paths/menubar/tab/common'
 import { generateMenubarTab } from '@repo/mock/utils/data-generators'
 import { getEnumKeys } from '@repo/utils/enum'
 
@@ -16,7 +19,9 @@ import MenubarTabsRoute from '../tabs'
 type MenubarTabType = Required<MenubarTab>
 
 const create = async (menubarTab: MenubarTabType) => {
-  await userEvent.click(screen.getByRole('button', { name: /add menubar tab/i }))
+  await userEvent.click(
+    screen.getByRole('button', { name: /add menubar tab/i }),
+  )
 
   const drawer = await screen.findByRole('dialog', {
     name: /add a new menubar tab/i,
@@ -97,7 +102,7 @@ test(
     await renderApp(<MenubarTabsRoute />, { user: 'ADMIN' })
 
     const newMenubarTab = generateMenubarTab()
-    const updatedTitle = "updated-title"
+    const updatedTitle = 'updated-title'
 
     // Initially, no items
     expect(await screen.findByText(/There are 0 items./i)).toBeInTheDocument()

@@ -2,16 +2,19 @@ import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { swapModelInputSchema } from '@repo/api/config/shared-schemas'
-import { createVehicleInputSchema } from '@repo/api/paths/vehicle/create'
-import { updateVehicleInputSchema } from '@repo/api/paths/vehicle/update'
+import {
+  vehicleCreateSchema,
+  vehicleUpdateSchema,
+} from '@repo/api/paths/vehicle/common'
 import { giveError } from '@repo/utils/error'
 import { getNextIndex, sortByIndex } from '@repo/utils/obj'
+import { zodCheckSchema } from '@repo/utils/schema'
 import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, checkSchema, networkDelay } from '#mock/utils/mock'
+import { catchError, networkDelay } from '#mock/utils/mock'
 import { getImageById, getParentById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -49,14 +52,14 @@ export const vehiclesHandlers = [
       if (dbModel.count() >= maxItemCounts.vehicle)
         throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        createVehicleInputSchema,
+        vehicleCreateSchema,
       )
 
       getParentById(data.menubarVehicle, 'menubarVehicle')
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const index = getNextIndex(
         dbModel.findMany({
@@ -95,9 +98,9 @@ export const vehiclesHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.vehicle.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateVehicleInputSchema,
+        vehicleUpdateSchema,
       )
 
       const oldData = dbModel.findFirst({
@@ -128,7 +131,7 @@ export const vehiclesHandlers = [
             }),
           )
 
-      const img = data.img && getImageById(data.img)
+      const img = getImageById(data.img)
 
       const result = dbModel.update({
         where: {
@@ -154,14 +157,14 @@ export const vehiclesHandlers = [
   }),
 
   // Swapping
-  http.patch(`${url}`, async ({ request }) => {
+  http.patch(url, async ({ request }) => {
     await networkDelay()
 
     try {
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.vehicle.swap(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
         swapModelInputSchema,
       )

@@ -1,6 +1,6 @@
+import { MenubarTab } from '@repo/api/paths/menubar/tab/common'
 import { useMenubarTabs } from '@repo/api/paths/menubar/tab/get-all'
 import { useMenubarVehicles } from '@repo/api/paths/menubar/vehicle/get-all'
-import { MenubarTab } from '@repo/api/types/menubar'
 import { useEffect, useMemo, useState } from 'react'
 
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'

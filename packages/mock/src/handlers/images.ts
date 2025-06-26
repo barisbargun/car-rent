@@ -1,3 +1,4 @@
+import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { giveError } from '@repo/utils/error'
 import { StatusCodes } from 'http-status-codes'
@@ -29,6 +30,9 @@ export const imagesHandlers = [
       REQUIRED_ROLE.image.add(user.role, true)
       const data = await request.formData()
       const file = data.get('file')
+
+      if (dbModel.count() >= maxItemCounts.image)
+        throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
       if (!file) {
         throw giveError(StatusCodes.BAD_REQUEST, 'Missing file')

@@ -1,15 +1,14 @@
-import { useMenubarTabs } from '@repo/api/paths/menubar/tab/get-all'
-import { useMenubarVehicles } from '@repo/api/paths/menubar/vehicle/get-all'
-import { useVehicles } from '@repo/api/paths/vehicle/get-all'
 import { Skeleton } from '@repo/ui/components/skeleton'
-import { useEffect, useMemo } from 'react'
 
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
 import { ItemCounts } from '@/components/shared/item-counts'
 import { VehicleCardSkeleton } from '@/features/vehicle/components/card.skeleton'
 import { VehicleCreateForm } from '@/features/vehicle/components/create-form'
 import { VehicleGroup } from '@/features/vehicle/components/group'
-import { toast } from '@/lib/toast'
+import {
+  useVehicleContext,
+  VehicleProvider,
+} from '@/features/vehicle/lib/context'
 
 const VehiclesSkeleton = () => (
   <div className="flex gap-8">
@@ -29,55 +28,15 @@ const VehiclesSkeleton = () => (
   </div>
 )
 
-const VehiclesRoute = () => {
+const Vehicles = () => {
   const {
-    data: menubarTabs,
-    isPending: isMenubarTabsPending,
-    isError: isMenubarTabsError,
-  } = useMenubarTabs()
-  const {
-    data: menubarVehicles,
-    isPending: isMenubarVehiclesPending,
-    isError: isMenubarVehiclesError,
-  } = useMenubarVehicles()
-  const {
-    data: vehicles,
-    isPending: isVehiclesPending,
-    isError: isVehiclesError,
-  } = useVehicles()
+    menubarTabs,
+    vehicles,
+    menubarVehiclesByMenubarTab,
+    vehiclesByMenubarVehicles,
+  } = useVehicleContext()
 
-  useEffect(() => {
-    if (isMenubarTabsError) {
-      toast.api.fetch('menubarTab').error()
-    } else if (isMenubarVehiclesError) {
-      toast.api.fetch('menubarVehicle').error()
-    } else if (isVehiclesError) {
-      toast.api.fetch('vehicle').error()
-    }
-  }, [isMenubarTabsError, isMenubarVehiclesError, isVehiclesError])
-
-  const menubarVehiclesByMenubarTab = useMemo(() => {
-    const map = new Map<string, typeof menubarVehicles>()
-    if (menubarVehicles)
-      for (const v of menubarVehicles) {
-        if (!map.has(v.menubarTab)) map.set(v.menubarTab, [])
-        map.get(v.menubarTab)?.push(v)
-      }
-    return map
-  }, [menubarVehicles])
-
-  const vehiclesByMenubarVehicles = useMemo(() => {
-    const map = new Map<string, typeof vehicles>()
-    if (vehicles)
-      for (const v of vehicles) {
-        if (!map.has(v.menubarVehicle)) map.set(v.menubarVehicle, [])
-        map.get(v.menubarVehicle)?.push(v)
-      }
-    return map
-  }, [vehicles])
-
-  if (isMenubarTabsPending || isMenubarVehiclesPending || isVehiclesPending)
-    return <VehiclesSkeleton />
+  console.log(vehicles?.map((v) => v.id))
 
   return (
     <>
@@ -111,5 +70,11 @@ const VehiclesRoute = () => {
     </>
   )
 }
+
+const VehiclesRoute = () => (
+  <VehicleProvider Skeleton={VehiclesSkeleton}>
+    <Vehicles />
+  </VehicleProvider>
+)
 
 export default VehiclesRoute

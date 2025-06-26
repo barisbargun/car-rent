@@ -12,4 +12,4 @@ const navLinkConfig = {
   reviews: { name: 'Reviews', title: 'Client Reviews', link: 'reviews' },
 } satisfies Record<string, NavLinkConfig>
 
-export { navLinkConfig, type NavLinkConfig, type NavLinks }
+export { navLinkConfig }

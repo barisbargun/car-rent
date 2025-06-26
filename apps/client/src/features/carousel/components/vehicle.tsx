@@ -1,11 +1,11 @@
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-import { CarouselGet } from '@repo/api/types/carousel'
+import { CarouselGet } from '@repo/api/paths/carousel/common'
 import { Image } from '@repo/ui/components/image'
 import React from 'react'
 
-import { H1, H2, H3 } from '@/components/global/typography'
+import { H1, H2, H3, H4 } from '@/components/global/typography'
 
 type Props = {
   data: CarouselGet
@@ -19,40 +19,45 @@ export const CarouselVehicle = ({ data }: Props) => {
     label: string
     children: React.ReactNode
   }) => (
-    <div>
-      <small className="text-sm opacity-85">{label}</small>
-      <H3 as="p" className="font-semibold">
+    <div className="*:drop-shadow-black">
+      <small className="text-xs opacity-85">{label}</small>
+      <p className="font-semibold">
         {children}
-      </H3>
+      </p>
     </div>
   )
 
   return (
-    <div className="relative h-screen w-screen text-black">
+    <div className="relative h-screen w-screen text-white">
       <Image
         fill
         src={data.img?.url}
         widthList={[1500, 1300, 1000, 600, 400]}
         alt="carousel"
+        loading="eager"
+        className="h-screen object-cover"
       />
       <div className="absolute left-0 top-0 flex h-screen w-full justify-center">
         <div className="container relative">
           <div className="absolute top-28 w-full max-md:top-20">
-            <H2 className="w-[700px] max-w-[90%] text-balance uppercase">
+            <H1 className="drop-shadow-black w-[700px] max-w-[90%] text-balance font-bold uppercase">
               {data.title}
-            </H2>
-            <h2 className="max-w-[50%] text-sm">{data.desc}</h2>
+            </H1>
+            <h2 className="drop-shadow-black mt-4 max-w-[50%] text-sm">
+              {data.desc}
+            </h2>
           </div>
-          <div className="max-desktop:bottom-20 absolute bottom-28 flex flex-col max-sm:hidden">
-            <H1 className="text-balance uppercase">{data.vehicleName}</H1>
-            <div className="my-3 h-1 bg-gradient-to-r from-slate-800"></div>
-            <div className="flex gap-8">
+          <div className=" absolute bottom-20 flex flex-col max-sm:hidden">
+            <H4 className="drop-shadow-black text-balance text-white font-bold">
+              {data.vehicleName}
+            </H4>
+            <div className="flex gap-8 max-lg:hidden mt-3">
               <Feature label="Base Price">
                 ${data.price}
                 <span className="text-sm">/hour</span>
               </Feature>
               <Feature label="Engine">{data.engine}</Feature>
-              <Feature label="Horse power">{data.power}</Feature>
+              <Feature label="Horse power">{data.power} HP</Feature>
             </div>
           </div>
         </div>

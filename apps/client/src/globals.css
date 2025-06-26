@@ -16,11 +16,11 @@
   }
 
   body {
-    @apply overflow-x-hidden;
+    @apply overflow-x-hidden w-screen min-h-screen bg-background text-foreground;
   }
 
   #root {
-    @apply flex min-h-screen w-full bg-background max-lg:flex-col text-foreground;
+    @apply flex min-h-screen w-full max-lg:flex-col;
   }
 
   textarea {
@@ -39,24 +39,12 @@
     @apply text-sm;
   }
 
-  /* Page Space */
-  .page-t-p {
-    @apply pt-6 xl:pt-8;
+  /* Section Space */
+  .section-t-p {
+    @apply pt-10 xl:pt-12;
   }
-  .page-b-p {
-    @apply pb-6 xl:pb-8;
-  }
-  .page-l-p {
-    @apply pl-6 xl:pl-12;
-  }
-  .page-r-p {
-    @apply pr-6 xl:pr-12;
-  }
-  .page-t-gap {
-    @apply gap-14 2xl:gap-20;
-  }
-  .page-between-r-p {
-    @apply pr-16 2xl:pr-20;
+  .section-b-p {
+    @apply pb-10 xl:pb-12;
   }
 }
 

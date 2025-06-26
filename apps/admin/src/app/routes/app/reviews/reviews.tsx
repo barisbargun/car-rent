@@ -1,6 +1,6 @@
+import { ReviewGet } from '@repo/api/paths/review/common'
 import { useReviews } from '@repo/api/paths/review/get-all'
 import { useSwapReview } from '@repo/api/paths/review/swap'
-import { ReviewGet } from '@repo/api/types/review'
 import { Skeleton } from '@repo/ui/components/skeleton'
 import { cn } from '@repo/ui/lib/utils'
 import { useEffect, useState } from 'react'
@@ -109,7 +109,12 @@ const ReviewsRoute = () => {
         ))}
       </div>
 
-      <ButtonModelForm model="review" modelText="Review" type="ADD" itemsCount={reviews?.length}>
+      <ButtonModelForm
+        model="review"
+        modelText="Review"
+        type="ADD"
+        itemsCount={reviews?.length}
+      >
         <ReviewCreateForm />
       </ButtonModelForm>
       <ItemCounts count={reviews?.length} model="review" />

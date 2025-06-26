@@ -1,10 +1,10 @@
+import { MenubarVehicleGet } from '@repo/api/paths/menubar/vehicle/common'
 import { useDeleteMenubarVehicle } from '@repo/api/paths/menubar/vehicle/delete'
-import { MenubarVehicleGet } from '@repo/api/types/menubar'
+import { Image } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
-import { Image } from '@repo/ui/components/image'
 
 import { MenubarVehicleUpdateForm } from './update-form'
 

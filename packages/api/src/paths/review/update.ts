@@ -1,24 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { z } from 'zod'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { ReviewGet } from '#api/types/review'
 
-import { createReviewInputSchema } from './create'
+import { ReviewGet,ReviewUpdate } from './common'
 import { getReviewsQueryOptions } from './get-all'
-
-export const updateReviewInputSchema = createReviewInputSchema
-
-export type UpdateReviewInput = z.infer<typeof updateReviewInputSchema>
 
 export const updateReview = ({
   id,
   data,
 }: {
   id: string
-  data: UpdateReviewInput
+  data: ReviewUpdate
 }): Promise<ReviewGet> => {
   return api.patch(`${API_PATHS.review}/${id}`, data)
 }

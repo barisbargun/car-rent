@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  updateSiteConfigInputSchema,
-  useUpdateSiteConfig,
-} from '@repo/api/paths/site-config/update'
-import { SiteConfigGet } from '@repo/api/types/site-config'
+  SiteConfigGet,
+  SiteConfigUpdate,
+  siteConfigUpdateSchema,
+} from '@repo/api/paths/site-config/common'
+import { useUpdateSiteConfig } from '@repo/api/paths/site-config/update'
 import {
   Form,
   FormControl,
@@ -14,18 +15,17 @@ import {
 } from '@repo/ui/components/form'
 import { Input } from '@repo/ui/components/input'
 import { Textarea } from '@repo/ui/components/textarea'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { ImageFormField } from '@/features/image/components/form-field'
-import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     siteConfig?: SiteConfigGet
   }
 
@@ -39,17 +39,17 @@ export const SiteConfigUpdateForm = ({
   const breakpoint = useBreakpoint()
   const isDesktop = breakpoint > 2
 
-  const form = useForm<z.infer<typeof updateSiteConfigInputSchema>>({
-    resolver: zodResolver(updateSiteConfigInputSchema),
+  const form = useForm<SiteConfigUpdate>({
+    resolver: zodResolver(siteConfigUpdateSchema),
     defaultValues: {
-      logoImg: siteConfig?.logoImg?.id || '',
-      serviceImg: siteConfig?.serviceImg?.id || '',
+      logoImg: siteConfig?.logoImg?.id,
+      serviceImg: siteConfig?.serviceImg?.id,
       title: siteConfig?.title || '',
       desc: siteConfig?.desc || '',
     },
   })
 
-  async function onSubmit(values: z.infer<typeof updateSiteConfigInputSchema>) {
+  async function onSubmit(values: SiteConfigUpdate) {
     try {
       await mutateAsync({
         data: values,

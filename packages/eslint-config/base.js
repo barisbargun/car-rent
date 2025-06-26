@@ -34,9 +34,10 @@ export const config = [
       'import/newline-after-import': 'error',
       'import/no-duplicates': 'error',
 
-      'unicorn/prevent-abbreviations': ['off'],
+      'unicorn/prevent-abbreviations': 'off',
       'unicorn/no-empty-file': 'off',
       'unicorn/no-array-reduce': 'off',
+      'unicorn/no-await-expression-member': 'off',
 
       '@typescript-eslint/no-explicit-any': ['off'],
       '@typescript-eslint/no-unused-vars': [

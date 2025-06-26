@@ -11,10 +11,9 @@ import { useVehicles } from '@repo/api/paths/vehicle/get-all'
 
 import { paths } from '@/config/paths'
 import { DashboardCard } from '@/features/dashboard/components/card'
-import { StatisticContainer } from '@/types/statistic'
 
 const DashboardRoute = () => {
-  const statistics: StatisticContainer[] = [
+  const statistics: DashboardCard[] = [
     /** Users */
     {
       title: 'Users',

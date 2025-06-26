@@ -40,7 +40,7 @@ const NavItem = ({
         variant="ghost"
         size="lg"
         className={cn(
-          'w-full px-2 max-lg:py-8 max-lg:last:col-span-2 xl:px-3',
+          'w-full px-2 max-lg:py-8 max-lg:last:col-span-2 xl:px-3 drop-shadow-black',
           item.title === 'Users' && 'mt-auto',
         )}
         onClick={() => handleClick(item.link || '')}

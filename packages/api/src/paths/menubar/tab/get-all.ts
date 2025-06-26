@@ -1,9 +1,10 @@
-import { MenubarTab } from '#api/types/menubar'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { QueryConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
+
+import { MenubarTab } from './common'
 
 export const getMenubarTabs = (): Promise<MenubarTab[]> => {
   return api.get(API_PATHS.menubarTab)

@@ -1,6 +1,6 @@
+import { MenubarTab } from '@repo/api/paths/menubar/tab/common'
 import { useMenubarTabs } from '@repo/api/paths/menubar/tab/get-all'
 import { useSwapMenubarTab } from '@repo/api/paths/menubar/tab/swap'
-import { MenubarTab } from '@repo/api/types/menubar'
 import { Skeleton } from '@repo/ui/components/skeleton'
 import { cn } from '@repo/ui/lib/utils'
 import { useEffect, useState } from 'react'
@@ -13,15 +13,13 @@ import { MenubarTabCardSkeleton } from '@/features/menubar/tab/components/card.s
 import { MenubarTabCreateForm } from '@/features/menubar/tab/components/create-form'
 import { toast } from '@/lib/toast'
 
-const itemsClassName = "grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-
 const MenubarTabsSkeleton = () => (
   <>
     <div className="flex w-full justify-start items-gap">
       <Skeleton className="h-10 w-32" />
       <Skeleton className="h-10 w-32" />
     </div>
-    <div className={itemsClassName}>
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {Array.from({ length: 4 }).map((_, i) => (
         <MenubarTabCardSkeleton key={i} />
       ))}
@@ -97,13 +95,14 @@ const MenubarTabsRoute = () => {
     <>
       <ButtonModelSwapComplete
         model="menubarTab"
+        swapId={swapId}
         handlePatch={handlePatch}
         handleSwapReset={handleSwapReset}
         pendingSwap={pendingSwap}
         isAnyChange={isAnyChange}
       />
 
-      <div className={itemsClassName}>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {currentData?.map((menubarTab) => (
           <MenubarTabCard
             className={cn(pendingSwap && 'pointer-events-none')}

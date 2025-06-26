@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMenubarTabs } from '@repo/api/paths/menubar/tab/get-all'
 import {
-  createMenubarVehicleInputSchema,
-  useCreateMenubarVehicle,
-} from '@repo/api/paths/menubar/vehicle/create'
+  MenubarVehicleCreate,
+  menubarVehicleCreateSchema,
+} from '@repo/api/paths/menubar/vehicle/common'
+import { useCreateMenubarVehicle } from '@repo/api/paths/menubar/vehicle/create'
 import {
   Form,
   FormControl,
@@ -24,14 +25,13 @@ import {
 import { Textarea } from '@repo/ui/components/textarea'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
-type Props = React.HTMLAttributes<HTMLFormElement> & DialogPropsPartial & {}
+type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps & {}
 
 export const MenubarVehicleCreateForm = ({
   closeDialog,
@@ -42,8 +42,8 @@ export const MenubarVehicleCreateForm = ({
     useMenubarTabs()
   const { mutateAsync, isPending } = useCreateMenubarVehicle()
 
-  const form = useForm<z.infer<typeof createMenubarVehicleInputSchema>>({
-    resolver: zodResolver(createMenubarVehicleInputSchema),
+  const form = useForm<MenubarVehicleCreate>({
+    resolver: zodResolver(menubarVehicleCreateSchema),
     defaultValues: {
       img: '',
       title: '',
@@ -52,9 +52,7 @@ export const MenubarVehicleCreateForm = ({
     },
   })
 
-  async function onSubmit(
-    values: z.infer<typeof createMenubarVehicleInputSchema>,
-  ) {
+  async function onSubmit(values: MenubarVehicleCreate) {
     try {
       await mutateAsync({
         data: values,

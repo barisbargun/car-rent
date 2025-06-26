@@ -3,24 +3,30 @@ import mongoose from 'mongoose'
 
 import { env } from './env'
 
-export const databaseConnect = async (
-  _request?: Request,
-  _response?: Response,
-  next?: NextFunction
+export const dbConnect = async (
+  req: Request,
+  _res: Response,
+  next: NextFunction,
 ) => {
   mongoose.set('strictQuery', true)
   mongoose.set('toJSON', {
     virtuals: true,
     transform: (_document, converted) => {
-      delete converted._id
-    }
+      delete converted.id
+    },
   })
   try {
     await mongoose.connect(env.MONGO_URI, {
-      dbName: 'car_rent'
+      dbName: 'car_rent',
+      serverApi: {
+        version: '1',
+        strict: true,
+        deprecationErrors: true,
+      },
     })
-    if (next) next()
+
+    next()
   } catch (error) {
-    console.log(error)
+    req.log.error(`Database connection error: ${error}`)
   }
 }

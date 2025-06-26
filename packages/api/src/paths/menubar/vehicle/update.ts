@@ -1,27 +1,19 @@
 import { sortByIndex } from '@repo/utils/obj'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { z } from 'zod'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
-import { MenubarVehicleGet } from '#api/types/menubar'
 
-import { createMenubarVehicleInputSchema } from './create'
+import { MenubarVehicleGet, MenubarVehicleUpdate } from './common'
 import { getMenubarVehiclesQueryOptions } from './get-all'
-
-export const updateMenubarVehicleInputSchema = createMenubarVehicleInputSchema
-
-export type UpdateMenubarVehicleInput = z.infer<
-  typeof updateMenubarVehicleInputSchema
->
 
 export const updateMenubarVehicle = ({
   id,
   data,
 }: {
   id: string
-  data: UpdateMenubarVehicleInput
+  data: MenubarVehicleUpdate
 }): Promise<MenubarVehicleGet> => {
   return api.patch(`${API_PATHS.menubarVehicle}/${id}`, data)
 }

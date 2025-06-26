@@ -1,4 +1,4 @@
-import { MenubarVehicleGet } from '@repo/api/types/menubar'
+import { MenubarVehicleGet } from '@repo/api/paths/menubar/vehicle/common'
 import { NavigationMenuLink } from '@repo/ui/components/navigation-menu'
 
 type Props = React.HTMLAttributes<HTMLLIElement> & {

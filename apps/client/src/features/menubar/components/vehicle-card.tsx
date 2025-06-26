@@ -2,7 +2,7 @@ import {
   DRIVE_TRAIN_LIST_UI,
   VehicleGet,
   WHEEL_DRIVE_LIST_UI,
-} from '@repo/api/types/vehicle'
+} from '@repo/api/paths/vehicle/common'
 import { useMemo } from 'react'
 
 import assets from '@/assets'

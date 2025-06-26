@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  updateFooterTitleInputSchema,
-  useUpdateFooterTitle,
-} from '@repo/api/paths/footer/title/update'
-import { FooterTitle } from '@repo/api/types/footer'
+  FooterTitle,
+  FooterTitleUpdate,
+  footerTitleUpdateSchema,
+} from '@repo/api/paths/footer/title/common'
+import { useUpdateFooterTitle } from '@repo/api/paths/footer/title/update'
 import {
   Form,
   FormControl,
@@ -15,14 +16,13 @@ import {
 import { Input } from '@repo/ui/components/input'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     footerTitle: FooterTitle
   }
 
@@ -34,34 +34,29 @@ export const FooterTitleUpdateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useUpdateFooterTitle()
 
-  const form = useForm<z.infer<typeof updateFooterTitleInputSchema>>({
-    resolver: zodResolver(updateFooterTitleInputSchema),
+  const form = useForm<FooterTitleUpdate>({
+    resolver: zodResolver(footerTitleUpdateSchema),
     defaultValues: {
       title: footerTitle.title || '',
     },
   })
 
-  async function onSubmit(
-    values: z.infer<typeof updateFooterTitleInputSchema>,
-  ) {
+  async function onSubmit(values: FooterTitleUpdate) {
     try {
       await mutateAsync({
         id: footerTitle.id,
         data: values,
       })
-      toast.footerTitle.add.success()
+      toast.footerTitle.update.success()
       closeDialog?.()
     } catch {
-      toast.footerTitle.add.error()
+      toast.footerTitle.update.error()
     }
   }
 
   return (
     <Form {...form}>
-      <form
-        className={cn('flex w-full flex-col gap-5', className)}
-        {...props}
-      >
+      <form className={cn('flex w-full flex-col gap-5', className)} {...props}>
         <FormField
           control={form.control}
           name="title"

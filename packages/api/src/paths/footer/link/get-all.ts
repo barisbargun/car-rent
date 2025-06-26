@@ -1,9 +1,10 @@
-import { FooterLink } from '#api/types/footer'
 import { queryOptions, useQuery } from '@tanstack/react-query'
 
 import { API_PATHS } from '#api/config/api-paths'
 import { QueryConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
+
+import { FooterLink } from './common'
 
 export const getFooterLinks = (): Promise<FooterLink[]> => {
   return api.get(API_PATHS.footerLink)

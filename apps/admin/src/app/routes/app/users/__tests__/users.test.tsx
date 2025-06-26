@@ -1,5 +1,5 @@
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
-import { ROLE_POST_LIST_UI, UserPost } from '@repo/api/types/user'
+import { ROLE_POST_LIST_UI, User } from '@repo/api/paths/user/common'
 import { generateUser } from '@repo/mock/utils/data-generators'
 import { getEnumKeys } from '@repo/utils/enum'
 
@@ -19,7 +19,7 @@ import {
 
 import UsersRoute from '../users'
 
-type UserType = Required<UserPost>
+type UserType = Required<Omit<User, 'refreshToken'>>
 
 const create = async (user: UserType) => {
   await userEvent.click(screen.getByRole('button', { name: /add user/i }))

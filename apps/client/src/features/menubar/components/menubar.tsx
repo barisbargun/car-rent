@@ -1,8 +1,8 @@
 import {
   MENUBAR_TAB_GRID_LIST,
   MenubarTab,
-  MenubarVehicleGet,
-} from '@repo/api/types/menubar'
+} from '@repo/api/paths/menubar/tab/common'
+import { MenubarVehicleGet } from '@repo/api/paths/menubar/vehicle/common'
 import {
   NavigationMenuContent,
   NavigationMenuItem,
@@ -15,7 +15,9 @@ import { MenubarVehicleCard } from './menubar-vehicle-card'
 type Props = {
   menubarTab: MenubarTab
   menubarVehicles: MenubarVehicleGet[]
-  setSelectedMenubarVehicle: React.Dispatch<React.SetStateAction<string | undefined>>
+  setSelectedMenubarVehicle: React.Dispatch<
+    React.SetStateAction<string | undefined>
+  >
 }
 
 export const Menubar = ({
@@ -24,29 +26,28 @@ export const Menubar = ({
   setSelectedMenubarVehicle,
 }: Props) => {
   const isGrid4 = menubarTab.type == MENUBAR_TAB_GRID_LIST.GRID4
-
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className='cursor-default'>{menubarTab.title}</NavigationMenuTrigger>
+      <NavigationMenuTrigger className="cursor-default">
+        {menubarTab.title}
+      </NavigationMenuTrigger>
       <NavigationMenuContent>
         <ul
-          className={
-            'grid gap-3 p-4 text-white ' +
-            (isGrid4
+          className={cn(
+            'grid gap-3 p-4 text-white',
+            isGrid4
               ? 'w-[350px] grid-cols-[.75fr_1fr] sm:w-[450px] md:w-[500px]'
-              : 'w-fit max-md:flex-center md:w-[500px] md:grid-cols-2 lg:w-[550px]')
-          }
+              : 'w-fit max-md:flex-center md:w-[500px] md:grid-cols-2 lg:w-[550px]',
+          )}
         >
-          {menubarVehicles
-            .slice(isGrid4 ? 0 : 0, isGrid4 ? 4 : 6)
-            .map((menubarVehicle, index) => (
-              <MenubarVehicleCard
-                key={menubarVehicle.id}
-                data={menubarVehicle}
-                className={cn(isGrid4 && index == 0 && 'row-span-3')}
-                onClick={() => setSelectedMenubarVehicle(menubarVehicle.id)}
-              />
-            ))}
+          {menubarVehicles.map((menubarVehicle, index) => (
+            <MenubarVehicleCard
+              key={menubarVehicle.id}
+              data={menubarVehicle}
+              className={isGrid4 && index == 0 ? 'row-span-3' : ''}
+              onClick={() => setSelectedMenubarVehicle(menubarVehicle.id)}
+            />
+          ))}
         </ul>
       </NavigationMenuContent>
     </NavigationMenuItem>

@@ -15,19 +15,17 @@ export const AuthLayout = ({ children }: LayoutProps) => {
   const { data: user, isPending, isSuccess } = useCurrentUser()
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirectTo')
-
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user && isSuccess) {
+    if (user?.id && isSuccess) {
       navigate(redirectTo ?? (paths.app.dashboard.path || '/'), {
         replace: true,
       })
     }
   }, [user, isSuccess, navigate, redirectTo])
 
-  if (isPending || isSuccess) return <FullPageLoader />
-
+  if (isPending) return <FullPageLoader />
   return (
     <>
       <ModeToggle className="absolute right-4 top-4 z-10" />

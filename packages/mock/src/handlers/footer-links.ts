@@ -2,15 +2,19 @@ import { MODELS } from '@repo/api/config/api-paths'
 import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { swapModelInputSchema } from '@repo/api/config/shared-schemas'
-import { createFooterLinkInputSchema } from '@repo/api/paths/footer/link/create'
-import { updateFooterLinkInputSchema } from '@repo/api/paths/footer/link/update'
-import { giveError, StatusCodes } from '@repo/utils/error'
+import {
+  footerLinkCreateSchema,
+  footerLinkUpdateSchema,
+} from '@repo/api/paths/footer/link/common'
+import { giveError } from '@repo/utils/error'
 import { getNextIndex, sortByIndex } from '@repo/utils/obj'
+import { zodCheckSchema } from '@repo/utils/schema'
+import { StatusCodes } from 'http-status-codes'
 import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, checkSchema, networkDelay } from '#mock/utils/mock'
+import { catchError, networkDelay } from '#mock/utils/mock'
 import { getParentById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'
@@ -41,9 +45,9 @@ export const footerLinksHandlers = [
       if (dbModel.count() >= maxItemCounts.footerLink)
         throw giveError(StatusCodes.BAD_REQUEST, `Max item count reached`)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        createFooterLinkInputSchema,
+        footerLinkCreateSchema,
       )
 
       getParentById(data.footerTitle, 'footerTitle')
@@ -82,9 +86,9 @@ export const footerLinksHandlers = [
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.footerLink.update(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
-        updateFooterLinkInputSchema,
+        footerLinkUpdateSchema,
       )
 
       const oldData = dbModel.findFirst({
@@ -136,14 +140,14 @@ export const footerLinksHandlers = [
   }),
 
   // Swapping
-  http.patch(`${url}`, async ({ request }) => {
+  http.patch(url, async ({ request }) => {
     await networkDelay()
 
     try {
       const user = verifyAccessToken(request)
       REQUIRED_ROLE.footerLink.swap(user.role, true)
 
-      const data = checkSchema(
+      const data = zodCheckSchema(
         (await request.json()) as any,
         swapModelInputSchema,
       )

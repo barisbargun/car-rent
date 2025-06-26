@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  updateCarouselInputSchema,
-  useUpdateCarousel,
-} from '@repo/api/paths/carousel/update'
-import { CarouselGet } from '@repo/api/types/carousel'
+  CarouselGet,
+  CarouselUpdate,
+  carouselUpdateSchema,
+} from '@repo/api/paths/carousel/common'
+import { useUpdateCarousel } from '@repo/api/paths/carousel/update'
 import {
   Form,
   FormControl,
@@ -16,15 +17,14 @@ import { Input } from '@repo/ui/components/input'
 import { Textarea } from '@repo/ui/components/textarea'
 import { cn } from '@repo/ui/lib/utils'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonAlertUpdate } from '@/components/shared/buttons/alert-update'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogPropsPartial } from '@/types/dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> &
-  DialogPropsPartial & {
+  DialogProps & {
     carousel: CarouselGet
   }
 
@@ -36,10 +36,10 @@ export const CarouselUpdateForm = ({
 }: Props) => {
   const { mutateAsync, isPending } = useUpdateCarousel()
 
-  const form = useForm<z.infer<typeof updateCarouselInputSchema>>({
-    resolver: zodResolver(updateCarouselInputSchema),
+  const form = useForm<CarouselUpdate>({
+    resolver: zodResolver(carouselUpdateSchema),
     defaultValues: {
-      img: carousel.img?.id || '',
+      img: carousel.img?.id,
       title: carousel.title || '',
       desc: carousel.desc || '',
       vehicleName: carousel.vehicleName || '',
@@ -49,7 +49,7 @@ export const CarouselUpdateForm = ({
     },
   })
 
-  async function onSubmit(values: z.infer<typeof updateCarouselInputSchema>) {
+  async function onSubmit(values: CarouselUpdate) {
     try {
       await mutateAsync({
         id: carousel.id,
@@ -141,7 +141,7 @@ export const CarouselUpdateForm = ({
             <FormItem>
               <FormLabel>Engine</FormLabel>
               <FormControl>
-                <Input type="number" placeholder="Enter engine" {...field} />
+                <Input type="text" placeholder="Enter engine" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

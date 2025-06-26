@@ -14,14 +14,12 @@ const modelsApiPaths = {
 
 export const API_PATHS = {
   ...modelsApiPaths,
-  menubarPopulated: 'menubar/populated',
-  footerPopulated: 'footer/populated',
 
   // Auth
   login: 'auth/login',
+  logout: 'auth/logout',
   currentUser: 'auth/current-user',
   refreshAccessToken: 'auth/refresh',
-  logout: 'auth/logout',
 } as const satisfies Record<string, string>
 
 export type MODELS = keyof typeof modelsApiPaths

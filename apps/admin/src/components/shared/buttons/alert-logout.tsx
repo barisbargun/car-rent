@@ -4,16 +4,20 @@ import { Button } from '@repo/ui/components/button'
 import { HandleAlert } from '@repo/ui/components/handle-alert'
 import { Loader } from '@repo/ui/components/loader'
 import { LogOut } from 'lucide-react'
+import { useNavigate } from 'react-router'
 
+import { paths } from '@/config/paths'
 import { toast } from '@/lib/toast'
 
 export const ButtonAlertLogout = () => {
   const { mutateAsync, isSuccess, isPending } = useAuthLogout()
+  const navigate = useNavigate()
 
   const handleLogout = async () => {
     try {
       await mutateAsync()
-      queryClient.resetQueries()
+      queryClient.removeQueries()
+      navigate(paths.auth.login.path)
       toast.user.logout.success()
     } catch {
       toast.user.logout.error()

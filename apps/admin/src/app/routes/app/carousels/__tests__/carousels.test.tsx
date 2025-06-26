@@ -1,4 +1,4 @@
-import { Carousel } from '@repo/api/types/carousel'
+import { Carousel } from '@repo/api/paths/carousel/common'
 import { generateCarousel } from '@repo/mock/utils/data-generators'
 
 import { confirmDialog, selectFirstImage } from '@/testing/helpers'

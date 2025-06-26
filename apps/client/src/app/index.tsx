@@ -59,9 +59,9 @@ export const App = () => {
       </PageSection>
 
       {/** Footer */}
-      {/* <PageSection className="bg-slate-950 text-white">
+      <PageSection className="bg-slate-950 text-white">
         <FooterView />
-      </PageSection> */}
+      </PageSection>
     </>
   )
 }
