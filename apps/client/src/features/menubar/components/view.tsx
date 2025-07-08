@@ -51,7 +51,7 @@ export const MenubarView = ({ className, ...props }: Props) => {
   if (isMenubarTabsPending || isMenubarVehiclesPending || isVehiclesPending)
     return <Loader />
   return (
-    <div className={cn('z-20 flex-col flex-center', className)} {...props}>
+    <div className={cn('flex-center z-20 flex-col', className)} {...props}>
       <NavigationMenu className="">
         <NavigationMenuList className="flex-wrap px-4 max-lg:flex max-lg:gap-4">
           {menubarTabs?.map((tab) => {

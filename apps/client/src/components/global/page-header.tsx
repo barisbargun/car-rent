@@ -10,7 +10,7 @@ export function PageHeader({ className, children, ...props }: Props) {
   return (
     <H3
       className={cn(
-        'mx-auto text-balance uppercase tracking-[0.8rem] page-bottom-space',
+        'page-bottom-space mx-auto text-balance uppercase tracking-[0.8rem]',
         className,
       )}
       {...props}

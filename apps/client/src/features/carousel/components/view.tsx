@@ -48,14 +48,14 @@ export const CarouselView = () => {
         ))}
       </Slider>
 
-      <div className="absolute bottom-10 right-10 gap-4 flex-center max-lg:hidden">
+      <div className="flex-center absolute bottom-10 right-10 gap-4 max-lg:hidden">
         <ChevronLeft
-          className="size-12 cursor-pointer text-stone-400 drop-shadow-black"
+          className="drop-shadow-black size-12 cursor-pointer text-stone-400"
           onClick={slideLeft}
         />
 
         <ChevronRight
-          className="size-12 cursor-pointer text-stone-400 drop-shadow-black"
+          className="drop-shadow-black size-12 cursor-pointer text-stone-400"
           onClick={slideRight}
         />
       </div>

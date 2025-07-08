@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import { env } from './env'
 
-export const AUTH_COOKIE = 'jwt'
+const AUTH_COOKIE = 'jwt'
 
 export const getJwtCookie = (req: Request): string => {
   const cookie = req.cookies[AUTH_COOKIE] as string | undefined

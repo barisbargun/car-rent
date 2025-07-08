@@ -5,11 +5,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@repo/ui/components/form'
+import { Image } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'
 import { ComponentProps, useEffect, useState } from 'react'
 import { UseFormReturn } from 'react-hook-form'
-
-import { Image } from '@repo/ui/components/image'
 
 import { ButtonClearImage } from './button-clear-image'
 import { ImageButtonDialogSelect } from './button-dialog-select'

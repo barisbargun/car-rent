@@ -24,14 +24,14 @@ export const MenubarTabCard = ({
   return (
     <div
       className={cn(
-        'relative aspect-[3] overflow-hidden rounded border-4 border-secondary shadow flex-center lg:aspect-[5/3]',
+        'border-secondary flex-center relative aspect-[3] overflow-hidden rounded border-4 shadow lg:aspect-[5/3]',
         className,
       )}
       data-testid="menubar-tab-card"
       {...props}
     >
       {/** Buttons */}
-      <div className="absolute right-1 top-1 flex gap-2 card-buttons">
+      <div className="card-buttons absolute right-1 top-1 flex gap-2">
         <ButtonModelForm
           type="UPDATE"
           model="menubarTab"
@@ -58,4 +58,3 @@ export const MenubarTabCard = ({
     </div>
   )
 }
-

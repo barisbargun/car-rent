@@ -4,7 +4,7 @@ import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
 
-import { ReviewGet,ReviewUpdate } from './common'
+import { ReviewGet, ReviewUpdate } from './common'
 import { getReviewsQueryOptions } from './get-all'
 
 export const updateReview = ({

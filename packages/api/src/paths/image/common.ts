@@ -17,7 +17,7 @@ TYPES
 
 */
 export type Image = {
-  id:string
+  id: string
   url: string
   publicId: string
 }

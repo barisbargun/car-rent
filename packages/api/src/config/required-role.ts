@@ -38,7 +38,6 @@ type OPERATIONS =
   | 'admin'
   | 'editor'
 
-// TODO: delete unnecessary operations
 export const REQUIRED_ROLE = {
   user: {
     get: reqAdmin,

@@ -134,9 +134,7 @@ const vehicle = () =>
   ({
     index: getNextIndex(db.vehicle.getAll()),
     img: randomImage().id,
-    menubarVehicle: randElement(
-      ...db.menubarVehicle.getAll().map((v) => v.id),
-    ),
+    menubarVehicle: randElement(...db.menubarVehicle.getAll().map((v) => v.id)),
     title: randTextRange({ min: 5, max: 50 }),
     fuel: randElement(randNumber({ min: 4, max: 1000 }).toString(), 'electric'),
     drivetrain: randElement(...getEnumValues(DRIVE_TRAIN_LIST)),

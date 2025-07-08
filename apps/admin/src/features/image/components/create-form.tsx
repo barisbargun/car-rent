@@ -13,9 +13,9 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { toast } from '@/lib/toast'
-import { DialogProps } from '@/components/global/open-dialog'
 
 import { ImageUploader as ImageUploaderType } from '../types'
 import { getCroppedImg } from '../utils/crop'

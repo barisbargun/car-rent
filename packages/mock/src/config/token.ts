@@ -1,8 +1,8 @@
+import { sanitizeUser } from '@repo/api/paths/user/common'
 import { giveError } from '@repo/utils/error'
 import { StatusCodes } from 'http-status-codes'
 
 import { decode, encode } from '#mock/utils/encryption'
-import { sanitizeUser } from '#mock/utils/mock'
 
 import { db } from '../db'
 import { getJwtCookie } from './cookie-jwt'

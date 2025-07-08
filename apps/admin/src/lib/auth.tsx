@@ -10,7 +10,7 @@ export const ProtectedAuthRoute = ({
 }: {
   children: React.ReactNode
 }) => {
-  const { data: user, isPending,  isError } = useCurrentUser()
+  const { data: user, isPending, isError } = useCurrentUser()
   const location = useLocation()
   if (isPending) return <FullPageLoader />
 

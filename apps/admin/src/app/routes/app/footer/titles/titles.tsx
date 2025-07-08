@@ -74,7 +74,7 @@ const FooterTitlesRoute = () => {
       const idList = currentData.map((footerTitle) => footerTitle.id)
       if (idList) {
         await mutateSwap({
-          data: {idList},
+          data: { idList },
         })
         setIsAnyChange(false)
         toast.footerTitle.swap.success()

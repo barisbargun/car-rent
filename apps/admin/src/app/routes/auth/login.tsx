@@ -23,7 +23,7 @@ const LoginRoute = () => {
           <CardTitle>Sign in</CardTitle>
           <CardDescription>Enter your username and password</CardDescription>
         </CardHeader>
-        <CardContent className=''>
+        <CardContent className="">
           <LoginForm
             onSuccess={() => {
               navigate(

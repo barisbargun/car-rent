@@ -1,8 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { UserGet, UserUpdateSelf, userUpdateSelfSchema } from '@repo/api/paths/user/common'
 import {
-  useUpdateUserSelf,
-} from '@repo/api/paths/user/update-self'
+  UserGet,
+  UserUpdateSelf,
+  userUpdateSelfSchema,
+} from '@repo/api/paths/user/common'
+import { useUpdateUserSelf } from '@repo/api/paths/user/update-self'
 import {
   Form,
   FormControl,
@@ -65,9 +67,9 @@ export const UserProfileUpdateForm = ({
           formName="img"
           initialImage={user?.img?.url}
           image={{
-            fallback:assets.profilePlaceHolder,
+            fallback: assets.profilePlaceHolder,
             alt: 'user',
-            className:'h-full object-cover rounded-full',
+            className: 'h-full object-cover rounded-full',
           }}
           button={{
             buttonText: 'Change image',

@@ -17,7 +17,6 @@ const model: MODELS = 'siteConfig'
 
 const role = REQUIRED_ROLE[model]
 
-
 const populate = 'logoImg serviceImg'
 
 router.get('/', useCache(model), async (_req, res) => {

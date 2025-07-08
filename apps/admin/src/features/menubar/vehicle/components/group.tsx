@@ -1,5 +1,5 @@
 import { arrayMove } from '@dnd-kit/sortable'
-import {  MenubarVehicleGet } from '@repo/api/paths/menubar/vehicle/common'
+import { MenubarVehicleGet } from '@repo/api/paths/menubar/vehicle/common'
 import { useSwapMenubarVehicle } from '@repo/api/paths/menubar/vehicle/swap'
 import { useEffect, useState } from 'react'
 
@@ -31,7 +31,7 @@ export const MenubarVehicleGroup = ({ tabTitle, data }: Props) => {
       const idList = items?.map((item) => item.id)
       if (idList) {
         await mutateSwap({
-          data: {idList},
+          data: { idList },
         })
         setIsAnyChange(false)
         toast.menubarVehicle.swap.success()

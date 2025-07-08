@@ -51,7 +51,7 @@ export const Loader = ({
 
 export const FullPageLoader = () => {
   return (
-    <div className="fixed left-0 top-0 z-50 h-screen w-full flex-center">
+    <div className="flex-center fixed left-0 top-0 z-50 h-screen w-full">
       <Loader />
     </div>
   )

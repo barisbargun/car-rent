@@ -1,5 +1,6 @@
-import { validationMsg } from '#api/lib/utils'
 import z from 'zod'
+
+import { validationMsg } from '#api/lib/utils'
 
 import { Image } from '../image/common'
 
@@ -38,7 +39,7 @@ TYPES
 
 */
 export type Carousel = {
-  id:string
+  id: string
   img: string
   index: number
   title?: string

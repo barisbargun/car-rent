@@ -30,7 +30,7 @@ export const App = () => {
       {/** Subscribe */}
       <PageSection className="bg-primary">
         <div className="flex flex-col items-center gap-5">
-          <h2 className="max-w-80 text-balance text-center text-3xl font-bold uppercase tracking-wider text-primary-foreground">
+          <h2 className="text-primary-foreground max-w-80 text-balance text-center text-3xl font-bold uppercase tracking-wider">
             subscribe to get discounts
           </h2>
           <form

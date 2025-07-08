@@ -1,11 +1,11 @@
-import { useDeleteUser } from '@repo/api/paths/user/delete'
 import { UserGet } from '@repo/api/paths/user/common'
+import { useDeleteUser } from '@repo/api/paths/user/delete'
+import { Image } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'
 
 import assets from '@/assets'
 import { ButtonModelDelete } from '@/components/shared/buttons/model-delete'
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
-import { Image } from '@repo/ui/components/image'
 
 import { UserUpdateForm } from './update-form'
 
@@ -17,7 +17,7 @@ export const UserCard = ({ data, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'relative flex flex-col items-center overflow-hidden rounded bg-background p-10 text-center shadow',
+        'bg-background relative flex flex-col items-center overflow-hidden rounded p-10 text-center shadow',
         className,
       )}
       data-testid="user-card"
@@ -33,12 +33,12 @@ export const UserCard = ({ data, className, ...props }: Props) => {
       <strong className="mt-4" title={data.username}>
         {data.username}
       </strong>
-      <small className="block text-sm text-muted-foreground" title={data.email}>
+      <small className="text-muted-foreground block text-sm" title={data.email}>
         {data.email}
       </small>
 
       {/** Buttons */}
-      <div className="absolute right-2 top-2 z-10 flex gap-2 card-buttons">
+      <div className="card-buttons absolute right-2 top-2 z-10 flex gap-2">
         <ButtonModelForm type="UPDATE" model="user" modelText="user">
           <UserUpdateForm user={data as any} />
         </ButtonModelForm>

@@ -34,7 +34,7 @@ export const Menubar = ({
       <NavigationMenuContent>
         <ul
           className={cn(
-            'grid w-[350px] gap-3 p-4 text-primary-foreground sm:w-[450px] lg:w-[500px]',
+            'text-primary-foreground grid w-[350px] gap-3 p-4 sm:w-[450px] lg:w-[500px]',
             isGrid4 ? 'grid-cols-[.75fr_1fr]' : 'grid-cols-2',
           )}
         >

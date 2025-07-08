@@ -44,7 +44,7 @@ export const FooterView = ({ className, ...props }: Props) => {
           {siteConfig?.desc}
         </p>
       </div>
-      <div className="flex  justify-between max-xl:flex-1 max-md:text-center max-sm:flex-col max-sm:gap-10 xl:w-[50%]">
+      <div className="flex justify-between max-xl:flex-1 max-md:text-center max-sm:flex-col max-sm:gap-10 xl:w-[50%]">
         {footerTitles?.map((tab) => {
           const links = linksByTitles.get(tab.id)
           if (!links?.length) return

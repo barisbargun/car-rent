@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import * as React from 'react'
 
 import { cn } from '#ui/lib/utils'
+
 import { Button } from './button'
 
 type CarouselApi = UseEmblaCarouselType[1]
@@ -28,7 +29,9 @@ type CarouselContextProps = {
   canScrollNext: boolean
 } & CarouselProps
 
-const CarouselContext = React.createContext<CarouselContextProps | null>(null)
+const CarouselContext = React.createContext<CarouselContextProps | undefined>(
+  undefined,
+)
 
 function useCarousel() {
   const context = React.useContext(CarouselContext)
@@ -134,10 +137,10 @@ const Carousel = React.forwardRef<
       >
         <div
           ref={ref}
-          onKeyDownCapture={handleKeyDown}
           className={cn('relative', className)}
           role="region"
           aria-roledescription="carousel"
+          onKeyDownCapture={handleKeyDown}
           {...props}
         >
           {children}

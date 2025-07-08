@@ -1,6 +1,7 @@
-import { validationMsg } from '#api/lib/utils'
 import { objectExclude } from '@repo/utils/obj'
 import z from 'zod'
+
+import { validationMsg } from '#api/lib/utils'
 
 import { Image } from '../image/common'
 
@@ -44,14 +45,17 @@ export const userCreateSchema = z.object({
   }),
 })
 
-export const userUpdateSchema = userCreateSchema.omit({
-  password: true,
-}).partial()
+export const userUpdateSchema = userCreateSchema
+  .omit({
+    password: true,
+  })
+  .partial()
 
-export const userUpdateSelfSchema = userCreateSchema.omit({
-  password: true,
-  role: true,
-})
+export const userUpdateSelfSchema = userCreateSchema
+  .omit({
+    password: true,
+    role: true,
+  })
   .extend({
     password: z
       .string()
@@ -67,7 +71,7 @@ TYPES
 
 */
 export type User = {
-  id:string
+  id: string
   img: string
   username: string
   password: string
@@ -86,7 +90,6 @@ export type UserUpdate = z.infer<typeof userUpdateSchema>
 
 export type UserUpdateSelf = z.infer<typeof userUpdateSelfSchema>
 
-// TODO: Remove other sanitizeUser in mock and use this one
 export const sanitizeUser = <
   O extends Pick<User, 'password' | 'refreshToken'> & Record<string, any>,
 >(

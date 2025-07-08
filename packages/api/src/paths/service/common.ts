@@ -1,5 +1,6 @@
-import { validationMsg } from '#api/lib/utils'
 import z from 'zod'
+
+import { validationMsg } from '#api/lib/utils'
 
 import { Image } from '../image/common'
 
@@ -28,7 +29,7 @@ TYPES
 
 */
 export type Service = {
-  id:string
+  id: string
   index: number
   img: string
   title: string

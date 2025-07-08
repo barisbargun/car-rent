@@ -11,10 +11,13 @@ export const ButtonClearImage = ({ name = '', ...props }: Props) => {
       size="icon"
       variant="outline"
       title="clear"
-      type='button'
+      type="button"
       {...props}
     >
-      <span className="sr-only">Clear {name}{name.length > 0 ? ' ' : ''}image</span>
+      <span className="sr-only">
+        Clear {name}
+        {name.length > 0 ? ' ' : ''}image
+      </span>
       <BrushCleaning />
     </Button>
   )

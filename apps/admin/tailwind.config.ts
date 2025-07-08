@@ -15,7 +15,9 @@ export default {
       addUtilities({
         '.card-buttons': { '@apply origin-top-right scale-75': {} },
         '.items-gap': { '@apply gap-6 lg:gap-4': {} },
-        '.center-x-absolute':{ '@apply absolute left-1/2 -translate-x-1/2': {} },
+        '.center-x-absolute': {
+          '@apply absolute left-1/2 -translate-x-1/2': {},
+        },
       })
     },
   ],

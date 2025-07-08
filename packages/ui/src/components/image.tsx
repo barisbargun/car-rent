@@ -53,7 +53,7 @@ export const Image = ({
 
   return (
     <div
-      className={cn('pointer-events-none flex-center', containerClassName)}
+      className={cn('flex-center pointer-events-none', containerClassName)}
       style={fill ? {} : { width, height }}
     >
       <img

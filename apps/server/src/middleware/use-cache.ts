@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prefer-structured-clone */
 import { MODELS } from '@repo/api/config/api-paths'
 import { NextFunction, Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
@@ -5,7 +6,7 @@ import NodeCache from 'node-cache'
 
 import { sendResponse } from '@/lib/utils'
 
-export const cache = new NodeCache()
+const cache = new NodeCache()
 
 export const useCache = (cacheKey: MODELS) => {
   return (_req: Request, res: Response, next: NextFunction) => {

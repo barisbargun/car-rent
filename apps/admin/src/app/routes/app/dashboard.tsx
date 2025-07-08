@@ -107,7 +107,7 @@ const DashboardRoute = () => {
   ]
 
   return (
-    <div className="grid items-gap sm:grid-cols-2 xl:grid-cols-3">
+    <div className="items-gap grid sm:grid-cols-2 xl:grid-cols-3">
       {statistics.map((statistic) => (
         <DashboardCard key={statistic.title} {...statistic} />
       ))}

@@ -31,7 +31,7 @@ export const ReviewCard = ({ data, index, className, ...props }: Props) => {
         </div>
         <div>
           <h4 className="text-md font-medium leading-none">{data.fullname}</h4>
-          <p className="text-xs text-muted-foreground">{data.occupation}</p>
+          <p className="text-muted-foreground text-xs">{data.occupation}</p>
         </div>
       </div>
       <div>

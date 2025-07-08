@@ -22,7 +22,7 @@ TYPES
 
 */
 export type FooterTitle = {
-  id:string
+  id: string
   index: number
   title: string
 }

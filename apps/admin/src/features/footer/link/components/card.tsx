@@ -15,7 +15,7 @@ export const FooterLinkCard = ({ data, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'relative overflow-hidden border-b-2 border-dashed p-8 px-4 flex-center',
+        'flex-center relative overflow-hidden border-b-2 border-dashed p-8 px-4',
         className,
       )}
       data-testid="footerLink-card"
@@ -23,7 +23,7 @@ export const FooterLinkCard = ({ data, className, ...props }: Props) => {
     >
       {/** Buttons */}
       <div
-        className="absolute right-1 top-1 z-10 flex gap-2 card-buttons"
+        className="card-buttons absolute right-1 top-1 z-10 flex gap-2"
         onPointerDown={(e) => e.stopPropagation()}
       >
         <ButtonModelForm

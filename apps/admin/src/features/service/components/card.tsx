@@ -1,8 +1,8 @@
 import { ServiceGet } from '@repo/api/paths/service/common'
+import { Image } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'
 
 import { ButtonModelForm } from '@/components/shared/buttons/model-form'
-import { Image } from '@repo/ui/components/image'
 
 import { ServiceUpdateForm } from './update-form'
 
@@ -14,24 +14,28 @@ export const ServiceCard = ({ service, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'relative flex flex-col gap-4 rounded bg-background p-3',
+        'bg-background relative flex flex-col gap-4 rounded p-3',
         className,
       )}
       data-testid="service-card"
       {...props}
     >
       {/** Image and Text */}
-      <div className="gap-4 flex-center">
-        <Image src={service.img?.url} widthList={[60,60,60,80,50]} alt="service" />
+      <div className="flex-center gap-4">
+        <Image
+          src={service.img?.url}
+          widthList={[60, 60, 60, 80, 50]}
+          alt="service"
+        />
         <div className="flex-1">
           <p className="line-clamp-3 w-full text-sm" title={service.desc}>
             {service.desc}
           </p>
-          <div className="mt-1 xl:mt-2 flex items-end justify-between gap-2">
+          <div className="mt-1 flex items-end justify-between gap-2 xl:mt-2">
             {/** Fullname and occupation */}
             <div>
               <strong
-                className="text-xs xl:text-sm text-muted-foreground"
+                className="text-muted-foreground text-xs xl:text-sm"
                 title={service.title}
               >
                 {service.title}

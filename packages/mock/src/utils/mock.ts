@@ -1,9 +1,7 @@
 /* eslint-disable unicorn/prefer-code-point */
 
 import { AuthLogin } from '@repo/api/paths/auth/common'
-import { User } from '@repo/api/paths/user/common'
 import { giveError } from '@repo/utils/error'
-import { objectExclude } from '@repo/utils/obj'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { delay, HttpResponse } from 'msw'
 
@@ -28,13 +26,6 @@ export const hash = (str: string) => {
   }
   return String(hash >>> 0)
 }
-
-export const sanitizeUser = <
-  O extends Pick<User, 'password' | 'refreshToken'> & Record<string, any>,
->(
-  user: O,
-): Omit<O, 'password' | 'refreshToken'> =>
-  objectExclude(user, ['password', 'refreshToken'])
 
 export const authenticate = ({ username, password }: AuthLogin) => {
   const user = db.user.findFirst({

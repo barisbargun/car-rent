@@ -4,7 +4,7 @@ import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
 
-import { FooterLink,FooterLinkCreate } from './common'
+import { FooterLink, FooterLinkCreate } from './common'
 import { getFooterLinksQueryOptions } from './get-all'
 
 export const createFooterLink = ({

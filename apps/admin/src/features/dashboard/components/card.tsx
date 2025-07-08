@@ -36,7 +36,7 @@ export const DashboardCard = ({
           <Link to={link}>{title}</Link>
         </CardTitle>
       </CardHeader>
-      <CardContent className="gap-20 pb-10 pt-4 font-inter flex-center">
+      <CardContent className="font-inter flex-center gap-20 pb-10 pt-4">
         {statistics.map((statistic) => (
           <div
             className="flex flex-col items-center gap-2"

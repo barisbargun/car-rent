@@ -7,35 +7,17 @@
     "dev:admin": "turbo dev --filter admin",
     "dev:client": "turbo dev --filter client",
     "dev:server": "turbo dev --filter server",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write . --log-level=warn",
     "lint": "turbo run lint",
-    "lint:fix": "turbo run lint -- --fix",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "apps/admin/**/*.{js,ts,jsx,tsx}": [
-      "pnpm run --prefix apps/admin lint"
-    ],
-    "apps/client/**/*.{js,ts,jsx,tsx}": [
-      "pnpm run --prefix apps/client lint"
-    ],
-    "apps/server/**/*.{js,ts}": [
-      "pnpm run --prefix apps/server lint"
-    ],
-    "*.{js,jsx,ts,tsx,html,css,json,md}": [
-      "prettier --write"
-    ]
+    "lint:fix": "turbo run lint -- --fix"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.8.1",
-    "@commitlint/config-conventional": "^19.8.1",
     "eslint": "^9.30.1",
-    "husky": "^9.1.7",
-    "knip": "^5.61.3",
-    "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
+    "knip": "^5.61.3",
     "turbo": "^2.5.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "prettier-plugin-tailwindcss": "^0.6.13"
   },
   "packageManager": "pnpm@10.12.4",
   "engines": {

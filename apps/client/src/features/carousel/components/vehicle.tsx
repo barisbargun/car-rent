@@ -38,15 +38,15 @@ export const CarouselVehicle = ({ data }: Props) => {
       <div className="absolute left-0 top-0 flex h-screen w-full justify-center">
         <div className="container relative">
           <div className="absolute top-28 w-full max-md:top-20">
-            <H1 className="w-[700px] max-w-[90%] text-balance font-bold uppercase drop-shadow-black">
+            <H1 className="drop-shadow-black w-[700px] max-w-[90%] text-balance font-bold uppercase">
               {data.title}
             </H1>
-            <p className="mt-4 max-w-[50%] text-sm drop-shadow-black max-lg:hidden">
+            <p className="drop-shadow-black mt-4 max-w-[50%] text-sm max-lg:hidden">
               {data.desc}
             </p>
           </div>
-          <div className="absolute bottom-20 flex flex-col ">
-            <H4 className="text-balance font-bold text-white drop-shadow-black">
+          <div className="absolute bottom-20 flex flex-col">
+            <H4 className="drop-shadow-black text-balance font-bold text-white">
               {data.vehicleName}
             </H4>
             <div className="mt-3 flex gap-8 max-lg:hidden">

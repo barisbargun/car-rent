@@ -27,7 +27,7 @@ TYPES
 
 */
 export type FooterLink = {
-  id:string
+  id: string
   index: number
   footerTitle: string
   title: string

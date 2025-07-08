@@ -11,7 +11,7 @@ import { toast } from '@/lib/toast'
 
 const ServicesSkeleton = () => (
   <>
-    <div className="flex w-full justify-start items-gap">
+    <div className="items-gap flex w-full justify-start">
       <Skeleton className="h-10 w-32" />
       <Skeleton className="h-10 w-32" />
     </div>
@@ -44,8 +44,13 @@ const ServicesRoute = () => {
           />
         ))}
       </div>
-      <ButtonModelForm model="service" modelText="Service" type="ADD" itemsCount={services?.length}>
-        <ServiceCreateForm  />
+      <ButtonModelForm
+        model="service"
+        modelText="Service"
+        type="ADD"
+        itemsCount={services?.length}
+      >
+        <ServiceCreateForm />
       </ButtonModelForm>
       <ItemCounts count={services?.length} model="service" />
     </>

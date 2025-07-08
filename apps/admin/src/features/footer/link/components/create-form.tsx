@@ -65,7 +65,7 @@ export const FooterLinkCreateForm = ({
     return <FullPageLoader />
   } else if (!footerTitles || footerTitles.length === 0) {
     return (
-      <div className="h-full flex-center">
+      <div className="flex-center h-full">
         <p className="text-muted-foreground">No groups available</p>
       </div>
     )

@@ -24,7 +24,6 @@ const schema = new Schema<FooterTitle>(
         delete ret._id
       },
     },
-
   },
 )
 

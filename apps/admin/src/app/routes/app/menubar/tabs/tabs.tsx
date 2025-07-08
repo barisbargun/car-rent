@@ -15,7 +15,7 @@ import { toast } from '@/lib/toast'
 
 const MenubarTabsSkeleton = () => (
   <>
-    <div className="flex w-full justify-start items-gap">
+    <div className="items-gap flex w-full justify-start">
       <Skeleton className="h-10 w-32" />
       <Skeleton className="h-10 w-32" />
     </div>

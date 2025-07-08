@@ -1,4 +1,6 @@
+import { Service } from '@repo/api/paths/service/common'
 import { generateService } from '@repo/mock/utils/data-generators'
+
 import { confirmDialog, selectFirstImage } from '@/testing/helpers'
 import {
   renderApp,
@@ -9,7 +11,6 @@ import {
 } from '@/testing/test-utils'
 
 import ServicesRoute from '../services'
-import { Service } from '@repo/api/paths/service/common'
 
 type ServiceType = Required<Service>
 

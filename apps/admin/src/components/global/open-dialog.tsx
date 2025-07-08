@@ -69,7 +69,7 @@ export const OpenDialog = ({
           <DialogTitle>{title}</DialogTitle>
           {desc && <DialogDescription>{desc}</DialogDescription>}
         </DialogHeader>
-        <div className="space-x-2 flex-center">{childrenWithProps}</div>
+        <div className="flex-center space-x-2">{childrenWithProps}</div>
       </DialogContent>
     </Dialog>
   )

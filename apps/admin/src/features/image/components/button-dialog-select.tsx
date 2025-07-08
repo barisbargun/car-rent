@@ -12,7 +12,7 @@ type ImageButtonDialogSelectProps = Pick<
 
 export const ImageButtonDialogSelect = ({
   buttonText,
-  hideButtonText=false,
+  hideButtonText = false,
   buttonIconType,
   fieldChange,
   setImage,

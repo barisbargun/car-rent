@@ -12,7 +12,7 @@ export const App = () => {
       <AppProvider>
         <ThemeProvider defaultTheme="dark" storageKey="theme">
           <AppRouter />
-          <Toaster richColors position='bottom-left' />
+          <Toaster richColors position="bottom-left" />
         </ThemeProvider>
       </AppProvider>
       <img

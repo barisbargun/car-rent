@@ -1,5 +1,6 @@
-import { AuthLayout } from '@/components/layouts/auth'
 import { generateUser } from '@repo/mock/utils/data-generators'
+
+import { AuthLayout } from '@/components/layouts/auth'
 import { renderApp, screen, userEvent, waitFor } from '@/testing/test-utils'
 
 import { LoginForm } from '../login-form'

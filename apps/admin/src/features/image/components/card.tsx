@@ -20,17 +20,22 @@ export const ImageCard = ({
   return (
     <div
       className={cn(
-        'relative rounded-lg bg-slate-300 bg-opacity-50 p-4 shadow-xl flex-center dark:bg-slate-950',
+        'flex-center relative rounded-lg bg-slate-300 bg-opacity-50 p-4 shadow-xl dark:bg-slate-950',
         className,
       )}
       data-testid="image-card"
       {...props}
     >
-      <ImageComponent src={data.url} widthList={[200,180,150,220,100]} heightRatio={0.8} alt="image" />
+      <ImageComponent
+        src={data.url}
+        widthList={[200, 180, 150, 220, 100]}
+        heightRatio={0.8}
+        alt="image"
+      />
 
       {showDeleteButton && (
         <ButtonModelDelete
-          className="absolute right-1 top-1 card-buttons"
+          className="card-buttons absolute right-1 top-1"
           model="image"
           id={data.id}
           mutate={useDeleteImage}

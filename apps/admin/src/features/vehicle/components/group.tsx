@@ -1,6 +1,6 @@
 import { arrayMove } from '@dnd-kit/sortable'
+import { VehicleGet } from '@repo/api/paths/vehicle/common'
 import { useSwapVehicle } from '@repo/api/paths/vehicle/swap'
-import {  VehicleGet } from '@repo/api/paths/vehicle/common'
 import { useEffect, useState } from 'react'
 
 import { ModelVerticalList } from '@/components/shared/model-vertical-list'
@@ -29,7 +29,7 @@ export const VehicleGroup = ({ tabTitle, vehicleTitle, vehicles }: Props) => {
       const idList = items?.map((item) => item.id)
       if (idList) {
         await mutateSwap({
-          data: {idList},
+          data: { idList },
         })
         setIsAnyChange(false)
         toast.vehicle.swap.success()

@@ -16,7 +16,10 @@ export const ImageUploader = ({ fieldChange }: props) => {
 
   const onDrop = useCallback((acceptedFiles: FileWithPath[]) => {
     const size = acceptedFiles[0].size / 1024
-    if (size > 701) return toast.image.drop.warning()
+    if (size > 701) {
+      toast.image.drop.warning()
+      return
+    }
     setFile((v) => ({ ...v, file: acceptedFiles[0] }))
     setFileUrl(URL.createObjectURL(acceptedFiles[0]))
   }, [])
@@ -34,19 +37,19 @@ export const ImageUploader = ({ fieldChange }: props) => {
   }, [file])
 
   return (
-    <div className="h-full w-full flex-center">
+    <div className="flex-center h-full w-full">
       <div {...(fileUrl ? {} : getRootProps())} className="w-full">
         {!fileUrl && <input {...getInputProps()} />}
 
-        <div className="flex h-60 w-full cursor-pointer flex-col flex-center sm:h-80">
+        <div className="flex-center flex h-60 w-full cursor-pointer flex-col sm:h-80">
           {fileUrl ? (
             <ImageCrop fileUrl={fileUrl} setFile={setFile} />
           ) : (
-            <div className="h-full w-full flex-col rounded-xl border-2 border-dashed flex-center">
-              <h3 className="text-sm text-muted-foreground">
+            <div className="flex-center h-full w-full flex-col rounded-xl border-2 border-dashed">
+              <h3 className="text-muted-foreground text-sm">
                 Click or drag a file
               </h3>
-              <h3 className="text-xs text-muted-foreground">
+              <h3 className="text-muted-foreground text-xs">
                 (SVG, PNG, JPG, AVIF)
               </h3>
             </div>

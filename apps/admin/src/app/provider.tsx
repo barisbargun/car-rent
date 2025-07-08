@@ -1,4 +1,8 @@
-import { queryClient, QueryClientProvider, ReactQueryDevtools } from '@repo/api/config/react-query'
+import {
+  queryClient,
+  QueryClientProvider,
+  ReactQueryDevtools,
+} from '@repo/api/config/react-query'
 import { FullPageLoader } from '@repo/ui/components/loader'
 import * as React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'

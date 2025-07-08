@@ -6,11 +6,7 @@ import { api, ApiResponse } from '#api/lib/api'
 
 import { getUsersQueryOptions } from './get-all'
 
-export const deleteUser = ({
-  id,
-}: {
-  id: string
-}): ApiResponse<undefined> => {
+export const deleteUser = ({ id }: { id: string }): ApiResponse<undefined> => {
   return api.delete(`${API_PATHS.user}/${id}`)
 }
 

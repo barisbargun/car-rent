@@ -11,7 +11,7 @@ type Props = {
   type: 'ADD' | 'UPDATE'
   itemsCount?: number
   model: MODELS
-  modelText:string
+  modelText: string
   dialogProps?: Partial<OpenDialogProps>
   children: React.ReactNode
 }

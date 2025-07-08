@@ -25,14 +25,17 @@ export const CarouselCard = ({
 }: Props) => {
   return (
     <div
-      className={cn('relative overflow-hidden flex-center aspect-video', className)}
+      className={cn(
+        'flex-center relative aspect-video overflow-hidden',
+        className,
+      )}
       data-testid="carousel-card"
       {...props}
     >
       <Image fill src={data.img?.url} w={300} alt="carousel" />
 
       {/** Buttons */}
-      <div className="absolute right-1 top-1 z-10 flex gap-2 card-buttons">
+      <div className="card-buttons absolute right-1 top-1 z-10 flex gap-2">
         <ButtonModelForm type="UPDATE" model="carousel" modelText="carousel">
           <CarouselUpdateForm carousel={data} />
         </ButtonModelForm>

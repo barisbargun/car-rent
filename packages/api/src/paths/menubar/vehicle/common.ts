@@ -26,7 +26,7 @@ TYPES
 
 */
 export type MenubarVehicle = {
-  id:string
+  id: string
   img?: string
   menubarTab: string
   index: number

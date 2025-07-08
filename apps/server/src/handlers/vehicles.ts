@@ -22,7 +22,6 @@ const model: MODELS = 'vehicle'
 
 const role = REQUIRED_ROLE[model]
 
-
 router.get('/', useCache(model), async (_req, res) => {
   try {
     const data = await db

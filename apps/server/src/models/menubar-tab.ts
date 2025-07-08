@@ -33,7 +33,6 @@ const schema = new Schema<MenubarTab>(
         delete ret._id
       },
     },
-
   },
 )
 

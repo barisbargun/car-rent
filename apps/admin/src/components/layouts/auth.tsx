@@ -30,7 +30,7 @@ export const AuthLayout = ({ children }: LayoutProps) => {
     <>
       <ModeToggle className="absolute right-4 top-4 z-10" />
 
-      <main className="absolute left-0 top-0 z-10 h-full w-full flex-center">
+      <main className="flex-center absolute left-0 top-0 z-10 h-full w-full">
         <div className="flex w-full max-w-lg flex-col rounded-xl p-8 max-sm:max-w-[95%]">
           {children}
         </div>

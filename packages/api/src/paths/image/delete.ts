@@ -6,7 +6,7 @@ import { api } from '#api/lib/api'
 
 import { getImagesQueryOptions } from './get-all'
 
-export const deleteImage = ({id}:{id: string}) => {
+export const deleteImage = ({ id }: { id: string }) => {
   return api.delete(`${API_PATHS.image}/${id}`)
 }
 

@@ -3,6 +3,7 @@ import { maxItemCounts } from '@repo/api/config/max-item-counts'
 import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import {
   ROLE_LIST,
+  sanitizeUser,
   userCreateSchema,
   userUpdateSchema,
   userUpdateSelfSchema,
@@ -14,7 +15,7 @@ import { http, HttpResponse } from 'msw'
 
 import { verifyAccessToken } from '#mock/config/token'
 import { getPath } from '#mock/utils/get-path'
-import { catchError, hash, networkDelay, sanitizeUser } from '#mock/utils/mock'
+import { catchError, hash, networkDelay } from '#mock/utils/mock'
 import { getImageById } from '#mock/utils/populate'
 
 import { db, persistDb } from '../db'

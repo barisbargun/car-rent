@@ -40,7 +40,6 @@ const schema = new Schema<Type>(
         delete ret._id
       },
     },
-
   },
 )
 

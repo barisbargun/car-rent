@@ -5,7 +5,7 @@ import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
 
-import { VehicleGet,VehicleUpdate } from './common'
+import { VehicleGet, VehicleUpdate } from './common'
 import { getVehiclesQueryOptions } from './get-all'
 
 export const updateVehicle = ({

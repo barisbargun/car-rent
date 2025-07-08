@@ -24,7 +24,7 @@ const SiteConfigsRoute = () => {
   if (isPending) return <FullPageLoader />
 
   return (
-    <Card className="xl:absolute xl:left-1/2 xl:-translate-x-1/2 mx-auto w-full max-w-lg lg:w-fit">
+    <Card className="mx-auto w-full max-w-lg lg:w-fit xl:absolute xl:left-1/2 xl:-translate-x-1/2">
       <CardHeader>
         <CardTitle>Edit your profile</CardTitle>
         <CardDescription>Edit your amazing profile!</CardDescription>

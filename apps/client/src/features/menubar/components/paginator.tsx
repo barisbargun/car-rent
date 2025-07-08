@@ -43,7 +43,9 @@ export const Paginator = ({ length, page, setPage }: Props) => {
             ))}
         </PaginationItem>
         <PaginationItem>
-          <PaginationNext onClick={() => setPage((v) => Math.min(v + 1, length))} />
+          <PaginationNext
+            onClick={() => setPage((v) => Math.min(v + 1, length))}
+          />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

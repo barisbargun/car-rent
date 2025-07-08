@@ -21,11 +21,11 @@ export const VehicleCard = ({ data }: Props) => {
   }, [data?.img?.url])
 
   return (
-    <div className="cursor-pointer flex-col gap-4 p-4 shadow-lg transition-transform flex-center sm:hover:scale-110">
+    <div className="flex-center cursor-pointer flex-col gap-4 p-4 shadow-lg transition-transform sm:hover:scale-110">
       <img src={getImg || ''} alt="vehicle" className="w-fit object-cover" />
       <h4 className="line-clamp-2 w-full text-xl">{data.title}</h4>
       <div className="mt-2 flex h-10 w-full justify-between gap-4">
-        <div className="w-28 flex-col flex-center">
+        <div className="flex-center w-28 flex-col">
           <img
             src={assets.vehicleProps.steering}
             alt="steering-icon"
@@ -35,7 +35,7 @@ export const VehicleCard = ({ data }: Props) => {
             {WHEEL_DRIVE_LIST_UI[data.wheel]}
           </p>
         </div>
-        <div className="w-28 flex-col flex-center">
+        <div className="flex-center w-28 flex-col">
           <img
             src={assets.vehicleProps.awd}
             alt="awd-icon"
@@ -45,7 +45,7 @@ export const VehicleCard = ({ data }: Props) => {
             {DRIVE_TRAIN_LIST_UI[data.drivetrain]}
           </p>
         </div>
-        <div className="w-28 flex-col flex-center">
+        <div className="flex-center w-28 flex-col">
           <img
             src={assets.vehicleProps.fuel}
             alt="fuel-icon"

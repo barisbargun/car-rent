@@ -39,7 +39,7 @@ export const config = [
       'unicorn/no-array-reduce': 'off',
       'unicorn/no-await-expression-member': 'off',
 
-      '@typescript-eslint/no-explicit-any': ['off'],
+      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
@@ -52,6 +52,6 @@ export const config = [
   },
   eslintConfigPrettier,
   {
-    ignores: ['dist/**'],
+    ignores: ['dist/**', 'public/mockServiceWorker.js'],
   },
 ]

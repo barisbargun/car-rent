@@ -16,7 +16,7 @@ export const Authorization = ({
 
   if (isPending) return <span className="sr-only">loading</span>
 
-  if (!user  || !checkRole || !checkRole(user.role)) return forbiddenFallback
+  if (!user || !checkRole || !checkRole(user.role)) return forbiddenFallback
 
   return children
 }

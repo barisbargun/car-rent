@@ -53,7 +53,7 @@ export const VehicleProvider = ({
     return <Skeleton />
   if (!menubarVehicles?.length || !menubarTabs?.length) {
     return (
-      <div className="h-full flex-center">
+      <div className="flex-center h-full">
         <p className="text-muted-foreground">First create menubar vehicles.</p>
       </div>
     )

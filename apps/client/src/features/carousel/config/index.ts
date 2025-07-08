@@ -1,9 +1,7 @@
 export const carouselSettings = {
   infinite: true,
   speed: 1000,
-  lazyload: true,
-  // TODO: Make true when the carousel is ready
-  autoplay: false,
+  autoplay: true,
   autoplaySpeed: 10_000,
   pauseOnHover: false,
   slidesToShow: 1,

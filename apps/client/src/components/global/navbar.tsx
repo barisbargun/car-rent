@@ -18,9 +18,9 @@ export const Navbar = () => {
   const navList = useMemo(() => Object.values(navLinkConfig), [])
   return (
     <>
-      <header className="fixed left-0 top-0 z-50 flex w-full justify-center bg-primary/30 text-primary-foreground backdrop-blur-sm">
+      <header className="bg-primary/30 text-primary-foreground fixed left-0 top-0 z-50 flex w-full justify-center backdrop-blur-sm">
         <div className="container flex items-center justify-between py-2 lg:py-3">
-          <strong className="cursor-pointer font-pacifico text-3xl font-medium drop-shadow-black max-lg:text-2xl">
+          <strong className="font-pacifico drop-shadow-black cursor-pointer text-3xl font-medium max-lg:text-2xl">
             {siteConfig?.title || ''}
           </strong>
           {isDesktop ? (
@@ -29,7 +29,7 @@ export const Navbar = () => {
                 {navList.map((v) => (
                   <li key={v.name}>
                     <a
-                      className="text-sm opacity-60 drop-shadow-black transition-opacity hover:opacity-100"
+                      className="drop-shadow-black text-sm opacity-60 transition-opacity hover:opacity-100"
                       href={`#${v.link}`}
                     >
                       {v.name}

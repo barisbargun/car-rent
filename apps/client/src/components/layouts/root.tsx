@@ -10,7 +10,7 @@ export const RootLayout = ({ children }: Props) => {
   return (
     <>
       <Navbar />
-      <main className="flex min-h-screen w-full flex-col z-10">{children}</main>
+      <main className="z-10 flex min-h-screen w-full flex-col">{children}</main>
       <img
         src={assets.pattern}
         alt="pattern"

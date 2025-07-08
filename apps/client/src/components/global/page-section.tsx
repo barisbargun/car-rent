@@ -12,7 +12,7 @@ const PageSection = forwardRef<HTMLDivElement, Props>(
       <section className={cn('relative', className)} ref={ref} {...props}>
         <div
           className={cn(
-            'container mx-auto flex flex-col section-t-p section-b-p',
+            'section-t-p section-b-p container mx-auto flex flex-col',
             nestedClassName,
           )}
         >

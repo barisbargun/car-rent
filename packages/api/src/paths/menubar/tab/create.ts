@@ -4,7 +4,7 @@ import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
 
-import { MenubarTab,MenubarTabCreate } from './common'
+import { MenubarTab, MenubarTabCreate } from './common'
 import { getMenubarTabsQueryOptions } from './get-all'
 
 export const createMenubarTab = ({

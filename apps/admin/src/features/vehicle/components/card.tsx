@@ -16,7 +16,7 @@ export const VehicleCard = ({ data, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'relative overflow-hidden border-b-2 border-dashed p-4 flex-center',
+        'flex-center relative overflow-hidden border-b-2 border-dashed p-4',
         className,
       )}
       data-testid="vehicle-card"
@@ -31,7 +31,7 @@ export const VehicleCard = ({ data, className, ...props }: Props) => {
 
       {/** Buttons */}
       <div
-        className="absolute right-1 top-1 flex gap-2 card-buttons"
+        className="card-buttons absolute right-1 top-1 flex gap-2"
         onPointerDown={(e) => e.stopPropagation()}
       >
         <ButtonModelForm type="UPDATE" model="vehicle" modelText="vehicle">

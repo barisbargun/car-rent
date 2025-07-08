@@ -1,8 +1,8 @@
 import { useCurrentUser } from '@repo/api/paths/auth/current-user'
+import { Image } from '@repo/ui/components/image'
 import { cn } from '@repo/ui/lib/utils'
 
 import assets from '@/assets'
-import { Image } from '@repo/ui/components/image'
 
 type Props = React.HTMLAttributes<HTMLDivElement> & {}
 
@@ -13,7 +13,7 @@ export const UserContent = ({ className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'gap-4 flex-center max-lg:flex-col max-lg:text-center lg:gap-2',
+        'flex-center gap-4 max-lg:flex-col max-lg:text-center lg:gap-2',
         className,
       )}
       {...props}

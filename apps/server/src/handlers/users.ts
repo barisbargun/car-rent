@@ -25,7 +25,6 @@ const model: MODELS = 'user'
 
 const role = REQUIRED_ROLE[model]
 
-
 router.get(
   '/',
   verifyAccessToken,
@@ -35,7 +34,7 @@ router.get(
     try {
       const id = res.locals.userId
       const data = await db
-        .find({ _id: { $ne:id } })
+        .find({ _id: { $ne: id } })
         .populate('img')
         .exec()
       storeCache(model, data)

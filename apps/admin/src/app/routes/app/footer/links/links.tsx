@@ -12,10 +12,10 @@ import { toast } from '@/lib/toast'
 
 const FooterLinksSkeleton = () => (
   <div className="flex gap-8">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <ModelVerticalListSkeleton key={i} Card={FooterLinkCardSkeleton} />
-      ))}
-    </div>
+    {Array.from({ length: 5 }).map((_, i) => (
+      <ModelVerticalListSkeleton key={i} Card={FooterLinkCardSkeleton} />
+    ))}
+  </div>
 )
 
 const FooterLinksRoute = () => {

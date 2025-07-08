@@ -26,10 +26,10 @@ import { cn } from '@repo/ui/lib/utils'
 import { getEnumEntries } from '@repo/utils/enum'
 import { useForm } from 'react-hook-form'
 
+import { DialogProps } from '@/components/global/open-dialog'
 import { ButtonSubmit } from '@/components/shared/buttons/submit'
 import { ImageFormField } from '@/features/image/components/form-field'
 import { toast } from '@/lib/toast'
-import { DialogProps } from '@/components/global/open-dialog'
 
 type Props = React.HTMLAttributes<HTMLFormElement> & DialogProps & {}
 

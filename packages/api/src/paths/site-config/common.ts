@@ -22,7 +22,7 @@ TYPES
 
 */
 export type SiteConfig = {
-  id:string
+  id: string
   logoImg?: string
   serviceImg?: string
   title?: string

@@ -4,7 +4,6 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@repo/ui/components/hover-card'
-
 import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 
 type Props = {
@@ -25,7 +24,7 @@ export const ModelHover = ({ model, data }: Props) => {
         <ul className="[&>li]:mt-2">
           {data.map(([key, value]) => (
             <li key={key}>
-              <p className="line-clamp-2 text-sm text-muted-foreground">
+              <p className="text-muted-foreground line-clamp-2 text-sm">
                 {key}
               </p>
               <small className="line-clamp-2 text-sm font-medium">

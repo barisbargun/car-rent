@@ -23,7 +23,6 @@ const model: MODELS = 'menubarVehicle'
 
 const role = REQUIRED_ROLE[model]
 
-
 router.get('/', useCache(model), async (_req, res) => {
   try {
     const data = await db.find({}).sort({ index: 1 }).populate('img').exec()

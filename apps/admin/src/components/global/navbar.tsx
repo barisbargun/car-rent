@@ -40,7 +40,7 @@ const NavItem = ({
         variant="ghost"
         size="lg"
         className={cn(
-          'w-full px-2 max-lg:py-8 max-lg:last:col-span-2 xl:px-3 drop-shadow-black',
+          'drop-shadow-black w-full px-2 max-lg:py-8 max-lg:last:col-span-2 xl:px-3',
           item.title === 'Users' && 'mt-auto',
         )}
         onClick={() => handleClick(item.link || '')}
@@ -113,7 +113,7 @@ export const Navbar = ({ className, ...props }: Props) => {
     >
       <Drawer open={openDrawer} onOpenChange={setOpenDrawer}>
         <DrawerTrigger>{<RowsIcon className="max-lg:size-5" />}</DrawerTrigger>
-        <DrawerContent className="w-full flex-col gap-1 pb-4 flex-center">
+        <DrawerContent className="flex-center w-full flex-col gap-1 pb-4">
           <DrawerHeader>
             <DrawerTitle className="sr-only">Navigation</DrawerTitle>
             <UserContent

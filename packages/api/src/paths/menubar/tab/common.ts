@@ -1,5 +1,6 @@
-import { validationMsg } from '#api/lib/utils'
 import z from 'zod'
+
+import { validationMsg } from '#api/lib/utils'
 
 /*
 
@@ -38,7 +39,7 @@ TYPES
 
 */
 export type MenubarTab = {
-  id:string
+  id: string
   index: number
   title: string
   type: MENUBAR_TAB_GRID_LIST

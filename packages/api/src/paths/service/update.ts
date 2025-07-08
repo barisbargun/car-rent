@@ -4,7 +4,7 @@ import { API_PATHS } from '#api/config/api-paths'
 import { MutationConfig } from '#api/config/react-query'
 import { api } from '#api/lib/api'
 
-import { ServiceGet,ServiceUpdate } from './common'
+import { ServiceGet, ServiceUpdate } from './common'
 import { getServicesQueryOptions } from './get-all'
 
 export const updateService = ({

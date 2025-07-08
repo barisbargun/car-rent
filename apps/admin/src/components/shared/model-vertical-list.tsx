@@ -4,7 +4,11 @@ import { Skeleton } from '@repo/ui/components/skeleton'
 
 import { VerticalSortableList } from './vertical-list'
 
-export const ModelVerticalListSkeleton = ({Card}:{Card:React.ComponentType}) => (
+export const ModelVerticalListSkeleton = ({
+  Card,
+}: {
+  Card: React.ComponentType
+}) => (
   <div className="min-h-[50vh] w-60 shrink-0 xl:w-72 2xl:w-80">
     <div className="mb-4 flex w-full items-center justify-between gap-4">
       <Skeleton className="h-4 w-32" />
@@ -41,7 +45,7 @@ export const ModelVerticalList = ({
 }: Props) => {
   const title = tabSecondTitle ? (
     <div>
-      <small className="block text-muted-foreground">{tabTitle}</small>
+      <small className="text-muted-foreground block">{tabTitle}</small>
       <strong>{tabSecondTitle}</strong>
     </div>
   ) : (

@@ -9,8 +9,8 @@ type Props = {
 export const ItemCounts = ({ count = 0, model }: Props) => {
   return (
     <div className="mt-3 flex items-center gap-2 max-xl:flex-col max-xl:gap-0">
-      <p className="text-xs text-muted-foreground">There are {count} items.</p>
-      <p className="text-xs text-muted-foreground">
+      <p className="text-muted-foreground text-xs">There are {count} items.</p>
+      <p className="text-muted-foreground text-xs">
         (Maximum item length is {maxItemCounts[model]})
       </p>
     </div>

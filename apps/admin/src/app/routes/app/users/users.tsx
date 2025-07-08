@@ -31,7 +31,9 @@ const UsersRoute = () => {
   return (
     <>
       <div className={itemsClassName}>
-        {users?.map((user) => <UserCard key={user.id} data={user} />)}
+        {users?.map((user) => (
+          <UserCard key={user.id} data={user} />
+        ))}
       </div>
       <ButtonModelForm
         model="user"

@@ -1,9 +1,9 @@
 import { useSiteConfig } from '@repo/api/paths/site-config/get'
 import { Skeleton } from '@repo/ui/components/skeleton'
+import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 import { Link, Outlet } from 'react-router'
 
 import { paths } from '@/config/paths'
-import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
 
 import { Navbar } from '../global/navbar'
 import { Topbar } from '../global/topbar'
@@ -20,7 +20,7 @@ export const RootLayout = () => {
     if (isSiteConfigPending) return <Skeleton className="h-10 w-28" />
     return (
       <Link
-        className="max-lg:center-x-absolute h-8 font-pacifico text-4xl tracking-[1px] text-gray-700 dark:text-gray-50"
+        className="font-pacifico max-lg:center-x-absolute h-8 text-4xl tracking-[1px] text-gray-700 dark:text-gray-50"
         to={paths.app.dashboard.getHref()}
       >
         {siteConfig?.title || 'Site'}

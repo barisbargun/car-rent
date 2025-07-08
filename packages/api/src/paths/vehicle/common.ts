@@ -61,7 +61,7 @@ TYPES
 
 */
 export type Vehicle = {
-  id:string
+  id: string
   index: number
   img: string
   menubarVehicle: string
