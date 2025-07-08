@@ -11,6 +11,7 @@ import {
   getJwtCookie,
   removeJwtCookie,
 } from '@/config/cookie-jwt'
+import { authLimiter } from '@/config/rate-limiter'
 import {
   createAccessToken,
   createRefreshToken,
@@ -53,7 +54,7 @@ router.get(paths.refreshAccessToken, async (req, res) => {
   }
 })
 
-router.post(paths.login, async (req, res) => {
+router.post(paths.login, authLimiter, async (req, res) => {
   try {
     const data = zodCheckSchema(req.body, authLoginSchema)
     const [user, userPassword] = await Promise.all([
