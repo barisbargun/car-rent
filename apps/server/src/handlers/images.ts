@@ -21,7 +21,6 @@ const model: MODELS = 'image'
 
 const role = REQUIRED_ROLE[model]
 
-
 const uploadOptions: UploadApiOptions = {
   folder: 'car-rent',
   transformation: {
@@ -30,7 +29,7 @@ const uploadOptions: UploadApiOptions = {
   },
 }
 
-router.get('/',useCache(model), async (_req, res) => {
+router.get('/', useCache(model), async (_req, res) => {
   try {
     const data = await db.find({}).exec()
     storeCache(model, data)
