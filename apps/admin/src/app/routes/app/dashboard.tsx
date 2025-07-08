@@ -1,3 +1,5 @@
+import { REQUIRED_ROLE } from '@repo/api/config/required-role'
+import { useCurrentUser } from '@repo/api/paths/auth/current-user'
 import { useCarousels } from '@repo/api/paths/carousel/get-all'
 import { useFooterLinks } from '@repo/api/paths/footer/link/get-all'
 import { useFooterTitles } from '@repo/api/paths/footer/title/get-all'
@@ -13,18 +15,24 @@ import { paths } from '@/config/paths'
 import { DashboardCard } from '@/features/dashboard/components/card'
 
 const DashboardRoute = () => {
+  const { data: users } = useCurrentUser()
+  const _useUsers = useUsers()
   const statistics: DashboardCard[] = [
     /** Users */
-    {
-      title: 'Users',
-      link: paths.app.users.getHref(),
-      statistics: [
-        {
-          data: useUsers(),
-          name: 'Users',
-        },
-      ],
-    },
+    ...(REQUIRED_ROLE.user.get(users?.role)
+      ? [
+          {
+            title: 'Users',
+            link: paths.app.users.getHref(),
+            statistics: [
+              {
+                data: _useUsers,
+                name: 'Users',
+              },
+            ],
+          },
+        ]
+      : []),
     /** Carousels */
     {
       title: 'Carousels',

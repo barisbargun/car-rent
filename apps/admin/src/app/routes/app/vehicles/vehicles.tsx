@@ -36,8 +36,6 @@ const Vehicles = () => {
     vehiclesByMenubarVehicles,
   } = useVehicleContext()
 
-  console.log(vehicles?.map((v) => v.id))
-
   return (
     <>
       <div className="flex w-fit gap-8">

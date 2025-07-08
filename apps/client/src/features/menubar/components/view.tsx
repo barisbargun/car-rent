@@ -51,12 +51,9 @@ export const MenubarView = ({ className, ...props }: Props) => {
   if (isMenubarTabsPending || isMenubarVehiclesPending || isVehiclesPending)
     return <Loader />
   return (
-    <div
-      className={cn('z-20 flex-col flex-center', className)}
-      {...props}
-    >
-      <NavigationMenu className="gap-2 flex-center max-md:flex-col">
-        <NavigationMenuList className="flex-wrap px-4 max-md:flex">
+    <div className={cn('z-20 flex-col flex-center', className)} {...props}>
+      <NavigationMenu className="">
+        <NavigationMenuList className="flex-wrap px-4 max-lg:flex max-lg:gap-4">
           {menubarTabs?.map((tab) => {
             const vehicles = menubarVehiclesByMenubarTab.get(tab.id)
             if (!vehicles?.length) return
@@ -83,7 +80,9 @@ export const MenubarView = ({ className, ...props }: Props) => {
       <div className="my-10 grid w-full grid-cols-3 gap-8 max-xl:grid-cols-2 max-md:grid-cols-1">
         {vehiclesByMenubarVehicles
           ?.slice((page - 1) * count, page * count)
-          .map((v) => <VehicleCard data={v} key={v.id} />)}
+          .map((v) => (
+            <VehicleCard data={v} key={v.id} />
+          ))}
       </div>
       <Paginator
         length={Math.ceil((vehiclesByMenubarVehicles?.length || count) / count)}

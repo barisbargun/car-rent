@@ -10,7 +10,7 @@ const H1 = React.forwardRef<HTMLParagraphElement, HeadingProps>(
     return (
       <Tag
         ref={ref}
-        className={cn('text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl', className)}
+        className={cn('text-5xl sm:text-7xl lg:text-4xl xl:text-5xl 2xl:text-6xl', className)}
         {...props}
       />
     )

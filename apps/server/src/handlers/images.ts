@@ -9,7 +9,7 @@ import { getParamsId } from '@/lib/model-utils'
 import { sendResponse } from '@/lib/utils'
 import { checkLimit } from '@/middleware/check-limit'
 import { upload } from '@/middleware/multer'
-import { cache, storeCache, useCache } from '@/middleware/use-cache'
+import { clearCache, storeCache, useCache } from '@/middleware/use-cache'
 import { verifyAccessToken } from '@/middleware/verify-access-token'
 import { verifyRole } from '@/middleware/verify-role'
 import { modelImage } from '@/models/image'
@@ -20,7 +20,7 @@ const db = modelImage
 const model: MODELS = 'image'
 
 const role = REQUIRED_ROLE[model]
-const clearCache = () => cache.del(model)
+
 
 const uploadOptions: UploadApiOptions = {
   folder: 'car-rent',
@@ -63,7 +63,7 @@ router.post(
               url: result.secure_url,
               publicId: result.public_id,
             })
-            clearCache()
+            clearCache(model)
             res.status(StatusCodes.CREATED).json(modelResult)
           }
         },
@@ -88,7 +88,7 @@ router.delete(
         cloudinary.uploader.destroy(image!.publicId),
         image!.deleteOne(),
       ])
-      clearCache()
+      clearCache(model)
       res.sendStatus(StatusCodes.OK)
     } catch (error: any) {
       sendResponse(res, error)

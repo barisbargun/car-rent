@@ -28,16 +28,14 @@ export const Menubar = ({
   const isGrid4 = menubarTab.type == MENUBAR_TAB_GRID_LIST.GRID4
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger className="cursor-default">
+      <NavigationMenuTrigger className="cursor-default max-lg:text-base">
         {menubarTab.title}
       </NavigationMenuTrigger>
       <NavigationMenuContent>
         <ul
           className={cn(
-            'grid gap-3 p-4 text-white',
-            isGrid4
-              ? 'w-[350px] grid-cols-[.75fr_1fr] sm:w-[450px] md:w-[500px]'
-              : 'w-fit max-md:flex-center md:w-[500px] md:grid-cols-2 lg:w-[550px]',
+            'grid w-[350px] gap-3 p-4 text-primary-foreground sm:w-[450px] lg:w-[500px]',
+            isGrid4 ? 'grid-cols-[.75fr_1fr]' : 'grid-cols-2',
           )}
         >
           {menubarVehicles.map((menubarVehicle, index) => (

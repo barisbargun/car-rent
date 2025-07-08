@@ -47,9 +47,7 @@ export const Navbar = () => {
                 <DropdownMenuContent className="">
                   {navList.map((v) => (
                     <DropdownMenuItem key={v.link}>
-                      <a className="drop-shadow-black" href={`#${v.link}`}>
-                        {v.name}
-                      </a>
+                      <a href={`#${v.link}`}>{v.name}</a>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>

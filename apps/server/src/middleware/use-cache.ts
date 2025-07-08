@@ -5,7 +5,7 @@ import NodeCache from 'node-cache'
 
 import { sendResponse } from '@/lib/utils'
 
-export const cache = new NodeCache();
+export const cache = new NodeCache()
 
 export const useCache = (cacheKey: MODELS) => {
   return (_req: Request, res: Response, next: NextFunction) => {
@@ -24,4 +24,8 @@ export const useCache = (cacheKey: MODELS) => {
 
 export const storeCache = (cacheKey: MODELS, data: any) => {
   cache.set(cacheKey, JSON.parse(JSON.stringify(data)))
+}
+
+export const clearCache = (cacheKey: MODELS) => {
+  cache.del(cacheKey)
 }

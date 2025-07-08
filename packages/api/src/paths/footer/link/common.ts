@@ -1,5 +1,6 @@
-import { validationMsg } from '#api/lib/utils'
 import z from 'zod'
+
+import { validationMsg } from '#api/lib/utils'
 
 /*
 
@@ -10,7 +11,7 @@ export const footerLinkCreateSchema = z.object({
   footerTitle: z.string().min(1, 'FooterLink title is required'),
   title: z
     .string()
-    .min(5, validationMsg('min', 5))
+    .min(2, validationMsg('min', 2))
     .max(50, validationMsg('max', 50)),
   link: z
     .string()

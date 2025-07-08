@@ -109,7 +109,7 @@ const FooterTitlesRoute = () => {
       </div>
       <ButtonModelForm
         model="footerTitle"
-        modelText="Footer Title"
+        modelText="footer title"
         type="ADD"
         itemsCount={footerTitles?.length}
       >

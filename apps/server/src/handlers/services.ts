@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes'
 import { findByIdAndUpdate, getParamsId } from '@/lib/model-utils'
 import { getNextIndex, sendResponse } from '@/lib/utils'
 import { checkLimit } from '@/middleware/check-limit'
-import { cache, storeCache, useCache } from '@/middleware/use-cache'
+import { clearCache, storeCache, useCache } from '@/middleware/use-cache'
 import { verifyAccessToken } from '@/middleware/verify-access-token'
 import { verifyRole } from '@/middleware/verify-role'
 import { modelService } from '@/models/service'
@@ -17,7 +17,7 @@ const db = modelService
 const model: MODELS = 'service'
 
 const role = REQUIRED_ROLE[model]
-const clearCache = () => cache.del(model)
+
 
 router.get('/', useCache(model), async (_req, res) => {
   try {
@@ -41,7 +41,7 @@ router.post(
         index: await getNextIndex(db),
       })
 
-      clearCache()
+      clearCache(model)
       const response = await result.populate('img')
       res.status(StatusCodes.OK).json(response)
     } catch (error: any) {
@@ -59,7 +59,7 @@ router.patch(
       const id = getParamsId(req)
       const data = req.body
       const result = await findByIdAndUpdate(db, id, data, 'img')
-      clearCache()
+      clearCache(model)
 
       res.status(StatusCodes.OK).json(result)
     } catch (error: any) {

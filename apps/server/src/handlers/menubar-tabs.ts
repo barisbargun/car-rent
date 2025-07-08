@@ -10,7 +10,7 @@ import {
 } from '@/lib/model-utils'
 import { getNextIndex, sendResponse } from '@/lib/utils'
 import { checkLimit } from '@/middleware/check-limit'
-import { cache, storeCache, useCache } from '@/middleware/use-cache'
+import { clearCache, storeCache, useCache } from '@/middleware/use-cache'
 import { verifyAccessToken } from '@/middleware/verify-access-token'
 import { verifyRole } from '@/middleware/verify-role'
 import { modelMenubarTab } from '@/models/menubar-tab'
@@ -23,7 +23,7 @@ const db = modelMenubarTab
 const model: MODELS = 'menubarTab'
 
 const role = REQUIRED_ROLE[model]
-const clearCache = () => cache.del(model)
+
 
 router.get('/', useCache(model), async (_req, res) => {
   try {
@@ -47,7 +47,7 @@ router.post(
         index: await getNextIndex(db),
       })
 
-      clearCache()
+      clearCache(model)
       res.status(StatusCodes.OK).json(result)
     } catch (error: any) {
       sendResponse(res, error)
@@ -64,7 +64,7 @@ router.patch(
       const id = getParamsId(req)
       const data = req.body
       const result = await findByIdAndUpdate(db, id, data)
-      clearCache()
+      clearCache(model)
 
       res.status(StatusCodes.OK).json(result)
     } catch (error: any) {
@@ -81,7 +81,7 @@ router.patch(
   async (req, res) => {
     try {
       await updateIndexesForIds(db, req.body.idList)
-      clearCache()
+      clearCache(model)
       res.sendStatus(StatusCodes.OK)
     } catch (error: any) {
       sendResponse(res, error)
@@ -112,7 +112,7 @@ router.delete(
 
       await db.findByIdAndDelete(id).exec()
 
-      clearCache()
+      clearCache(model)
       res.sendStatus(StatusCodes.OK)
     } catch (error: any) {
       sendResponse(res, error)

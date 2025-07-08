@@ -66,7 +66,7 @@ const FooterLinksRoute = () => {
       </div>
       <ButtonModelForm
         model="footerLink"
-        modelText="Footer Link"
+        modelText="footer link"
         type="ADD"
         itemsCount={footerLinks?.length}
       >

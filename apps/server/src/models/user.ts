@@ -46,7 +46,6 @@ const schema = new Schema<Type>(
     refreshToken: {
       type: String,
       select: false,
-      unique: true,
       trim: true,
     },
   },

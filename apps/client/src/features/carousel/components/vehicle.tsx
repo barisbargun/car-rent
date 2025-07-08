@@ -5,7 +5,7 @@ import { CarouselGet } from '@repo/api/paths/carousel/common'
 import { Image } from '@repo/ui/components/image'
 import React from 'react'
 
-import { H1, H2, H3, H4 } from '@/components/global/typography'
+import { H1, H4 } from '@/components/global/typography'
 
 type Props = {
   data: CarouselGet
@@ -21,9 +21,7 @@ export const CarouselVehicle = ({ data }: Props) => {
   }) => (
     <div className="*:drop-shadow-black">
       <small className="text-xs opacity-85">{label}</small>
-      <p className="font-semibold">
-        {children}
-      </p>
+      <p className="font-semibold">{children}</p>
     </div>
   )
 
@@ -40,18 +38,18 @@ export const CarouselVehicle = ({ data }: Props) => {
       <div className="absolute left-0 top-0 flex h-screen w-full justify-center">
         <div className="container relative">
           <div className="absolute top-28 w-full max-md:top-20">
-            <H1 className="drop-shadow-black w-[700px] max-w-[90%] text-balance font-bold uppercase">
+            <H1 className="w-[700px] max-w-[90%] text-balance font-bold uppercase drop-shadow-black">
               {data.title}
             </H1>
-            <h2 className="drop-shadow-black mt-4 max-w-[50%] text-sm">
+            <p className="mt-4 max-w-[50%] text-sm drop-shadow-black max-lg:hidden">
               {data.desc}
-            </h2>
+            </p>
           </div>
-          <div className=" absolute bottom-20 flex flex-col max-sm:hidden">
-            <H4 className="drop-shadow-black text-balance text-white font-bold">
+          <div className="absolute bottom-20 flex flex-col ">
+            <H4 className="text-balance font-bold text-white drop-shadow-black">
               {data.vehicleName}
             </H4>
-            <div className="flex gap-8 max-lg:hidden mt-3">
+            <div className="mt-3 flex gap-8 max-lg:hidden">
               <Feature label="Base Price">
                 ${data.price}
                 <span className="text-sm">/hour</span>

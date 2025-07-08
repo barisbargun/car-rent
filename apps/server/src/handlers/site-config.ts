@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import { findByIdAndUpdate } from '@/lib/model-utils'
 import { sendResponse } from '@/lib/utils'
-import { cache, storeCache, useCache } from '@/middleware/use-cache'
+import { clearCache, storeCache, useCache } from '@/middleware/use-cache'
 import { verifyAccessToken } from '@/middleware/verify-access-token'
 import { verifyRole } from '@/middleware/verify-role'
 import { modelSiteConfig } from '@/models/site-config'
@@ -16,7 +16,7 @@ const db = modelSiteConfig
 const model: MODELS = 'siteConfig'
 
 const role = REQUIRED_ROLE[model]
-const clearCache = () => cache.del(model)
+
 
 const populate = 'logoImg serviceImg'
 
@@ -53,7 +53,7 @@ router.patch(
         result = await result.populate(populate)
       }
 
-      clearCache()
+      clearCache(model)
 
       res.status(StatusCodes.OK).json(result)
     } catch (error: any) {
