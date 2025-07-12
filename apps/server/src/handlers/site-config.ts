@@ -3,9 +3,10 @@ import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
+import { revalidateCache } from '@/config/cache'
 import { findByIdAndUpdate } from '@/lib/model-utils'
 import { sendResponse } from '@/lib/utils'
-import { clearCache, storeCache, useCache } from '@/middleware/use-cache'
+import { useCache } from '@/middleware/use-cache'
 import { verifyAccessToken } from '@/middleware/verify-access-token'
 import { verifyRole } from '@/middleware/verify-role'
 import { modelSiteConfig } from '@/models/site-config'
@@ -19,16 +20,7 @@ const role = REQUIRED_ROLE[model]
 
 const populate = 'logoImg serviceImg'
 
-router.get('/', useCache(model), async (_req, res) => {
-  try {
-    const data = await db.find({}).populate(populate).exec()
-    const siteConfig = data.length > 0 ? data[0] : []
-    storeCache(model, siteConfig)
-    res.status(StatusCodes.OK).json(siteConfig)
-  } catch (error: any) {
-    sendResponse(res, error)
-  }
-})
+router.get('/', useCache(model))
 
 router.patch(
   '/',
@@ -52,7 +44,7 @@ router.patch(
         result = await result.populate(populate)
       }
 
-      clearCache(model)
+      revalidateCache(model)
 
       res.status(StatusCodes.OK).json(result)
     } catch (error: any) {

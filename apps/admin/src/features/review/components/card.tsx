@@ -31,11 +31,7 @@ export const ReviewCard = ({
       data-testid="review-card"
       {...props}
     >
-      <Image
-        src={data.img?.url}
-        widthList={[80, 80, 60, 80, 50]}
-        alt="review"
-      />
+      <Image src={data.img?.url} sizes={[80, 80, 60, 80, 50]} alt="review" />
 
       <div className="flex-1">
         <p className="line-clamp-2 w-full text-sm" title={data.desc}>

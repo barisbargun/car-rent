@@ -1,4 +1,3 @@
-import { useSiteConfig } from '@repo/api/paths/site-config/get'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,9 +9,10 @@ import { RowsIcon } from 'lucide-react'
 import { useMemo } from 'react'
 
 import { navLinkConfig } from '@/config/nav'
+import { useAppContext } from '@/lib/context'
 
 export const Navbar = () => {
-  const { data: siteConfig } = useSiteConfig()
+  const { siteConfig } = useAppContext()
   const breakpoint = useBreakpoint()
   const isDesktop = breakpoint > 2
   const navList = useMemo(() => Object.values(navLinkConfig), [])
@@ -29,7 +29,7 @@ export const Navbar = () => {
                 {navList.map((v) => (
                   <li key={v.name}>
                     <a
-                      className="drop-shadow-black text-sm opacity-60 transition-opacity hover:opacity-100"
+                      className="drop-shadow-black opacity-60 transition-opacity hover:opacity-100"
                       href={`#${v.link}`}
                     >
                       {v.name}
@@ -44,12 +44,16 @@ export const Navbar = () => {
                 <DropdownMenuTrigger>
                   <RowsIcon className="size-4" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="">
-                  {navList.map((v) => (
-                    <DropdownMenuItem key={v.link}>
-                      <a href={`#${v.link}`}>{v.name}</a>
-                    </DropdownMenuItem>
-                  ))}
+                <DropdownMenuContent>
+                  <ul>
+                    {navList.map((v) => (
+                      <DropdownMenuItem asChild key={v.link}>
+                        <li>
+                          <a href={`#${v.link}`}>{v.name}</a>
+                        </li>
+                      </DropdownMenuItem>
+                    ))}
+                  </ul>
                 </DropdownMenuContent>
               </DropdownMenu>
             </nav>

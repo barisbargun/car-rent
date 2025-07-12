@@ -1,6 +1,6 @@
 import { cn } from '@repo/ui/lib/utils'
 
-import { H3 } from './typography'
+import { H2 } from './typography'
 
 type Props = React.HTMLAttributes<HTMLHeadingElement> & {
   center?: boolean
@@ -8,7 +8,7 @@ type Props = React.HTMLAttributes<HTMLHeadingElement> & {
 
 export function PageHeader({ className, children, ...props }: Props) {
   return (
-    <H3
+    <H2
       className={cn(
         'page-bottom-space mx-auto text-balance uppercase tracking-[0.8rem]',
         className,
@@ -16,6 +16,6 @@ export function PageHeader({ className, children, ...props }: Props) {
       {...props}
     >
       {children}
-    </H3>
+    </H2>
   )
 }

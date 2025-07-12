@@ -21,8 +21,7 @@ export const UserContent = ({ className, ...props }: Props) => {
       {/* User Image */}
       <Image
         src={user.img?.url}
-        widthList={[50, 50, 40, 100, 100]}
-        quality="high"
+        sizes={[50, 50, 40, 100, 100]}
         fallback={assets.profilePlaceHolder}
         alt="user"
         className="h-full rounded-full object-cover"

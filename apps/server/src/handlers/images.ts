@@ -5,11 +5,12 @@ import { UploadApiOptions, v2 as cloudinary } from 'cloudinary'
 import { Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
+import { revalidateCache } from '@/config/cache'
 import { getParamsId } from '@/lib/model-utils'
 import { sendResponse } from '@/lib/utils'
 import { checkLimit } from '@/middleware/check-limit'
 import { upload } from '@/middleware/multer'
-import { clearCache, storeCache, useCache } from '@/middleware/use-cache'
+import { useCache } from '@/middleware/use-cache'
 import { verifyAccessToken } from '@/middleware/verify-access-token'
 import { verifyRole } from '@/middleware/verify-role'
 import { modelImage } from '@/models/image'
@@ -29,15 +30,7 @@ const uploadOptions: UploadApiOptions = {
   },
 }
 
-router.get('/', useCache(model), async (_req, res) => {
-  try {
-    const data = await db.find({}).exec()
-    storeCache(model, data)
-    res.status(StatusCodes.OK).json(data)
-  } catch (error: any) {
-    sendResponse(res, error)
-  }
-})
+router.get('/', useCache(model))
 
 router.post(
   '/',
@@ -62,7 +55,7 @@ router.post(
               url: result.secure_url,
               publicId: result.public_id,
             })
-            clearCache(model)
+            revalidateCache(model)
             res.status(StatusCodes.CREATED).json(modelResult)
           }
         },
@@ -87,7 +80,7 @@ router.delete(
         cloudinary.uploader.destroy(image!.publicId),
         image!.deleteOne(),
       ])
-      clearCache(model)
+      revalidateCache(model)
       res.sendStatus(StatusCodes.OK)
     } catch (error: any) {
       sendResponse(res, error)

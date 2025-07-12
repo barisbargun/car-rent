@@ -24,7 +24,7 @@ export const ServiceCard = ({ service, className, ...props }: Props) => {
       <div className="flex-center gap-4">
         <Image
           src={service.img?.url}
-          widthList={[60, 60, 60, 80, 50]}
+          sizes={[60, 60, 60, 80, 50]}
           alt="service"
         />
         <div className="flex-1">

@@ -77,7 +77,7 @@ export const ImageFormField = ({
             {showPreview && (
               <Image
                 src={image}
-                widthList={[100, 80, 90, 90, 70]}
+                sizes={[100, 80, 90, 90, 70]}
                 {...imageProps}
               />
             )}

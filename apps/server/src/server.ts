@@ -6,7 +6,6 @@ import helmet from 'helmet'
 import pino from 'pino-http'
 
 import { corsOptionsDelegate } from './config/cors'
-import { dbConnect } from './config/database-connect'
 import { rateLimiter } from './config/rate-limiter'
 
 export const createServer = (): Express => {
@@ -21,6 +20,5 @@ export const createServer = (): Express => {
     .use(json({ limit: '2mb' }))
     .use(urlencoded({ extended: true }))
     .use(cookieParser())
-    .use(dbConnect)
   return app
 }

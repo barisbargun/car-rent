@@ -15,6 +15,7 @@ const modelsApiPaths = {
 export const API_PATHS = {
   ...modelsApiPaths,
 
+  cached: 'cached',
   // Auth
   login: 'auth/login',
   logout: 'auth/logout',

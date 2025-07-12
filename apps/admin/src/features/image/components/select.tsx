@@ -27,9 +27,9 @@ export const ImagesSelect = ({ fieldChange, setImage, closeDialog }: Props) => {
     closeDialog?.()
   }
 
-  return isPending ? (
-    <Loader />
-  ) : (
+  if (isPending) return <Loader />
+  if (isError) return
+  return (
     isSuccess && (
       <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div className="flex-center min-h-20 rounded-xl border-2 border-dashed shadow-xl">

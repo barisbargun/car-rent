@@ -3,7 +3,7 @@ import {
   VehicleGet,
   WHEEL_DRIVE_LIST_UI,
 } from '@repo/api/paths/vehicle/common'
-import { useMemo } from 'react'
+import { Image } from '@repo/ui/components/image'
 
 import assets from '@/assets'
 
@@ -11,25 +11,22 @@ type Props = {
   data: VehicleGet
 }
 export const VehicleCard = ({ data }: Props) => {
-  const getImg = useMemo(() => {
-    let url: any = data.img?.url
-    if (url) {
-      url = url.split('/image/upload/')
-      url = `${url[0]}/image/upload/h_150,c_lfill/${url[1]}`
-    }
-    return url
-  }, [data?.img?.url])
-
   return (
     <div className="flex-center cursor-pointer flex-col gap-4 p-4 shadow-lg transition-transform sm:hover:scale-110">
-      <img src={getImg || ''} alt="vehicle" className="w-fit object-cover" />
-      <h4 className="line-clamp-2 w-full text-xl">{data.title}</h4>
+      <Image
+        src={data.img?.url}
+        sizes={[250, 250, 250, 250, 170]}
+        alt="vehicle"
+      />
+      <p className="line-clamp-2 w-full text-lg xl:text-xl">{data.title}</p>
       <div className="mt-2 flex h-10 w-full justify-between gap-4">
         <div className="flex-center w-28 flex-col">
           <img
+            loading='lazy'
             src={assets.vehicleProps.steering}
             alt="steering-icon"
-            className="h-[20px] w-[20px]"
+            width={20}
+            height={20}
           />
           <p className="text-xs md:text-sm">
             {WHEEL_DRIVE_LIST_UI[data.wheel]}
@@ -37,9 +34,11 @@ export const VehicleCard = ({ data }: Props) => {
         </div>
         <div className="flex-center w-28 flex-col">
           <img
+            loading='lazy'
             src={assets.vehicleProps.awd}
             alt="awd-icon"
-            className="h-[20px] w-[20px]"
+            width={20}
+            height={20}
           />
           <p className="text-xs md:text-sm">
             {DRIVE_TRAIN_LIST_UI[data.drivetrain]}
@@ -47,9 +46,11 @@ export const VehicleCard = ({ data }: Props) => {
         </div>
         <div className="flex-center w-28 flex-col">
           <img
+            loading='lazy'
             src={assets.vehicleProps.fuel}
             alt="fuel-icon"
-            className="h-[20px] w-[20px]"
+            width={20}
+            height={20}
           />
 
           <p className="text-xs md:text-sm">

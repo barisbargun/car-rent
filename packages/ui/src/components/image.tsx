@@ -1,74 +1,92 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 
-import { UseBreakpointArray, useBreakpointArray } from '../hooks/use-breakpoint'
 import { cn } from '../lib/utils'
 
 type Props = Omit<
   React.ImgHTMLAttributes<HTMLImageElement>,
-  'width' | 'height'
+  'width' | 'height' | 'sizes'
 > & {
-  quality?: 'low' | 'medium' | 'high'
-  heightRatio?: number
+  ratio?: number
   fill?: boolean
   alt: string
   fallback?: string
   containerClassName?: string
 } & (
-    | { w: number; widthList?: never }
-    | { w?: never; widthList: UseBreakpointArray }
+    | { w: number; sizes?: never }
+    | { w?: never; sizes: [number, number, number, number, number] }
   )
 
 export const Image = ({
   src,
-  w,
-  widthList,
+  w = 100,
+  sizes,
   fallback,
-  quality = 'medium',
-  heightRatio = 1,
+  ratio = 1,
   fill = false,
   containerClassName,
   className,
   ...props
 }: Props) => {
   const [isError, setIsError] = useState(false)
-  const breakpointArray = useBreakpointArray()
-  const width = w || (widthList && breakpointArray(...widthList)) || 100
-  const height = Math.round(width * heightRatio)
 
-  const useImage = useMemo(() => {
+  const width = w ?? (sizes?.length ? sizes[0] : 100)
+  const height = Math.round(width * ratio)
+
+  const getImage = (width: number) => {
     if (!src || isError)
       return (
-        fallback || `https://dummyimage.com/${width}x${height}&text=No%20Image`
+        fallback ||
+        `https://dummyimage.com/${width}x${width * ratio}&text=No%20Image`
       )
 
-    if (!src?.includes('/image/upload/')) return src || ''
+    if (!src.includes('/image/upload/')) return src || ''
     const [split1, split2] = src.split('/image/upload/')
-    const multiply = quality === 'low' ? 1 : quality === 'medium' ? 2 : 3
-    const transformations = [width ? `w_${width * multiply}` : '', 'c_lfill']
+    const transformations = [width ? `w_${width * 2}` : '', 'c_lfill']
       .filter(Boolean)
       .join(',')
 
     return `${split1}/${transformations}/${split2}`
-  }, [src, isError, width, height, quality, fallback])
+  }
+
+  const getSource = (media: string, width: number) => (
+    <source
+      {...(media ? { media: media } : {})}
+      {...(fill ? {} : { width: width })}
+      srcSet={getImage(width)}
+    />
+  )
 
   return (
-    <div
-      className={cn('flex-center pointer-events-none', containerClassName)}
-      style={fill ? {} : { width, height }}
+    <picture
+      className={cn('pointer-events-none', containerClassName)}
+      style={fill ? { width: '100%', height: '100%' } : {}}
     >
+      {sizes ? (
+        <>
+          {getSource('(width >= 1536px)', sizes[0])}
+          {getSource('(width >= 1280px)', sizes[1])}
+          {getSource('(width >= 1024px)', sizes[2])}
+          {getSource('(width >= 640px)', sizes[3])}
+          {getSource('(width < 640px)', sizes[4])}
+        </>
+      ) : (
+        getSource('', w)
+      )}
+
       <img
         loading="lazy"
-        src={useImage}
+        src={getImage(1024)}
         width={width}
         height={height}
+        style={fill ? {} : { aspectRatio: `${ratio}` }}
         className={cn(
-          'max-h-full max-w-full object-contain',
-          fill && 'h-full w-[100vw]',
+          'mx-auto max-h-full max-w-full object-contain',
+          fill && 'h-full w-full',
           className,
         )}
         onError={() => setIsError(true)}
         {...props}
       />
-    </div>
+    </picture>
   )
 }

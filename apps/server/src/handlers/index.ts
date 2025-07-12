@@ -2,6 +2,7 @@ import { API_PATHS } from '@repo/api/config/api-paths'
 import { Router } from 'express'
 
 import { authRouter } from './auth'
+import { cachedRouter } from './cached'
 import { carouselsRouter } from './carousels'
 import { footerLinksRouter } from './footer-links'
 import { footerTitlesRouter } from './footer-titles'
@@ -16,6 +17,7 @@ import { vehiclesRouter } from './vehicles'
 
 export const handlers: [string, Router][] = [
   ['auth', authRouter],
+  [API_PATHS.cached, cachedRouter],
   [API_PATHS.carousel, carouselsRouter],
   [API_PATHS.footerTitle, footerTitlesRouter],
   [API_PATHS.footerLink, footerLinksRouter],

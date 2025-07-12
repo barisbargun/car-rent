@@ -42,7 +42,7 @@ export const Menubar = ({
             <MenubarVehicleCard
               key={menubarVehicle.id}
               data={menubarVehicle}
-              className={isGrid4 && index == 0 ? 'row-span-3' : ''}
+              isGrid4AndFirst={isGrid4 && index == 0}
               onClick={() => setSelectedMenubarVehicle(menubarVehicle.id)}
             />
           ))}

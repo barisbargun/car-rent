@@ -16,7 +16,7 @@
   }
 
   body {
-    @apply bg-background text-foreground min-h-screen w-screen overflow-x-hidden;
+    @apply bg-background text-foreground min-h-screen w-full overflow-x-hidden;
   }
 
   #root {
@@ -29,10 +29,6 @@
 
   .container {
     @apply max-sm:!px-4;
-  }
-
-  p {
-    @apply leading-7;
   }
 
   small {

@@ -28,8 +28,8 @@ export const ImageCard = ({
     >
       <ImageComponent
         src={data.url}
-        widthList={[200, 180, 150, 220, 100]}
-        heightRatio={0.8}
+        sizes={[200, 180, 150, 220, 100]}
+        ratio={0.8}
         alt="image"
       />
 

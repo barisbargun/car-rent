@@ -9,12 +9,14 @@ type Props = {
 export const FooterGroup = ({ title, data }: Props) => {
   return (
     <div>
-      <h4 className="max-sm:mb-2 max-sm:text-lg">{title}</h4>
+      <strong className="mb-5 block font-normal max-lg:text-lg lg:mb-3">
+        {title}
+      </strong>
       <ul>
         {data.map((v) => (
           <li
             key={v.id}
-            className="mb-1 text-sm opacity-60 hover:opacity-90 max-sm:mb-3 max-sm:text-base"
+            className="mb-5 text-lg opacity-60 hover:opacity-90 lg:mb-2 lg:text-sm"
           >
             <Link
               to={v.link || ''}

@@ -8,7 +8,6 @@ export const api = baseAxios.create({
     'Content-Type': 'application/json',
   },
   withCredentials: true,
-  timeout: 15_000,
 })
 
 api.interceptors.response.use((response) => {

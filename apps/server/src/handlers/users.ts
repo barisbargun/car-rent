@@ -13,7 +13,6 @@ import { generateHash } from '@/config/hash'
 import { findByIdAndUpdate, getParamsId } from '@/lib/model-utils'
 import { sendResponse } from '@/lib/utils'
 import { checkLimit } from '@/middleware/check-limit'
-import { clearCache, storeCache, useCache } from '@/middleware/use-cache'
 import { verifyAccessToken } from '@/middleware/verify-access-token'
 import { verifyRole } from '@/middleware/verify-role'
 import { modelUser } from '@/models/user'
@@ -25,25 +24,18 @@ const model: MODELS = 'user'
 
 const role = REQUIRED_ROLE[model]
 
-router.get(
-  '/',
-  verifyAccessToken,
-  verifyRole(role.get),
-  useCache(model),
-  async (_req, res) => {
-    try {
-      const id = res.locals.userId
-      const data = await db
-        .find({ _id: { $ne: id } })
-        .populate('img')
-        .exec()
-      storeCache(model, data)
-      res.status(StatusCodes.OK).json(data)
-    } catch (error: any) {
-      sendResponse(res, error)
-    }
-  },
-)
+router.get('/', verifyAccessToken, verifyRole(role.get), async (_req, res) => {
+  try {
+    const id = res.locals.userId
+    const data = await db
+      .find({ _id: { $ne: id } })
+      .populate('img')
+      .exec()
+    res.status(StatusCodes.OK).json(data)
+  } catch (error: any) {
+    sendResponse(res, error)
+  }
+})
 
 router.post(
   '/',
@@ -59,7 +51,6 @@ router.post(
         password: await generateHash(data.password),
       })
 
-      clearCache(model)
       const response = await result.populate('img')
       res.status(StatusCodes.OK).json(response)
     } catch (error: any) {
@@ -82,7 +73,6 @@ router.patch('/self', verifyAccessToken, async (req, res) => {
     }
 
     const result = await findByIdAndUpdate(db, id, data, 'img')
-    clearCache(model)
 
     res.status(StatusCodes.OK).json(result)
   } catch (error: any) {
@@ -99,7 +89,6 @@ router.patch(
       const id = getParamsId(req)
       const data = zodCheckSchema(req.body, userUpdateSchema)
       const result = await findByIdAndUpdate(db, id, data, 'img')
-      clearCache(model)
 
       res.status(StatusCodes.OK).json(result)
     } catch (error: any) {
@@ -117,7 +106,6 @@ router.delete(
       const id = getParamsId(req)
       await db.findByIdAndDelete(id).exec()
 
-      clearCache(model)
       res.sendStatus(StatusCodes.OK)
     } catch (error: any) {
       sendResponse(res, error)

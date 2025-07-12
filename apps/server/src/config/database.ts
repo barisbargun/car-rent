@@ -1,13 +1,8 @@
-import { NextFunction, Request, Response } from 'express'
 import mongoose from 'mongoose'
 
 import { env } from './env'
 
-export const dbConnect = async (
-  req: Request,
-  _res: Response,
-  next: NextFunction,
-) => {
+export const connectToDatabase = async () => {
   mongoose.set('strictQuery', true)
   mongoose.set('toJSON', {
     virtuals: true,
@@ -15,6 +10,7 @@ export const dbConnect = async (
       delete converted.id
     },
   })
+
   try {
     await mongoose.connect(env.MONGO_URI, {
       dbName: 'car_rent',
@@ -24,9 +20,9 @@ export const dbConnect = async (
         deprecationErrors: true,
       },
     })
-
-    next()
+    console.log('Successfully connected to MongoDB.')
   } catch (error) {
-    req.log.error(`Database connection error: ${error}`)
+    console.error('Database connection failed:', error)
+    throw new Error('MongoDB connection failed')
   }
 }

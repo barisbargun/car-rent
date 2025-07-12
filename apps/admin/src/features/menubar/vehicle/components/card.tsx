@@ -23,8 +23,8 @@ export const MenubarVehicleCard = ({ data, className, ...props }: Props) => {
     >
       <Image
         src={data.img?.url}
-        widthList={[200, 200, 150, 180, 130]}
-        heightRatio={0.75}
+        sizes={[250, 200, 150, 180, 130]}
+        ratio={1.3}
         alt="menubar vehicle"
       />
 

@@ -19,6 +19,8 @@ export const App = () => {
         src={assets.pattern}
         alt="pattern"
         className="fixed -right-52 top-0 h-screen w-screen"
+        width={1577}
+        height={574}
       />
     </>
   )

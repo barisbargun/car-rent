@@ -5,6 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import { MainErrorFallback } from '@/components/errors/main'
 import { RootLayout } from '@/components/layouts/root'
+import { AppContextProvider } from '@/lib/context'
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -17,13 +18,15 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     >
       <ErrorBoundary FallbackComponent={MainErrorFallback}>
         <QueryClientProvider client={queryClient}>
-          {/* {import.meta.env.DEV && (
+          <AppContextProvider Skeleton={FullPageLoader}>
+            {/* {import.meta.env.DEV && (
             <ReactQueryDevtools
               client={queryClient}
               buttonPosition="top-left"
             />
           )} */}
-          <RootLayout>{children}</RootLayout>
+            <RootLayout>{children}</RootLayout>
+          </AppContextProvider>
         </QueryClientProvider>
       </ErrorBoundary>
     </React.Suspense>

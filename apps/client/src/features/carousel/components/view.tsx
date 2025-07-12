@@ -1,64 +1,36 @@
-import { useCarousels } from '@repo/api/paths/carousel/get-all'
-import { Skeleton } from '@repo/ui/components/skeleton'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useState } from 'react'
-import Slider from 'react-slick'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from '@repo/ui/components/carousel'
+import Autoplay from 'embla-carousel-autoplay'
 
-import { carouselSettings } from '../config'
+import { useAppContext } from '@/lib/context'
+
+import { CarouselArrows } from './carousel-arrows'
 import { CarouselVehicle } from './vehicle'
 
-const ViewSkeleton = () => {
-  return (
-    <div className="container min-h-screen pt-32">
-      <div className="absolute top-28 w-full max-md:top-20">
-        <Skeleton className="h-14 w-[40rem]" />
-        <Skeleton className="mt-2 h-14 w-[24rem] max-xl:hidden" />
-        <Skeleton className="mt-3 h-20 w-[40rem]" />
-      </div>
-      <div className="absolute bottom-20 flex flex-col max-sm:hidden">
-        <Skeleton className="mt-2 h-10 w-96" />
-        <div className="flex gap-6">
-          <Skeleton className="mt-2 h-12 w-24" />
-          <Skeleton className="mt-2 h-12 w-32" />
-          <Skeleton className="mt-2 h-12 w-24" />
-        </div>
-      </div>
-    </div>
-  )
-}
-
 export const CarouselView = () => {
-  const { data: carousels, isPending } = useCarousels()
-  const [ref, setRef] = useState<Slider | null>()
+  const { carousels } = useAppContext()
 
-  const slideLeft = () => {
-    ref?.slickPrev()
-  }
-
-  const slideRight = () => {
-    ref?.slickNext()
-  }
-
-  if (isPending) return <ViewSkeleton />
+  if (!carousels?.length) return
   return (
-    <div className="relative h-full min-h-screen w-full">
-      <Slider ref={(slider) => setRef(slider)} {...carouselSettings}>
-        {carousels?.map((carousel) => (
-          <CarouselVehicle key={carousel.id} data={carousel} />
-        ))}
-      </Slider>
+    <div className="relative h-full min-h-screen w-full [&_.slick-arrow]:!hidden">
+      <Carousel
+        className="w-full"
+        opts={{ loop: true }}
+        plugins={[Autoplay({ delay: 10_000 })]}
+      >
+        <CarouselContent>
+          {carousels.map((carousel) => (
+            <CarouselItem key={carousel.id} className="h-screen pl-0">
+              <CarouselVehicle key={carousel.id} data={carousel} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
 
-      <div className="flex-center absolute bottom-10 right-10 gap-4 max-lg:hidden">
-        <ChevronLeft
-          className="drop-shadow-black size-12 cursor-pointer text-stone-400"
-          onClick={slideLeft}
-        />
-
-        <ChevronRight
-          className="drop-shadow-black size-12 cursor-pointer text-stone-400"
-          onClick={slideRight}
-        />
-      </div>
+        <CarouselArrows />
+      </Carousel>
     </div>
   )
 }

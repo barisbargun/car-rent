@@ -24,8 +24,8 @@ export const VehicleCard = ({ data, className, ...props }: Props) => {
     >
       <Image
         src={data.img?.url}
-        widthList={[200, 200, 150, 180, 130]}
-        heightRatio={0.75}
+        sizes={[200, 200, 150, 180, 130]}
+        ratio={0.75}
         alt="vehicle"
       />
 

@@ -15,7 +15,7 @@ const options: Partial<Options> = {
 
 export const rateLimiter = rateLimit({
   ...options,
-  limit: limiter(1000),
+  limit: limiter(200),
 })
 
 export const authLimiter = rateLimit({

@@ -33,7 +33,7 @@ const CarouselContext = React.createContext<CarouselContextProps | undefined>(
   undefined,
 )
 
-function useCarousel() {
+export function useCarousel() {
   const context = React.useContext(CarouselContext)
 
   if (!context) {

@@ -1,7 +1,3 @@
-import { useMenubarTabs } from '@repo/api/paths/menubar/tab/get-all'
-import { useMenubarVehicles } from '@repo/api/paths/menubar/vehicle/get-all'
-import { useVehicles } from '@repo/api/paths/vehicle/get-all'
-import { Loader } from '@repo/ui/components/loader'
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -12,6 +8,8 @@ import {
 import { cn } from '@repo/ui/lib/utils'
 import React, { useMemo, useState } from 'react'
 
+import { useAppContext } from '@/lib/context'
+
 import { Menubar } from './menubar'
 import { Paginator } from './paginator'
 import { VehicleCard } from './vehicle-card'
@@ -20,11 +18,7 @@ type Props = React.HTMLAttributes<HTMLDivElement> & {}
 
 const count = 6
 export const MenubarView = ({ className, ...props }: Props) => {
-  const { data: menubarTabs, isPending: isMenubarTabsPending } =
-    useMenubarTabs()
-  const { data: menubarVehicles, isPending: isMenubarVehiclesPending } =
-    useMenubarVehicles()
-  const { data: vehicles, isPending: isVehiclesPending } = useVehicles()
+  const { menubarTabs, vehicles, menubarVehicles } = useAppContext()
 
   const [page, setPage] = useState(1)
   const [selectedMenubarVehicle, setSelectedMenubarVehicle] = useState<
@@ -48,13 +42,13 @@ export const MenubarView = ({ className, ...props }: Props) => {
     )
   }, [vehicles, selectedMenubarVehicle])
 
-  if (isMenubarTabsPending || isMenubarVehiclesPending || isVehiclesPending)
-    return <Loader />
+  if (!menubarTabs?.length || !menubarVehicles?.length || !vehicles?.length)
+    return
   return (
     <div className={cn('flex-center z-20 flex-col', className)} {...props}>
       <NavigationMenu className="">
         <NavigationMenuList className="flex-wrap px-4 max-lg:flex max-lg:gap-4">
-          {menubarTabs?.map((tab) => {
+          {menubarTabs.map((tab) => {
             const vehicles = menubarVehiclesByMenubarTab.get(tab.id)
             if (!vehicles?.length) return
             return (

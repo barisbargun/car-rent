@@ -3,6 +3,7 @@ import { REQUIRED_ROLE } from '@repo/api/config/required-role'
 import { Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
+import { revalidateCache } from '@/config/cache'
 import {
   findByIdAndUpdate,
   getParamsId,
@@ -10,7 +11,7 @@ import {
 } from '@/lib/model-utils'
 import { getNextIndex, sendResponse } from '@/lib/utils'
 import { checkLimit } from '@/middleware/check-limit'
-import { clearCache, storeCache, useCache } from '@/middleware/use-cache'
+import { useCache } from '@/middleware/use-cache'
 import { verifyAccessToken } from '@/middleware/verify-access-token'
 import { verifyRole } from '@/middleware/verify-role'
 import { modelMenubarTab } from '@/models/menubar-tab'
@@ -24,15 +25,7 @@ const model: MODELS = 'menubarTab'
 
 const role = REQUIRED_ROLE[model]
 
-router.get('/', useCache(model), async (_req, res) => {
-  try {
-    const data = await db.find({}).sort({ index: 1 }).exec()
-    storeCache(model, data)
-    res.status(StatusCodes.OK).json(data)
-  } catch (error: any) {
-    sendResponse(res, error)
-  }
-})
+router.get('/', useCache(model))
 
 router.post(
   '/',
@@ -45,8 +38,7 @@ router.post(
         ...req.body,
         index: await getNextIndex(db),
       })
-
-      clearCache(model)
+      revalidateCache(model)
       res.status(StatusCodes.OK).json(result)
     } catch (error: any) {
       sendResponse(res, error)
@@ -63,8 +55,7 @@ router.patch(
       const id = getParamsId(req)
       const data = req.body
       const result = await findByIdAndUpdate(db, id, data)
-      clearCache(model)
-
+      revalidateCache(model)
       res.status(StatusCodes.OK).json(result)
     } catch (error: any) {
       sendResponse(res, error)
@@ -80,7 +71,7 @@ router.patch(
   async (req, res) => {
     try {
       await updateIndexesForIds(db, req.body.idList)
-      clearCache(model)
+      revalidateCache(model)
       res.sendStatus(StatusCodes.OK)
     } catch (error: any) {
       sendResponse(res, error)
@@ -110,8 +101,7 @@ router.delete(
       await modelMenubarVehicle.deleteMany({ menubarTab: id }).exec()
 
       await db.findByIdAndDelete(id).exec()
-
-      clearCache(model)
+      revalidateCache(model)
       res.sendStatus(StatusCodes.OK)
     } catch (error: any) {
       sendResponse(res, error)

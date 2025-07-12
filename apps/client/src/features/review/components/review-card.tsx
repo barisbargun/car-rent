@@ -27,15 +27,22 @@ export const ReviewCard = ({ data, index, className, ...props }: Props) => {
     >
       <div className="flex items-center gap-4">
         <div>
-          <Image src={data.img?.url} w={55} alt="carousel" />
+          <Image
+            src={data.img?.url}
+            w={55}
+            alt="carousel"
+            className="rounded-full"
+          />
         </div>
         <div>
-          <h4 className="text-md font-medium leading-none">{data.fullname}</h4>
-          <p className="text-muted-foreground text-xs">{data.occupation}</p>
+          <strong className="block font-medium leading-none">
+            {data.fullname}
+          </strong>
+          <small className="text-muted-foreground">{data.occupation}</small>
         </div>
       </div>
       <div>
-        <p className="mt-6 line-clamp-5 text-sm opacity-90">{data.desc}</p>
+        <p className="mt-6 line-clamp-5 opacity-90">{data.desc}</p>
       </div>
     </div>
   )

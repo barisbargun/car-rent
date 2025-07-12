@@ -25,7 +25,7 @@ export const UserCard = ({ data, className, ...props }: Props) => {
     >
       <Image
         src={data.img?.url}
-        widthList={[100, 90, 80, 150, 100]}
+        sizes={[100, 90, 80, 150, 100]}
         fallback={assets.profilePlaceHolder}
         alt="user"
         className="h-full rounded-full object-cover"
