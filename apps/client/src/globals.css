@@ -13,6 +13,7 @@
   html {
     @apply scroll-smooth antialiased;
     @apply text-xs sm:text-base lg:text-sm xl:text-[15px] 2xl:text-base;
+    @apply max-sm:leading-tight xl:leading-normal;
   }
 
   body {

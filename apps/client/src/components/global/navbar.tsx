@@ -5,7 +5,7 @@ import {
   DropdownMenuTrigger,
 } from '@repo/ui/components/dropdown-menu'
 import { useBreakpoint } from '@repo/ui/hooks/use-breakpoint'
-import { RowsIcon } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { useMemo } from 'react'
 
 import { navLinkConfig } from '@/config/nav'
@@ -42,7 +42,7 @@ export const Navbar = () => {
             <nav className="flex-center">
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <RowsIcon className="size-4" />
+                  <Menu className="size-6" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <ul>

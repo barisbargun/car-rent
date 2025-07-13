@@ -27,7 +27,7 @@ export const UserContent = ({ className, ...props }: Props) => {
         className="h-full rounded-full object-cover"
       />
 
-      <div className="flex flex-col *:text-sm *:leading-none">
+      <div className="flex flex-col *:text-sm *:leading-4">
         <p className="text-muted-foreground max-lg:hidden">Current User</p>
         <h4 className="font-medium">@{user.username}</h4>
       </div>

@@ -26,11 +26,11 @@ export const MenubarVehicleCard = ({
           w={250}
           ratio={3}
           alt="vehicle"
-          className={cn(isGrid4AndFirst && 'h-full')}
+          className="h-full w-full rounded object-cover"
         />
-        <div className="absolute bottom-3 left-3 w-full">
+        <div className="absolute bottom-3 left-0 w-full px-2">
           <div className="line-clamp-1 text-sm font-medium">{data.title}</div>
-          <p className="line-clamp-2 text-xs leading-tight opacity-80 max-sm:line-clamp-1">
+          <p className="line-clamp-2 text-xs text-neutral-400 max-sm:line-clamp-1">
             {data.desc}
           </p>
         </div>

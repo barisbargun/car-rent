@@ -27,7 +27,7 @@ export const CarouselVehicle = ({ data }: Props) => {
       <Image
         fill
         src={data.img?.url}
-        sizes={[1500, 1300, 1000, 600, 400]}
+        w={1000}
         alt="carousel"
         loading="eager"
         className="h-screen w-full object-cover"

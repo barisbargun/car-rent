@@ -35,7 +35,7 @@ export const ReviewCard = ({ data, index, className, ...props }: Props) => {
           />
         </div>
         <div>
-          <strong className="block font-medium leading-none">
+          <strong className="block font-medium">
             {data.fullname}
           </strong>
           <small className="text-muted-foreground">{data.occupation}</small>
