@@ -14,6 +14,9 @@ export const createServer = (): Express => {
     .disable('x-powered-by')
     .use(helmet())
     .use(rateLimiter)
+    .get('/health', (_req, res) => {
+      res.sendStatus(200)
+    })
     .use(compression())
     .use(pino())
     .use(cors(corsOptionsDelegate))
