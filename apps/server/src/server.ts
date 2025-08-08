@@ -11,6 +11,7 @@ import { rateLimiter } from './config/rate-limiter'
 export const createServer = (): Express => {
   const app = express()
   app
+    .set('trust proxy', true)
     .disable('x-powered-by')
     .use(helmet())
     .use(rateLimiter)
